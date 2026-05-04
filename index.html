@@ -596,6 +596,7 @@
     /* ── ENVELOPE OVERLAY ──────────────────── */
     .env-overlay {
       position: fixed; inset: 0; z-index: 10000;
+      width: 100vw; height: 100vh; height: 100dvh;
       background: var(--cream);
       display: flex; flex-direction: column;
       overflow: hidden;
@@ -615,7 +616,7 @@
     .env-overlay.opened .env-bottom {
       transform: translateY(100vh);
     }
-    .env-overlay.done { visibility: hidden; }
+    .env-overlay.done { display: none; }
 
     .env-top {
       background:
@@ -1091,8 +1092,10 @@
   <!-- ── SCRIPTS ──────────────────────────── -->
   <script>
     // ── ENVELOPE ────────────────────────────
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
       var overlay = document.getElementById('envOverlay');
+      if (!overlay) return;
+
       var alreadyOpened = sessionStorage.getItem('envelope_opened');
 
       if (alreadyOpened) {
@@ -1107,7 +1110,7 @@
         }, 900);
         sessionStorage.setItem('envelope_opened', '1');
       });
-    })();
+    });
 
     // ── COUNTDOWN ──────────────────────────
     (function() {
