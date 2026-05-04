@@ -801,6 +801,7 @@
         </div>
       </div>
     </div>
+    <audio id="envMusic" src="https://res.cloudinary.com/dkerabcck/video/upload/v1777921696/A_Thousand_Years_-_Christina_Perri_-_reduzida_w41azh.mp3" preload="auto" loop></audio>
   </div>
 
   <!-- ── NAVEGACIÓN ──────────────────────── -->
@@ -1176,8 +1177,12 @@
         if (state === 0) {
           overlay.classList.add('abierto');
           state = 1;
+          var music = document.getElementById('envMusic');
+          if (music) music.play().catch(function() {});
         } else if (state === 1) {
           overlay.classList.add('done');
+          var music = document.getElementById('envMusic');
+          if (music) { music.pause(); music.currentTime = 0; }
           sessionStorage.setItem('envelope_opened', '1');
         }
       });
