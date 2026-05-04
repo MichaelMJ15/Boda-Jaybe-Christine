@@ -589,8 +589,106 @@
       .nav a { font-size: 0.75rem; }
       .detail-card .map-iframe { height: 280px; }
       .photos-gallery { grid-template-columns: repeat(2, 1fr); }
-      .envelope-names { font-size: 3.5rem !important; }
-      .envelope-seal { width: 80px !important; height: 80px !important; font-size: 0.8rem !important; }
+    }
+
+    /* ── ENVELOPE OVERLAY ──────────────────── */
+    .env-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .env-overlay.hidden { display: none; }
+    .env-overlay.done { display: none; }
+
+    .env-wrapper {
+      position: relative;
+      width: min(440px, 90vw);
+      perspective: 1200px;
+    }
+
+    .env-flap {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 120px;
+      background: #f2ede4;
+      z-index: 3;
+      transform-origin: top center;
+      transition: transform 0.7s cubic-bezier(0.3, 0, 0.4, 1);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 2px solid var(--border);
+      cursor: pointer;
+    }
+    .env-overlay.opened .env-flap {
+      transform: rotateX(-160deg);
+    }
+
+    .env-flap-seal {
+      position: absolute; bottom: 8px; left: 50%;
+      transform: translateX(-50%);
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: rgba(201,169,110,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem; color: var(--gold);
+      animation: sealPulse 2s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(201,169,110,0); }
+    }
+
+    .env-letter {
+      position: relative; z-index: 2;
+      background: var(--white);
+      border: 2px solid var(--border);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.25, 0.4, 0.3, 1);
+      box-shadow: var(--shadow-lg);
+      border-radius: 1px;
+    }
+    .env-overlay.opened .env-letter {
+      transform: translateY(-80px);
+    }
+
+    .env-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .envelope-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem; font-weight: 500;
+      color: var(--dark); line-height: 1.2;
+    }
+    .envelope-names span { display: block; }
+    .envelope-names .env-and {
+      font-size: 0.95rem; font-style: italic; color: var(--gold);
+      display: block; margin: 0.2rem 0 0.5rem;
+      font-weight: 400; letter-spacing: 0.1em;
+    }
+
+    .envelope-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; letter-spacing: 0.2em;
+      color: var(--text); margin-top: 0.5rem;
+    }
+
+    .envelope-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      color: var(--text-light); margin-top: 1.2rem;
+      animation: fadeHint 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeHint {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
 
     /* ── ENVELOPE OVERLAY ──────────────────── */
@@ -714,21 +812,18 @@
 
   <!-- ── ENVELOPE OVERLAY ─────────────────── -->
   <div class="env-overlay" id="envOverlay">
-    <div class="env-half env-top" id="envTop">
-      <div class="env-flap"></div>
-      <div class="env-top-content">
-        <p class="env-badge">Nos casamos</p>
+    <div class="env-wrapper">
+      <div class="env-flap">
+        <div class="env-flap-seal">J &amp; C</div>
       </div>
-    </div>
-    <div class="env-half env-bottom" id="envBottom">
-      <div class="env-body">
+      <div class="env-letter">
+        <p class="env-badge">Nos casamos</p>
         <h1 class="envelope-names">
           <span>Jaybie</span>
           <span class="env-and">&amp;</span>
           <span>Christine</span>
         </h1>
         <p class="envelope-date">10 · 10 · 2026</p>
-        <div class="envelope-seal">J &amp; C</div>
         <p class="envelope-hint">Toca para abrir</p>
       </div>
     </div>
@@ -1097,7 +1192,6 @@
       if (!overlay) return;
 
       var alreadyOpened = sessionStorage.getItem('envelope_opened');
-
       if (alreadyOpened) {
         overlay.classList.add('hidden');
         return;
@@ -1107,7 +1201,7 @@
         overlay.classList.add('opened');
         setTimeout(function() {
           overlay.classList.add('done');
-        }, 900);
+        }, 1000);
         sessionStorage.setItem('envelope_opened', '1');
       });
     });
