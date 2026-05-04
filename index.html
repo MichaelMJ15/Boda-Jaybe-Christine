@@ -465,6 +465,86 @@
       background: var(--gold);
     }
 
+    /* ── PHOTO UPLOAD ──────────────────────── */
+    .photos { background: var(--cream); }
+    .upload-area {
+      max-width: 500px; margin: 2rem auto;
+    }
+    .upload-label {
+      display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+      padding: 3rem 2rem;
+      border: 2px dashed var(--gold);
+      background: var(--white);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .upload-label:hover {
+      border-color: var(--gold-dark);
+      background: #fdfaf3;
+    }
+    .upload-label .upload-icon {
+      font-size: 2.5rem; color: var(--gold);
+    }
+    .upload-label p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; letter-spacing: 0.1em;
+      color: var(--text);
+    }
+    .upload-label span {
+      font-size: 0.75rem; color: var(--text-light);
+    }
+    .upload-input { display: none; }
+    .upload-preview {
+      display: none; margin-top: 1rem; text-align: center;
+    }
+    .upload-preview img {
+      max-width: 200px; max-height: 200px; object-fit: cover;
+      border-radius: 2px; border: 1px solid var(--border);
+    }
+    .upload-preview .upload-name {
+      font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;
+    }
+    .upload-preview .upload-actions {
+      margin-top: 0.8rem; display: flex; gap: 1rem; justify-content: center;
+    }
+    .upload-status {
+      text-align: center; margin-top: 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; color: var(--gold);
+    }
+    .upload-status.error { color: #b85c5c; }
+
+    /* ── PHOTO GALLERY ─────────────────────── */
+    .photos-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .photos-gallery .photo-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      cursor: pointer;
+      border-radius: 2px;
+      background: var(--border);
+    }
+    .photos-gallery .photo-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .photos-gallery .photo-card:hover img {
+      transform: scale(1.05);
+    }
+    .photos-empty {
+      text-align: center; color: var(--text-light);
+      font-style: italic; padding: 3rem;
+      display: none;
+    }
+    .photos-empty.active { display: block; }
+
     /* ── FADE IN ANIMATION ─────────────────── */
     .fade-in {
       opacity: 0;
@@ -508,6 +588,7 @@
       .nav-inner { gap: 1.2rem; flex-wrap: wrap; }
       .nav a { font-size: 0.75rem; }
       .detail-card .map-iframe { height: 280px; }
+      .photos-gallery { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -522,6 +603,7 @@
       <a href="#galeria">Galería</a>
       <a href="#rsvp">Confirmar</a>
       <a href="#musica">Música</a>
+      <a href="#recuerdos">Recuerdos</a>
       <a href="#regalos">Donaciones</a>
     </div>
   </nav>
@@ -807,6 +889,38 @@
     </div>
   </section>
 
+  <!-- ── FOTOS / RECUERDOS ────────────────── -->
+  <section class="section photos fade-in" id="recuerdos">
+    <div class="container">
+      <p class="section-tag">Recuerdos</p>
+      <h2 class="section-title">Vuestras fotos</h2>
+      <p style="text-align: center; color: var(--text); max-width: 500px; margin: 1rem auto 0;">
+        Comparte tus momentos con los novios. Sube tus fotos y las veremos todos.
+      </p>
+
+      <div class="upload-area">
+        <label class="upload-label" for="photoInput">
+          <span class="upload-icon">&#x1F4F7;</span>
+          <p>Haz clic para subir una foto</p>
+          <span>JPG o PNG, máx. 10 MB</span>
+        </label>
+        <input type="file" class="upload-input" id="photoInput" accept="image/jpeg,image/png,image/heic,image/webp">
+        <div class="upload-preview" id="uploadPreview">
+          <img src="" alt="" id="previewImg">
+          <p class="upload-name" id="previewName"></p>
+          <div class="upload-actions">
+            <button class="btn" id="uploadBtn" style="margin-top: 0; padding: 0.7rem 2rem;">Subir foto</button>
+            <button class="btn" id="cancelBtn" style="margin-top: 0; padding: 0.7rem 2rem; border-color: var(--text-light); color: var(--text-light);">Cancelar</button>
+          </div>
+        </div>
+        <p class="upload-status" id="uploadStatus"></p>
+      </div>
+
+      <div class="photos-empty active" id="photosEmpty">Aún no hay fotos. ¡Sé el primero en subir!</div>
+      <div class="photos-gallery" id="photosGallery"></div>
+    </div>
+  </section>
+
   <!-- ── FOOTER ───────────────────────────── -->
   <footer class="footer">
     <p class="names">J &amp; C</p>
@@ -1050,6 +1164,151 @@
           nav.style.boxShadow = 'none';
         }
       }, { passive: true });
+    })();
+
+    // ── PHOTO UPLOAD ────────────────────────
+    (function() {
+      var cloudName = 'dkerabcck';
+      var uploadPreset = 'boda_upload';
+      var photoInput = document.getElementById('photoInput');
+      var uploadPreview = document.getElementById('uploadPreview');
+      var previewImg = document.getElementById('previewImg');
+      var previewName = document.getElementById('previewName');
+      var uploadBtn = document.getElementById('uploadBtn');
+      var cancelBtn = document.getElementById('cancelBtn');
+      var uploadStatus = document.getElementById('uploadStatus');
+      var photosGallery = document.getElementById('photosGallery');
+      var photosEmpty = document.getElementById('photosEmpty');
+
+      var pendingFile = null;
+
+      photoInput.addEventListener('change', function() {
+        var file = photoInput.files[0];
+        if (!file) return;
+        if (file.size > 10 * 1024 * 1024) {
+          uploadStatus.textContent = 'La foto no debe superar 10 MB';
+          uploadStatus.className = 'upload-status error';
+          return;
+        }
+        pendingFile = file;
+        previewName.textContent = file.name;
+        uploadStatus.textContent = '';
+        uploadStatus.className = 'upload-status';
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          uploadPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      });
+
+      cancelBtn.addEventListener('click', function() {
+        photoInput.value = '';
+        pendingFile = null;
+        uploadPreview.style.display = 'none';
+        uploadStatus.textContent = '';
+        uploadStatus.className = 'upload-status';
+      });
+
+      uploadBtn.addEventListener('click', function() {
+        if (!pendingFile) return;
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = 'Subiendo...';
+        uploadStatus.textContent = 'Subiendo foto...';
+        uploadStatus.className = 'upload-status';
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          // Resize to max 1920px
+          var img = new Image();
+          img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var maxW = 1920, maxH = 1920;
+            var w = img.width, h = img.height;
+            if (w > maxW || h > maxH) {
+              if (w > h) { h = Math.round(h * maxW / w); w = maxW; }
+              else { w = Math.round(w * maxH / h); h = maxH; }
+            }
+            canvas.width = w; canvas.height = h;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            canvas.toBlob(function(blob) {
+              uploadToCloudinary(blob);
+            }, 'image/jpeg', 0.85);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(pendingFile);
+      });
+
+      function uploadToCloudinary(blob) {
+        var fd = new FormData();
+        fd.append('file', blob);
+        fd.append('upload_preset', uploadPreset);
+        fd.append('tags', 'boda');
+
+        fetch('https://api.cloudinary.com/v1_1/' + cloudName + '/image/upload', {
+          method: 'POST', body: fd
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.secure_url) {
+            uploadStatus.textContent = '¡Foto subida!';
+            uploadStatus.className = 'upload-status';
+            addPhotoToGallery(data.secure_url);
+            savePhotoUrl(data.secure_url);
+            resetUpload();
+          } else {
+            uploadStatus.textContent = 'Error al subir la foto';
+            uploadStatus.className = 'upload-status error';
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = 'Subir foto';
+          }
+        })
+        .catch(function() {
+          uploadStatus.textContent = 'Error de conexión';
+          uploadStatus.className = 'upload-status error';
+          uploadBtn.disabled = false;
+          uploadBtn.textContent = 'Subir foto';
+        });
+      }
+
+      function resetUpload() {
+        photoInput.value = '';
+        pendingFile = null;
+        uploadPreview.style.display = 'none';
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = 'Subir foto';
+      }
+
+      function addPhotoToGallery(url) {
+        photosEmpty.classList.remove('active');
+        var card = document.createElement('div');
+        card.className = 'photo-card';
+        card.innerHTML = '<img src="' + url + '" loading="lazy" alt="Foto de recuerdo">';
+        card.addEventListener('click', function() {
+          window.open(url, '_blank');
+        });
+        photosGallery.prepend(card);
+      }
+
+      function savePhotoUrl(url) {
+        var saved = JSON.parse(localStorage.getItem('wedding_photos') || '[]');
+        saved.unshift({ url: url, time: Date.now() });
+        if (saved.length > 200) saved = saved.slice(0, 200);
+        localStorage.setItem('wedding_photos', JSON.stringify(saved));
+      }
+
+      function loadSavedPhotos() {
+        var saved = JSON.parse(localStorage.getItem('wedding_photos') || '[]');
+        if (saved.length > 0) {
+          photosEmpty.classList.remove('active');
+          saved.forEach(function(p) { addPhotoToGallery(p.url); });
+        }
+      }
+
+      loadSavedPhotos();
     })();
   </script>
 </body>
