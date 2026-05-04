@@ -597,52 +597,46 @@
       display: flex; align-items: center; justify-content: center;
       background: #e8e3da;
       overflow: hidden;
-      transition: opacity 0.5s ease 0.9s;
+      transition: opacity 0.6s ease 0.8s;
     }
     .env-overlay.hidden { display: none; }
     .env-overlay.done {
       opacity: 0; pointer-events: none;
     }
 
-    .env-card {
-      width: min(420px, 88vw);
-      background: var(--white);
-      padding: 2.5rem 2rem;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-      border-radius: 2px;
-      transition: transform 0.6s ease, opacity 0.6s ease;
-      cursor: pointer;
+    .env-wrapper {
       position: relative;
-    }
-    .env-overlay.opened .env-card {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-
-    .env-card-border {
-      border: 1px solid var(--gold);
-      padding: 2.5rem 2rem;
-      position: relative;
-    }
-
-    .env-card-badge {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem; letter-spacing: 0.4em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 2rem;
-    }
-
-    .env-card-seal {
-      width: 90px; height: 90px; border-radius: 50%;
-      border: 2px solid var(--gold);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem;
+      width: min(520px, 92vw);
+      min-height: 320px;
+    }
+
+    /* ── STEP 1: Envelope (solo sello) ─────── */
+    .env-sobre {
+      position: absolute;
+      width: min(340px, 80vw);
+      aspect-ratio: 3/2;
+      background: var(--white);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      clip-path: polygon(0 0, 50% 28%, 100% 0, 100% 100%, 0 100%);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    .env-overlay.abierto .env-sobre {
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
+    }
+
+    .env-sobre-seal {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: #fdfcf9;
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 0.95rem; color: var(--gold-dark);
+      font-size: 0.85rem; color: var(--gold-dark);
       font-weight: 600; letter-spacing: 0.08em;
       animation: sealPulse 2s ease-in-out infinite;
-      background: #fdfcf9;
       box-shadow: 0 2px 12px rgba(201,169,110,0.15);
     }
 
@@ -651,36 +645,79 @@
       50% { box-shadow: 0 0 0 14px rgba(201,169,110,0), 0 2px 12px rgba(201,169,110,0.15); }
     }
 
-    .env-card-ornament {
+    /* ── STEP 2: Carta ancha ───────────────── */
+    .env-carta {
+      position: absolute;
+      width: 100%;
+      background: var(--white);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+      transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+    }
+    .env-overlay.abierto .env-carta {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .env-carta-border {
+      border: 1px solid var(--gold);
+      margin: 1.5rem;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .env-carta-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .env-carta-seal {
+      width: 70px; height: 70px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: #fdfcf9;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem; color: var(--gold-dark);
+      font-weight: 600; letter-spacing: 0.08em;
+      box-shadow: 0 2px 12px rgba(201,169,110,0.15);
+    }
+
+    .env-carta-ornament {
       color: var(--gold); font-size: 0.6rem; letter-spacing: 0.3em;
       margin: 1.2rem auto;
       display: flex; align-items: center; justify-content: center; gap: 0.8rem;
     }
-    .env-card-ornament::before, .env-card-ornament::after {
+    .env-carta-ornament::before, .env-carta-ornament::after {
       content: '';
       display: block; width: 40px; height: 1px;
       background: var(--gold); opacity: 0.5;
     }
 
-    .env-card-names {
+    .env-carta-names {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem; font-weight: 500;
       color: var(--dark); line-height: 1.2;
     }
-    .env-card-names span { display: block; }
-    .env-card-names .env-and {
+    .env-carta-names span { display: block; }
+    .env-carta-names .env-and {
       font-size: 1.1rem; font-style: italic; color: var(--gold);
       display: block; margin: 0.1rem 0 0.4rem;
       font-weight: 400; letter-spacing: 0.1em;
     }
 
-    .env-card-date {
+    .env-carta-date {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem; letter-spacing: 0.2em;
       color: var(--text); margin-top: 0.5rem;
     }
 
-    .env-card-hint {
+    .env-carta-hint {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.75rem; letter-spacing: 0.2em;
       color: var(--text-light); margin-top: 1.8rem;
@@ -698,23 +735,24 @@
 
   <!-- ── ENVELOPE OVERLAY ─────────────────── -->
   <div class="env-overlay" id="envOverlay">
-    <div class="env-card">
-      <div class="env-card-border">
-        <p class="env-card-badge">Nos casamos</p>
+    <div class="env-wrapper">
+      <div class="env-sobre">
+        <div class="env-sobre-seal">J &amp; C</div>
+      </div>
 
-        <div class="env-card-seal">J &amp; C</div>
-
-        <div class="env-card-ornament">✦</div>
-
-        <h1 class="env-card-names">
-          <span>Jaybie</span>
-          <span class="env-and">&amp;</span>
-          <span>Christine</span>
-        </h1>
-
-        <p class="env-card-date">10 · 10 · 2026</p>
-
-        <p class="env-card-hint">Toca para abrir</p>
+      <div class="env-carta">
+        <div class="env-carta-border">
+          <p class="env-carta-badge">Nos casamos</p>
+          <div class="env-carta-seal">J &amp; C</div>
+          <div class="env-carta-ornament">✦</div>
+          <h1 class="env-carta-names">
+            <span>Jaybie</span>
+            <span class="env-and">&amp;</span>
+            <span>Christine</span>
+          </h1>
+          <p class="env-carta-date">10 · 10 · 2026</p>
+          <p class="env-carta-hint">Toca para abrir</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1087,12 +1125,15 @@
         return;
       }
 
+      var state = 0;
       overlay.addEventListener('click', function() {
-        overlay.classList.add('opened');
-        setTimeout(function() {
+        if (state === 0) {
+          overlay.classList.add('abierto');
+          state = 1;
+        } else if (state === 1) {
           overlay.classList.add('done');
-        }, 900);
-        sessionStorage.setItem('envelope_opened', '1');
+          sessionStorage.setItem('envelope_opened', '1');
+        }
       });
     });
 
