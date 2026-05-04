@@ -634,17 +634,21 @@
       pointer-events: none;
     }
 
-    .env-flap {
-      position: absolute; top: 0; left: 0; right: 0;
+    .env-v-line {
+      position: absolute; top: 0; left: 0; width: 100%;
       height: 45%;
-      background: #ede8e0;
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      z-index: 2;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .env-v-line polyline {
+      stroke: var(--gold);
+      stroke-width: 0.6;
+      fill: none;
     }
 
     .env-sobre-seal {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       width: 80px; height: 80px; border-radius: 50%;
       border: 2px solid var(--gold);
       background: #fdfcf9;
@@ -754,7 +758,9 @@
     <div class="env-wrapper">
       <div class="env-sobre">
         <div class="env-sobre-shape">
-          <div class="env-flap"></div>
+          <svg class="env-v-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline points="0,0 50,100 100,0"/>
+          </svg>
           <div class="env-sobre-seal">J &amp; C</div>
         </div>
       </div>
