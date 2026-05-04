@@ -595,111 +595,95 @@
     .env-overlay {
       position: fixed; inset: 0; z-index: 10000;
       display: flex; align-items: center; justify-content: center;
-      background: #d5cdbc;
+      background: #e8e3da;
       overflow: hidden;
-      transition: opacity 0.6s ease 1.2s;
+      transition: opacity 0.5s ease 0.9s;
     }
     .env-overlay.hidden { display: none; }
     .env-overlay.done {
       opacity: 0; pointer-events: none;
     }
 
-    .env-wrapper {
-      position: relative;
-      width: min(400px, 85vw);
-      perspective: 1200px;
-      transform-style: preserve-3d;
-      background: #ece4d5;
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    }
-
-    .env-flap {
-      position: absolute; top: -2px; left: -2px; right: -2px;
-      height: 60%;
-      background: linear-gradient(180deg, #ede4d5 0%, #dfd4c0 100%);
-      z-index: 4;
-      transform-origin: top center;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid var(--border);
-      border-radius: 4px 4px 0 0;
+    .env-card {
+      width: min(420px, 88vw);
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      border-radius: 2px;
+      transition: transform 0.6s ease, opacity 0.6s ease;
       cursor: pointer;
-      backface-visibility: hidden;
+      position: relative;
     }
-    .env-overlay.opened .env-flap {
-      transform: rotateX(-180deg);
+    .env-overlay.opened .env-card {
+      transform: scale(0.9);
+      opacity: 0;
     }
 
-    .env-flap-seal {
-      position: absolute; bottom: -28px; left: 50%;
-      transform: translateX(-50%);
-      width: 62px; height: 62px; border-radius: 50%;
-      border: 2px solid var(--gold-dark);
-      background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.7rem; color: var(--gold-dark);
-      font-weight: 700; letter-spacing: 0.05em;
-      animation: sealPulse 2s ease-in-out infinite;
-      z-index: 5;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    .env-card-border {
+      border: 1px solid var(--gold);
+      padding: 2.5rem 2rem;
+      position: relative;
     }
-    .env-overlay.opened .env-flap-seal {
-      animation: sealBreak 0.5s ease forwards;
+
+    .env-card-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .env-card-seal {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; color: var(--gold-dark);
+      font-weight: 600; letter-spacing: 0.08em;
+      animation: sealPulse 2s ease-in-out infinite;
+      background: #fdfcf9;
+      box-shadow: 0 2px 12px rgba(201,169,110,0.15);
     }
 
     @keyframes sealPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(156,126,74,0.3), 0 3px 12px rgba(0,0,0,0.08); }
-      50% { box-shadow: 0 0 0 12px rgba(156,126,74,0), 0 3px 12px rgba(0,0,0,0.08); }
-    }
-    @keyframes sealBreak {
-      0% { transform: translateX(-50%) scale(1); opacity: 1; }
-      100% { transform: translateX(-50%) scale(2); opacity: 0; }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.25), 0 2px 12px rgba(201,169,110,0.15); }
+      50% { box-shadow: 0 0 0 14px rgba(201,169,110,0), 0 2px 12px rgba(201,169,110,0.15); }
     }
 
-    .env-letter {
-      position: relative; z-index: 2;
-      background: var(--white);
-      margin: 14px;
-      padding: 1.5rem 1.5rem 2rem;
-      text-align: center;
-      transition: transform 0.9s cubic-bezier(0.25, 0.4, 0.3, 1);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02), 0 2px 8px rgba(0,0,0,0.03);
+    .env-card-ornament {
+      color: var(--gold); font-size: 0.6rem; letter-spacing: 0.3em;
+      margin: 1.2rem auto;
+      display: flex; align-items: center; justify-content: center; gap: 0.8rem;
     }
-    .env-overlay.opened .env-letter {
-      transform: translateY(-30%);
+    .env-card-ornament::before, .env-card-ornament::after {
+      content: '';
+      display: block; width: 40px; height: 1px;
+      background: var(--gold); opacity: 0.5;
     }
 
-    .env-badge {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem; letter-spacing: 0.4em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 1rem;
-    }
-
-    .envelope-names {
+    .env-card-names {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem; font-weight: 500;
       color: var(--dark); line-height: 1.2;
     }
-    .envelope-names span { display: block; }
-    .envelope-names .env-and {
-      font-size: 1rem; font-style: italic; color: var(--gold);
-      display: block; margin: 0.2rem 0 0.5rem;
+    .env-card-names span { display: block; }
+    .env-card-names .env-and {
+      font-size: 1.1rem; font-style: italic; color: var(--gold);
+      display: block; margin: 0.1rem 0 0.4rem;
       font-weight: 400; letter-spacing: 0.1em;
     }
 
-    .envelope-date {
+    .env-card-date {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem; letter-spacing: 0.2em;
       color: var(--text); margin-top: 0.5rem;
     }
 
-    .envelope-hint {
+    .env-card-hint {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.75rem; letter-spacing: 0.2em;
-      color: var(--text-light); margin-top: 1.5rem;
+      color: var(--text-light); margin-top: 1.8rem;
       animation: fadeHint 2s ease-in-out infinite;
     }
 
@@ -714,19 +698,23 @@
 
   <!-- ── ENVELOPE OVERLAY ─────────────────── -->
   <div class="env-overlay" id="envOverlay">
-    <div class="env-wrapper">
-      <div class="env-flap">
-        <div class="env-flap-seal">J &amp; C</div>
-      </div>
-      <div class="env-letter">
-        <p class="env-badge">Nos casamos</p>
-        <h1 class="envelope-names">
+    <div class="env-card">
+      <div class="env-card-border">
+        <p class="env-card-badge">Nos casamos</p>
+
+        <div class="env-card-seal">J &amp; C</div>
+
+        <div class="env-card-ornament">✦</div>
+
+        <h1 class="env-card-names">
           <span>Jaybie</span>
           <span class="env-and">&amp;</span>
           <span>Christine</span>
         </h1>
-        <p class="envelope-date">10 · 10 · 2026</p>
-        <p class="envelope-hint">Toca para abrir</p>
+
+        <p class="env-card-date">10 · 10 · 2026</p>
+
+        <p class="env-card-hint">Toca para abrir</p>
       </div>
     </div>
   </div>
