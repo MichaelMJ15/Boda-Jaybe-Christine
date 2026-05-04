@@ -589,10 +589,149 @@
       .nav a { font-size: 0.75rem; }
       .detail-card .map-iframe { height: 280px; }
       .photos-gallery { grid-template-columns: repeat(2, 1fr); }
+      .envelope-names { font-size: 3.5rem !important; }
+      .envelope-seal { width: 80px !important; height: 80px !important; font-size: 0.8rem !important; }
+    }
+
+    /* ── ENVELOPE OVERLAY ──────────────────── */
+    .env-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .env-overlay.hidden { display: none; }
+
+    .env-half {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      position: relative;
+      transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .env-overlay.opened .env-top {
+      transform: translateY(-100vh);
+    }
+    .env-overlay.opened .env-bottom {
+      transform: translateY(100vh);
+    }
+    .env-overlay.done { visibility: hidden; }
+
+    .env-top {
+      background:
+        linear-gradient(135deg, transparent 49.8%, var(--border) 49.8%, var(--border) 50.2%, transparent 50.2%),
+        linear-gradient(225deg, transparent 49.8%, var(--border) 49.8%, var(--border) 50.2%, transparent 50.2%),
+        var(--cream);
+    }
+
+    .env-flap {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-top: 70px solid var(--cream);
+      filter: drop-shadow(0 -1px 0 var(--border));
+      z-index: 2;
+    }
+
+    .env-top-content {
+      text-align: center; padding-bottom: 4rem;
+    }
+    .env-top-content .env-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+    }
+
+    .env-body {
+      background: var(--white);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 3rem;
+      text-align: center;
+      position: relative;
+      max-width: 420px; width: 100%;
+    }
+
+    .envelope-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 500; color: var(--dark);
+      line-height: 1.2;
+    }
+    .envelope-names span { display: block; }
+    .envelope-names .env-and {
+      font-size: 1rem; font-style: italic; color: var(--gold);
+      display: block; margin: 0.3rem 0 0.6rem;
+      font-weight: 400; letter-spacing: 0.1em;
+    }
+
+    .envelope-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; letter-spacing: 0.2em;
+      color: var(--text); margin-top: 0.8rem;
+    }
+
+    .envelope-seal {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      margin: 1.5rem auto 1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; color: var(--gold);
+      letter-spacing: 0.1em;
+      animation: sealPulse 2s ease-in-out infinite;
+      cursor: pointer;
+      transition: background 0.3s;
+      background: rgba(201,169,110,0.06);
+    }
+    .envelope-seal:hover {
+      background: rgba(201,169,110,0.15);
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(201,169,110,0); }
+    }
+
+    .envelope-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; letter-spacing: 0.2em;
+      color: var(--text-light); margin-top: 0.5rem;
+      animation: fadeHint 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeHint {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ── ENVELOPE OVERLAY ─────────────────── -->
+  <div class="env-overlay" id="envOverlay">
+    <div class="env-half env-top" id="envTop">
+      <div class="env-flap"></div>
+      <div class="env-top-content">
+        <p class="env-badge">Nos casamos</p>
+      </div>
+    </div>
+    <div class="env-half env-bottom" id="envBottom">
+      <div class="env-body">
+        <h1 class="envelope-names">
+          <span>Jaybie</span>
+          <span class="env-and">&amp;</span>
+          <span>Christine</span>
+        </h1>
+        <p class="envelope-date">10 · 10 · 2026</p>
+        <div class="envelope-seal">J &amp; C</div>
+        <p class="envelope-hint">Toca para abrir</p>
+      </div>
+    </div>
+  </div>
 
   <!-- ── NAVEGACIÓN ──────────────────────── -->
   <nav class="nav" id="nav">
@@ -951,6 +1090,25 @@
 
   <!-- ── SCRIPTS ──────────────────────────── -->
   <script>
+    // ── ENVELOPE ────────────────────────────
+    (function() {
+      var overlay = document.getElementById('envOverlay');
+      var alreadyOpened = sessionStorage.getItem('envelope_opened');
+
+      if (alreadyOpened) {
+        overlay.classList.add('hidden');
+        return;
+      }
+
+      overlay.addEventListener('click', function() {
+        overlay.classList.add('opened');
+        setTimeout(function() {
+          overlay.classList.add('done');
+        }, 900);
+        sessionStorage.setItem('envelope_opened', '1');
+      });
+    })();
+
     // ── COUNTDOWN ──────────────────────────
     (function() {
       const weddingDate = new Date('2026-10-10T17:00:00+02:00').getTime();
