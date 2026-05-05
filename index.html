@@ -627,6 +627,7 @@
       border: 1px solid var(--gold);
       box-shadow: 0 8px 32px rgba(0,0,0,0.06);
       overflow: hidden;
+      z-index: 2;
     }
 
     .env-sobre-interior {
@@ -665,15 +666,15 @@
     .env-sobre-seal {
       position: absolute;
       left: 50%;
-      bottom: -42px;
-      transform: translateX(-50%);
+      top: 85%;
+      transform: translate(-50%, -50%);
       z-index: 5;
-      width: 80px; height: 80px; border-radius: 50%;
+      width: 72px; height: 72px; border-radius: 50%;
       border: 3px solid var(--gold-dark);
       background: radial-gradient(circle at 30% 30%, #f5e6c8, #d4a843 60%, #a67c2e);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem; color: #7a5c2e;
+      font-size: 1rem; color: #7a5c2e;
       font-weight: 700; letter-spacing: 0.05em;
       text-shadow: 0 1px 1px rgba(255,255,255,0.4), 0 -1px 1px rgba(0,0,0,0.1);
       animation: sealPulse 2.5s ease-in-out infinite;
@@ -681,7 +682,7 @@
         inset 0 2px 6px rgba(255,255,255,0.3),
         inset 0 -2px 6px rgba(0,0,0,0.1),
         0 3px 10px rgba(156,126,74,0.3);
-      transition: opacity 0.4s ease;
+      transition: opacity 0.15s ease;
     }
     .env-overlay.abierto .env-sobre-seal {
       opacity: 0;
@@ -708,7 +709,7 @@
     .env-carta {
       position: absolute;
       left: 50%;
-      top: 58%;
+      top: 52%;
       width: min(320px, 76vw);
       transform: translateX(-50%) scale(0.92);
       background: var(--white);
@@ -716,22 +717,26 @@
       opacity: 0;
       pointer-events: none;
       z-index: 1;
+      max-height: 0;
+      overflow: hidden;
       transition:
         top 1.4s cubic-bezier(0.4, 0, 0.2, 1),
         transform 1.4s cubic-bezier(0.4, 0, 0.2, 1),
         width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.5s ease 0.3s,
+        max-height 1.4s cubic-bezier(0.4, 0, 0.2, 1),
         z-index 0s;
     }
 
     /* Estado 1: carta emerge parcialmente del sobre */
     .env-overlay.abierto .env-carta {
-      top: 30%;
+      top: 46%;
       transform: translateX(-50%) scale(0.92);
       width: min(320px, 76vw);
       opacity: 1;
       pointer-events: auto;
       z-index: 10;
+      max-height: 160px;
     }
 
     /* Estado 2: carta se expande completamente */
@@ -742,6 +747,12 @@
       opacity: 1;
       pointer-events: auto;
       z-index: 10;
+      max-height: 800px;
+      overflow: visible;
+    }
+
+    .env-overlay.abierto .env-sobre {
+      pointer-events: none;
     }
 
     .env-carta-border {
