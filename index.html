@@ -713,16 +713,16 @@
 
     /* ── STEP 2: Carta ─────────────────────── */
     .env-carta {
-      position: absolute;
+      position: fixed;
       left: 50%;
-      top: 55%;
+      top: 100%;
       width: min(340px, 80vw);
       transform: translateX(-50%) scale(0.92);
       background: var(--white);
       box-shadow: 0 8px 40px rgba(0,0,0,0.08);
       opacity: 0;
       pointer-events: none;
-      z-index: 10;
+      z-index: 10001;
       transition:
         top 1.4s cubic-bezier(0.4, 0, 0.2, 1),
         transform 1.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -730,9 +730,9 @@
         opacity 0.5s ease 0.3s;
     }
 
-    /* Estado 1: carta emerge desde el interior del sobre */
+    /* Estado 1: carta emerge desde el interior del sobre (12% del viewport) */
     .env-overlay.abierto .env-carta {
-      top: 15%;
+      top: 12%;
       transform: translateX(-50%) scale(0.92);
       width: min(340px, 80vw);
       opacity: 1;
@@ -741,11 +741,17 @@
 
     /* Estado 2: carta se expande completamente */
     .env-overlay.expandido .env-carta {
-      top: 8%;
+      top: 5%;
       transform: translateX(-50%) scale(1);
       width: min(520px, 92vw);
       opacity: 1;
       pointer-events: auto;
+    }
+
+    /* Estado done: carta se desvanece con el overlay */
+    .env-overlay.done .env-carta {
+      opacity: 0;
+      transition: opacity 0.4s ease 0.8s;
     }
 
     .env-carta-border {
