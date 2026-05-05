@@ -724,19 +724,8 @@
         opacity 0.5s ease 0.3s;
     }
 
-    /* Estado 1: carta emerge desde el interior del sobre */
+    /* Estado 1: carta emerge completa (expandida) */
     .env-overlay.abierto .env-carta {
-      top: 5%;
-      transform: translateX(-50%) scale(0.92);
-      width: min(340px, 80vw);
-      opacity: 1;
-      pointer-events: auto;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    /* Estado 2: carta se expande completamente */
-    .env-overlay.expandido .env-carta {
       top: 3%;
       transform: translateX(-50%) scale(1);
       width: min(520px, 92vw);
@@ -1229,13 +1218,10 @@
         if (state === 0) {
           overlay.classList.add('abierto');
           state = 1;
+          if (hintEl) hintEl.textContent = 'Toca para entrar';
           var music = document.getElementById('envMusic');
           if (music) music.play().catch(function() {});
         } else if (state === 1) {
-          overlay.classList.add('expandido');
-          state = 2;
-          if (hintEl) hintEl.textContent = 'Toca para entrar';
-        } else if (state === 2) {
           overlay.classList.add('done');
           var music = document.getElementById('envMusic');
           if (music) { music.pause(); music.currentTime = 0; }
