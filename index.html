@@ -665,7 +665,7 @@
     .env-sobre-seal {
       position: absolute;
       left: 50%;
-      bottom: -40px;
+      bottom: -42px;
       transform: translateX(-50%);
       z-index: 5;
       width: 80px; height: 80px; border-radius: 50%;
@@ -681,6 +681,10 @@
         inset 0 2px 6px rgba(255,255,255,0.3),
         inset 0 -2px 6px rgba(0,0,0,0.1),
         0 3px 10px rgba(156,126,74,0.3);
+      transition: opacity 0.4s ease;
+    }
+    .env-overlay.abierto .env-sobre-seal {
+      opacity: 0;
     }
 
     @keyframes sealPulse {
