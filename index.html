@@ -709,34 +709,28 @@
     .env-carta {
       position: absolute;
       left: 50%;
-      top: 52%;
-      width: min(320px, 76vw);
+      top: 55%;
+      width: min(340px, 80vw);
       transform: translateX(-50%) scale(0.92);
       background: var(--white);
       box-shadow: 0 8px 40px rgba(0,0,0,0.08);
       opacity: 0;
       pointer-events: none;
-      z-index: 1;
-      max-height: 0;
-      overflow: hidden;
+      z-index: 10;
       transition:
         top 1.4s cubic-bezier(0.4, 0, 0.2, 1),
         transform 1.4s cubic-bezier(0.4, 0, 0.2, 1),
-        width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.5s ease 0.3s,
-        max-height 1.4s cubic-bezier(0.4, 0, 0.2, 1),
-        z-index 0s;
+        width 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.5s ease 0.3s;
     }
 
-    /* Estado 1: carta emerge parcialmente del sobre */
+    /* Estado 1: carta emerge desde el interior del sobre */
     .env-overlay.abierto .env-carta {
-      top: 46%;
+      top: 15%;
       transform: translateX(-50%) scale(0.92);
-      width: min(320px, 76vw);
+      width: min(340px, 80vw);
       opacity: 1;
       pointer-events: auto;
-      z-index: 10;
-      max-height: 160px;
     }
 
     /* Estado 2: carta se expande completamente */
@@ -746,13 +740,6 @@
       width: min(520px, 92vw);
       opacity: 1;
       pointer-events: auto;
-      z-index: 10;
-      max-height: 800px;
-      overflow: visible;
-    }
-
-    .env-overlay.abierto .env-sobre {
-      pointer-events: none;
     }
 
     .env-carta-border {
