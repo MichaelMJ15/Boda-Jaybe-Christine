@@ -1465,20 +1465,20 @@
         }, 1200);
       }
 
-      // First click: open envelope. Second click: enter
+      // First click: open envelope
       overlay.addEventListener('click', function(e) {
         if (state === 0) {
           handleOpen();
-        } else if (state === 1) {
-          handleEnter();
         }
       });
 
-      // Prevent card click from propagating so tapping card = enter only
+      // Second click on card: enter the site
       var card = document.querySelector('.env-card');
       if (card) {
         card.addEventListener('click', function(e) {
-          e.stopPropagation();
+          if (state === 1) {
+            handleEnter();
+          }
         });
       }
     });
