@@ -1451,7 +1451,7 @@
         if (music) music.play().catch(function() {});
       }
 
-      // Click on card enters the site
+      // Click enters the site
       function handleEnter() {
         if (state !== 1) return;
         state = 2;
@@ -1459,6 +1459,10 @@
         var music = document.getElementById('envMusic');
         if (music) { music.pause(); music.currentTime = 0; }
         sessionStorage.setItem('envelope_opened', '1');
+        // Remove overlay completely after transition finishes
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+        }, 1200);
       }
 
       // First click: open envelope. Second click: enter
