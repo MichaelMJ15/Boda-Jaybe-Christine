@@ -595,7 +595,7 @@
     .env-overlay {
       position: fixed; inset: 0; z-index: 10000;
       display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 40% 40%, #0e1a2e 0%, #080f1c 60%, #050a12 100%);
+      background: radial-gradient(ellipse at 40% 40%, #1a1408 0%, #110e06 60%, #0d0b04 100%);
       overflow: hidden;
       transition: opacity 0.6s ease 0.8s;
     }
@@ -603,8 +603,8 @@
       content: '';
       position: absolute; inset: 0;
       background-image:
-        radial-gradient(ellipse at 20% 20%, rgba(30,60,110,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 80%, rgba(20,45,85,0.14) 0%, transparent 55%);
+        radial-gradient(ellipse at 25% 25%, rgba(201,169,110,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 75%, rgba(180,140,70,0.06) 0%, transparent 55%);
       pointer-events: none;
     }
     .env-overlay.hidden { display: none; }
@@ -635,47 +635,54 @@
       .env-envelope { width: min(78vw, 400px); }
     }
 
-    /* Envelope front body - dark navy */
+    /* Envelope front body - dorado y crema */
     .env-body {
       position: absolute; inset: 0;
-      background: linear-gradient(160deg, #1e3060 0%, #182548 30%, #111d38 65%, #0c1528 100%);
-      border: none;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        inset 0 -1px 0 rgba(0,0,0,0.35);
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.1 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>"),
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 85%, rgba(60,40,10,0.3) 0%, transparent 55%),
+        linear-gradient(160deg, #c9a96e 0%, #d4b87a 45%, #b8923a 100%);
+      border: 2px solid #9c7e4a;
       border-radius: 3px;
       z-index: 2;
       overflow: hidden;
+      box-shadow:
+        0 50px 120px rgba(0,0,0,0.75),
+        0 20px 40px rgba(0,0,0,0.5),
+        0 4px 10px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -2px 6px rgba(60,40,10,0.3);
     }
-    .env-body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      z-index: 3;
+    .env-body::before { display: none; }
+    .env-body::after  { display: none; }
+
+    /* Pliegues laterales e inferior (patrón X sutil) */
+    .env-fold-l {
+      position: absolute; inset: 0; z-index: 1;
+      clip-path: polygon(0 0, 0 100%, 50% 50%);
+      background: linear-gradient(135deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.18) 100%);
+      mix-blend-mode: multiply;
     }
-    /* Bottom V-fold */
-    .env-body::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 54%;
-      background: linear-gradient(135deg, #182548 0%, #0c1528 50%, #182548 100%);
-      clip-path: polygon(0 100%, 50% 0%, 100% 100%);
-      z-index: 1;
-      opacity: 0.65;
+    .env-fold-r {
+      position: absolute; inset: 0; z-index: 1;
+      clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+      background: linear-gradient(225deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.18) 100%);
+      mix-blend-mode: multiply;
+    }
+    .env-fold-b {
+      position: absolute; inset: 0; z-index: 1;
+      clip-path: polygon(0 100%, 100% 100%, 50% 50%);
+      background: linear-gradient(0deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 100%);
+      mix-blend-mode: multiply;
     }
 
-    /* Interior lining - dorado cálido, visible al abrir */
+    /* Interior dorado — solo visible cuando la solapa abre */
     .env-interior {
-      position: absolute; top: 0; left: 0; right: 0; height: 50%;
-      background: linear-gradient(180deg, #c9a96e 0%, #b08840 100%);
-      z-index: 1;
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(180deg, #f5ede0 0%, #ede0c6 100%);
     }
-    .env-interior-line {
-      position: absolute; bottom: -1px; left: 6%; right: 6%;
-      height: 2px; background: rgba(0,0,0,0.3); border-radius: 1px;
-    }
+    .env-interior-line { display: none; }
 
     /* Flap - triángulo navy oscuro */
     .env-flap {
@@ -690,15 +697,20 @@
       content: '';
       position: absolute; inset: 0;
       clip-path: polygon(0 0, 50% 100%, 100% 0);
-      background: linear-gradient(175deg, #08111e 0%, #111d38 50%, #1a2d50 100%);
+      background:
+        repeating-linear-gradient(125deg, transparent 0, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 3px),
+        repeating-linear-gradient(45deg, transparent 0, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 4px),
+        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.5) 0%, transparent 60%),
+        linear-gradient(175deg, #faf5ec 0%, #f5ede0 50%, #e8dcc4 100%);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
     }
     .env-flap-border {
       position: absolute;
-      top: -1px; left: -1px; right: -1px;
-      height: calc(100% + 1px);
+      top: -2px; left: -2px; right: -2px;
+      height: calc(100% + 2px);
       clip-path: polygon(0 0, 50% 100%, 100% 0);
       z-index: -1;
-      background: rgba(255,255,255,0.04);
+      background: #9c7e4a;
     }
     .env-overlay.abierto .env-flap { transform: rotateX(-180deg); }
 
@@ -712,70 +724,112 @@
       content: '';
       position: absolute; inset: 0;
       clip-path: polygon(0 0, 50% 100%, 100% 0);
-      background: linear-gradient(180deg, #b08840 0%, #c9a96e 100%);
+      background: linear-gradient(180deg, #ede0c6 0%, #f5ede0 100%);
     }
 
-    /* Sello de cera - oscuro, embossed realista */
+    /* Sello de cera - dorado realista 3D */
     .env-seal {
       position: absolute;
       left: 50%; top: 46%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) rotate(-8deg);
       z-index: 10;
-      width: 84px; height: 84px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 32%,
-        #263d68 0%,
-        #182a4a 30%,
-        #0e1c34 62%,
-        #080f1e 100%
-      );
+      width: 72px; height: 72px;
+      border-radius: 44% 56% 52% 48% / 51% 47% 55% 45%;
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.18 0 0 0 0 0.03 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+        radial-gradient(circle at 30% 24%, rgba(255,248,210,0.85) 0%, rgba(255,235,160,0.5) 18%, transparent 38%),
+        radial-gradient(circle at 68% 76%, rgba(30,16,2,0.7) 0%, transparent 42%),
+        radial-gradient(ellipse at 35% 30%,
+          #fff3c0 0%,
+          #e8b830 18%,
+          #c48a10 40%,
+          #9a6508 62%,
+          #6e4405 80%,
+          #4a2d03 100%
+        );
       display: flex; align-items: center; justify-content: center;
       box-shadow:
-        0 8px 30px rgba(0,0,0,0.75),
-        0 2px 8px rgba(0,0,0,0.5),
-        inset 0 2px 5px rgba(255,255,255,0.07),
-        inset 0 -4px 10px rgba(0,0,0,0.5);
+        0 10px 28px rgba(0,0,0,0.55),
+        0 5px 12px rgba(0,0,0,0.4),
+        inset 0 6px 14px rgba(255,238,170,0.9),
+        inset 0 -10px 20px rgba(35,18,2,0.85),
+        inset 4px 0 10px rgba(255,220,120,0.25),
+        inset -4px 0 10px rgba(40,20,2,0.5);
       cursor: pointer;
       animation: sealGlow 3s ease-in-out infinite;
       transition: transform 0.3s ease, opacity 0.2s ease;
       user-select: none;
     }
+    .env-seal::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 2px solid rgba(90,58,10,0.5);
+      box-shadow:
+        inset 0 3px 6px rgba(255,240,160,0.7),
+        inset 0 -4px 7px rgba(30,15,2,0.55),
+        0 2px 4px rgba(255,230,130,0.65),
+        0 -1px 2px rgba(30,15,2,0.35);
+      pointer-events: none;
+    }
+    .env-seal::after {
+      content: '';
+      position: absolute;
+      inset: 13px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 35%,
+        rgba(255,235,150,0.1) 0%,
+        rgba(0,0,0,0.05) 60%,
+        rgba(0,0,0,0.15) 100%
+      );
+      pointer-events: none;
+    }
     .env-seal:hover {
-      transform: translate(-50%, -50%) scale(1.06);
+      transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
     }
     .env-overlay.abierto .env-seal { opacity: 0; pointer-events: none; }
 
     @keyframes sealGlow {
       0%, 100% {
         box-shadow:
-          0 8px 30px rgba(0,0,0,0.75),
-          0 2px 8px rgba(0,0,0,0.5),
-          inset 0 2px 5px rgba(255,255,255,0.07),
-          inset 0 -4px 10px rgba(0,0,0,0.5),
-          0 0 0 0 rgba(90,140,230,0);
+          0 10px 28px rgba(0,0,0,0.55),
+          0 5px 12px rgba(0,0,0,0.4),
+          inset 0 6px 14px rgba(255,238,170,0.9),
+          inset 0 -10px 20px rgba(35,18,2,0.85),
+          inset 4px 0 10px rgba(255,220,120,0.25),
+          inset -4px 0 10px rgba(40,20,2,0.5),
+          0 0 0 0 rgba(212,168,50,0);
       }
       50% {
         box-shadow:
-          0 8px 30px rgba(0,0,0,0.75),
-          0 2px 8px rgba(0,0,0,0.5),
-          inset 0 2px 5px rgba(255,255,255,0.07),
-          inset 0 -4px 10px rgba(0,0,0,0.5),
-          0 0 0 14px rgba(90,140,230,0);
+          0 10px 28px rgba(0,0,0,0.55),
+          0 5px 12px rgba(0,0,0,0.4),
+          inset 0 6px 14px rgba(255,238,170,0.9),
+          inset 0 -10px 20px rgba(35,18,2,0.85),
+          inset 4px 0 10px rgba(255,220,120,0.25),
+          inset -4px 0 10px rgba(40,20,2,0.5),
+          0 0 14px 4px rgba(212,168,50,0.25);
       }
     }
 
-    /* Monograma bajo el sello */
+    /* Monograma bajo el sello — efecto embossed (presionado) */
     .env-monogram {
       position: absolute;
-      left: 50%; top: 70%;
+      left: 50%; top: 75%;
       transform: translate(-50%, -50%);
       z-index: 6;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.45em;
-      color: rgba(175, 205, 255, 0.38);
+      font-size: 0.95rem;
+      letter-spacing: 0.25em;
+      color: rgba(80, 50, 10, 0.45);
       pointer-events: none;
-      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.6;
+      text-shadow:
+        0 1px 0 rgba(255, 245, 220, 0.6),
+        0 -1px 0 rgba(40, 25, 5, 0.25);
+      font-weight: 500;
     }
 
     .env-ribbon { display: none; }
@@ -982,30 +1036,65 @@
     <div class="env-wrapper">
       <div class="env-envelope" id="envEnvelope">
         <div class="env-body">
-          <div class="env-interior">
-            <div class="env-interior-line"></div>
-          </div>
+          <div class="env-interior"></div>
+          <div class="env-fold-l"></div>
+          <div class="env-fold-r"></div>
+          <div class="env-fold-b"></div>
           <div class="env-flap">
             <div class="env-flap-border"></div>
           </div>
           <div class="env-flap-inner"></div>
           <div class="env-ribbon"></div>
           <div class="env-seal" id="envSeal">
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M25 9 C23 15 22 20 25 25 C28 20 27 15 25 9Z" fill="rgba(190,215,255,0.55)"/>
-              <path d="M25 25 C22 20 17 17 14 13 C13 19 16 23 25 25Z" fill="rgba(190,215,255,0.45)"/>
-              <path d="M25 25 C28 20 33 17 36 13 C37 19 34 23 25 25Z" fill="rgba(190,215,255,0.45)"/>
-              <path d="M25 25 C20 21 13 21 9 20 C10 26 15 27 25 25Z" fill="rgba(190,215,255,0.3)"/>
-              <path d="M25 25 C30 21 37 21 41 20 C40 26 35 27 25 25Z" fill="rgba(190,215,255,0.3)"/>
-              <line x1="25" y1="25" x2="25" y2="35" stroke="rgba(190,215,255,0.4)" stroke-width="1.2" stroke-linecap="round"/>
-              <path d="M25 31 C22 29 18 30 15 33 C18 33 22 31 25 31Z" fill="rgba(190,215,255,0.26)"/>
-              <path d="M25 31 C28 29 32 30 35 33 C32 33 28 31 25 31Z" fill="rgba(190,215,255,0.26)"/>
-              <path d="M13 37 Q25 34 37 37" stroke="rgba(190,215,255,0.35)" stroke-width="1" fill="none" stroke-linecap="round"/>
-              <circle cx="25" cy="25" r="23" stroke="rgba(190,215,255,0.18)" stroke-width="0.8" fill="none"/>
-              <circle cx="25" cy="25" r="21" stroke="rgba(190,215,255,0.1)" stroke-width="0.5" fill="none" stroke-dasharray="2 2"/>
+            <svg width="54" height="54" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Pétalos exteriores - 12 pétalos forma gota -->
+              <g fill="rgba(42,24,3,0.52)">
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(30 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(60 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(90 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(120 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(150 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(180 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(210 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(240 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(270 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(300 30 30)"/>
+                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(330 30 30)"/>
+              </g>
+              <!-- Pétalos interiores - 12 más cortos intercalados -->
+              <g fill="rgba(42,24,3,0.32)">
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(15 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(45 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(75 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(105 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(135 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(165 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(195 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(225 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(255 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(285 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(315 30 30)"/>
+                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(345 30 30)"/>
+              </g>
+              <!-- Disco central -->
+              <circle cx="30" cy="30" r="8.5" fill="rgba(38,20,2,0.78)"/>
+              <!-- Semillas en espiral fibonacci -->
+              <circle cx="30" cy="23" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="34.2" cy="25" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="36" cy="29.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="34.2" cy="34.2" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="30" cy="36.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="25.8" cy="34.2" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="24" cy="29.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="25.8" cy="25" r="1.1" fill="rgba(55,32,4,0.55)"/>
+              <circle cx="30" cy="27.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
+              <circle cx="32" cy="29.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
+              <circle cx="30" cy="31.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
+              <circle cx="28" cy="29.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
             </svg>
           </div>
-          <div class="env-monogram">J &amp; C</div>
+          <div class="env-monogram">Jaybie<br><span style="font-style:italic;font-size:0.75rem;opacity:0.7">y</span><br>Christine</div>
         </div>
       </div>
 
