@@ -3,14 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaybie & Christine — Nuestra Boda</title>
+  <title>Jaybie & Christine — Nuestra Boda · 10 Octubre 2026</title>
+  <meta name="description" content="Acompáñanos en nuestra boda el 10 de octubre de 2026. Confirma tu asistencia y descubre todos los detalles del gran día.">
+  <meta name="theme-color" content="#c9a96e">
+  <meta name="color-scheme" content="light">
+
+  <!-- Open Graph (preview bonito al compartir en WhatsApp, Telegram, Insta, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jaybie & Christine — Nuestra Boda">
+  <meta property="og:description" content="10 de Octubre de 2026. Acompáñanos en nuestro gran día.">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jaybie & Christine — Nuestra Boda">
+  <meta name="twitter:description" content="10 de Octubre de 2026.">
+
+  <!-- Preconnect a fuentes Google (acelera carga) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload de la imagen hero (LCP optimization) -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80" fetchpriority="high">
+  <!-- Fuentes con display=swap — texto visible mientras cargan -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      /* Quitar resaltado azul/gris al tocar en móvil (iOS/Android) */
+      -webkit-tap-highlight-color: transparent;
+    }
 
     :root {
+      /* Paleta original */
       --cream: #faf8f5;
       --white: #ffffff;
       --gold: #c9a96e;
@@ -20,25 +44,96 @@
       --text: #4a4a4a;
       --text-light: #7a7a7a;
       --border: #e8e3dc;
+
+      /* Sombras refinadas: ultra-sutiles editorial */
+      --shadow-soft: 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-hover: 0 2px 12px rgba(0,0,0,0.04);
       --shadow: 0 4px 24px rgba(0,0,0,0.06);
       --shadow-lg: 0 8px 48px rgba(0,0,0,0.08);
-      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+      /* Easings custom (filosofía Emil Kowalski) */
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+      --ease-image: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+      /* Transición UI por defecto - rápida con ease-out fuerte */
+      --transition: 200ms var(--ease-out);
+
+      /* Acentos pastel cálidos (editorial minimal) */
+      --pastel-cream: #FBF3DB;
+      --pastel-cream-text: #956400;
     }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      /* Compensar nav fija al navegar por anclas (#detalles, #rsvp, etc.) */
+      scroll-padding-top: 80px;
+    }
+    @media (max-width: 768px) {
+      html { scroll-padding-top: 70px; }
+    }
+    /* Soporte safe-area iPhone (notch + home indicator) */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .footer {
+        padding-bottom: max(env(safe-area-inset-bottom), 1.5rem);
+      }
+      .audio-toggle {
+        bottom: max(env(safe-area-inset-bottom), 1.2rem);
+      }
+    }
     body {
       font-family: 'Lora', 'Georgia', serif;
       background: var(--cream);
       color: var(--text);
       line-height: 1.8;
       overflow-x: hidden;
+      /* Suavizado de fuentes — calidad editorial */
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      /* Ligaduras + kerning OpenType para serifs (web-typography) */
+      font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    }
+
+    /* Foco visible accesible — borde dorado en cualquier elemento navegable con teclado */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    /* Quitar outline sólo cuando el usuario usa ratón */
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* Skip link — accesibilidad para lectores de pantalla / teclado */
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 1rem;
+      background: var(--dark);
+      color: var(--white);
+      padding: 0.75rem 1.25rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      z-index: 10000;
+      transition: top 200ms var(--ease-out);
+    }
+    .skip-link:focus {
+      top: 1rem;
     }
 
     /* ── UTILITIES ─────────────────────────── */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
 
-    .section { padding: 6rem 0; position: relative; }
+    .section {
+      padding: clamp(3rem, 8vw, 6rem) 0;
+      position: relative;
+      /* Compensación adicional para anclas — el título no queda pegado al nav */
+      scroll-margin-top: 60px;
+    }
 
     .section-tag {
       display: inline-block;
@@ -62,11 +157,13 @@
 
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      /* Tamaño fluido entre móvil y desktop */
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
       font-weight: 500;
       color: var(--dark);
       letter-spacing: 0.02em;
       margin-bottom: 1rem;
+      line-height: 1.2;
     }
 
     .ornament {
@@ -88,8 +185,21 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: rgba(250, 248, 245, 0.92);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      transition: var(--transition);
+      transition: transform 320ms var(--ease-out),
+                  background 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out);
+      will-change: transform;
+    }
+    /* Smart nav: ocultar al hacer scroll hacia abajo, mostrar al subir */
+    .nav.hidden {
+      transform: translateY(-100%);
+    }
+    /* Cuando scrolleas, nav gana sombra sutil */
+    .nav.scrolled {
+      background: rgba(250, 248, 245, 0.96);
+      box-shadow: var(--shadow-soft);
     }
     .nav-inner {
       display: flex; justify-content: center; align-items: center;
@@ -101,8 +211,12 @@
       text-transform: uppercase;
       text-decoration: none;
       color: var(--text);
-      transition: color 0.3s;
+      transition: color 200ms var(--ease-out);
       position: relative;
+      /* Touch target ≥44px (Apple HIG / WCAG) */
+      padding: 0.75rem 0.25rem;
+      min-height: 44px;
+      display: inline-flex; align-items: center;
     }
     .nav a::after {
       content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
@@ -111,6 +225,9 @@
     }
     .nav a:hover { color: var(--gold); }
     .nav a:hover::after { transform: scaleX(1); }
+    /* Link activo según sección visible (scroll spy) */
+    .nav a[aria-current="true"] { color: var(--gold); }
+    .nav a[aria-current="true"]::after { transform: scaleX(1); }
 
     /* ── HERO ──────────────────────────────── */
     .hero {
@@ -125,6 +242,41 @@
       padding: 2rem;
     }
 
+    /* Entry animation hero — cada elemento aparece en cascada al cargar */
+    .hero-badge,
+    .hero-names span,
+    .hero-date {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroEntry 900ms var(--ease-out) forwards;
+    }
+    .hero-badge       { animation-delay: 200ms; }
+    .hero-names span:nth-child(1) { animation-delay: 400ms; }
+    .hero-names .and  { animation-delay: 550ms; }
+    .hero-names span:nth-child(3) { animation-delay: 700ms; }
+    .hero-date        { animation-delay: 950ms; }
+    /* .hero-scroll entry separado para no chocar con su anim de float */
+    .hero-scroll {
+      opacity: 0;
+      transition: opacity 700ms var(--ease-out) 1300ms;
+    }
+    .hero-scroll.visible { opacity: 1; }
+
+    @keyframes heroEntry {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* En reduced motion: aparece sin moverse */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-badge,
+      .hero-names span,
+      .hero-date,
+      .hero-scroll {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
     .hero-badge {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.85rem;
@@ -136,10 +288,12 @@
 
     .hero-names {
       font-family: 'Playfair Display', serif;
-      font-size: 5rem;
+      /* clamp() escala suave entre móvil y desktop sin breakpoints */
+      font-size: clamp(2.5rem, 9vw, 5rem);
       font-weight: 500;
       color: var(--dark);
       line-height: 1.1;
+      letter-spacing: -0.01em;
     }
     .hero-names span { display: block; }
     .hero-names .and {
@@ -165,10 +319,21 @@
       display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
       color: var(--text-light); font-size: 0.7rem;
       letter-spacing: 0.3em; text-transform: uppercase;
-      animation: float 2s ease-in-out infinite;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: opacity 700ms var(--ease-out) 1300ms,
+                  color 200ms var(--ease-out);
     }
+    .hero-scroll:hover { color: var(--gold); }
     .hero-scroll span {
       width: 1px; height: 40px; background: var(--gold);
+      animation: heroLine 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes heroLine {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.6); opacity: 0.5; }
     }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
@@ -194,6 +359,9 @@
       color: var(--gold);
       line-height: 1;
       display: block;
+      /* Anchura uniforme — los dígitos no saltan al cambiar de 9 a 10 */
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: 'tnum' 1;
     }
     .countdown-label {
       font-family: 'Cormorant Garamond', serif;
@@ -212,6 +380,46 @@
       color: var(--text);
       font-style: italic;
     }
+    /* Pull quote editorial — destaca la cita central como un libro */
+    .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3.2vw, 2rem);
+      line-height: 1.5;
+      color: var(--dark);
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      padding: 1.5rem 2rem;
+    }
+    /* Comillas decorativas grandes en dorado */
+    .pull-quote::before,
+    .pull-quote::after {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 4rem;
+      line-height: 1;
+      position: absolute;
+      opacity: 0.55;
+    }
+    .pull-quote::before {
+      content: '\201C';
+      top: -0.5rem; left: -0.5rem;
+    }
+    .pull-quote::after {
+      content: '\201D';
+      bottom: -2rem; right: -0.5rem;
+    }
+    .pull-quote-attr {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: normal;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 2rem;
+    }
 
     /* ── DETAILS ───────────────────────────── */
     .details { background: var(--white); }
@@ -222,13 +430,19 @@
     .detail-card {
       text-align: center; padding: 3rem 2rem;
       border: 1px solid var(--border);
-      transition: var(--transition);
+      /* Transiciones específicas — evitar 'all' (Emil) */
+      transition: border-color 200ms var(--ease-out),
+                  box-shadow 250ms var(--ease-out),
+                  transform 250ms var(--ease-out);
       position: relative;
+      background: var(--white);
     }
     .detail-card:hover {
       border-color: var(--gold);
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
+      /* Sombra ultra-sutil editorial en vez de pesada */
+      box-shadow: var(--shadow-hover);
+      /* Lift reducido — más sobrio */
+      transform: translateY(-2px);
     }
     .detail-icon {
       font-size: 2.2rem; color: var(--gold);
@@ -259,6 +473,81 @@
       border: none; margin-top: 1rem;
       border-radius: 2px;
     }
+    /* Botones añadir al calendario */
+    .calendar-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .calendar-btn {
+      padding: 0.65rem 0.9rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 200ms var(--ease-out),
+                  background 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
+      min-height: 44px;
+    }
+    .calendar-btn:hover {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: var(--white);
+    }
+    .calendar-btn:active { transform: scale(0.97); }
+
+    /* ── PADRINOS ──────────────────────────── */
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem 1.5rem;
+      margin-top: 3rem;
+      max-width: 1000px;
+      margin-left: auto; margin-right: auto;
+    }
+    .sponsor-pair {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-top: 1px solid var(--border);
+      transition: border-color 250ms var(--ease-out);
+    }
+    .sponsor-pair:hover { border-top-color: var(--gold); }
+    .sponsor-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+    .sponsor-and {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 0.85rem;
+      margin: 0.25rem 0;
+      display: block;
+    }
+    .sponsor-intro {
+      max-width: 600px;
+      margin: 1rem auto 0;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.8;
+    }
+    @media (max-width: 768px) {
+      .sponsors-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem 1rem;
+      }
+      .sponsor-pair { padding: 1.2rem 0.5rem; }
+      .sponsor-name { font-size: 0.85rem; }
+    }
 
     /* ── DRESS CODE ────────────────────────── */
     .dress-code {
@@ -276,6 +565,81 @@
       font-size: 1rem; letter-spacing: 0.1em;
       color: var(--dark);
     }
+    /* Paleta colores sugeridos — swatches visuales en vez de texto */
+    .palette {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .palette-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      transition: transform 250ms var(--ease-out);
+    }
+    .palette-swatch:hover { transform: translateY(-3px); }
+    .palette-swatch .swatch-color {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+    .palette-swatch .swatch-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+    @media (max-width: 768px) {
+      .palette { gap: 0.8rem; }
+      .palette-swatch .swatch-color { width: 44px; height: 44px; }
+    }
+
+    /* ── MUSIC SPOTIFY ──────────────────────── */
+    .music-wrap {
+      max-width: 720px;
+      margin: 2.5rem auto 0;
+      padding: 1.25rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      transition: box-shadow 250ms var(--ease-out);
+    }
+    .music-wrap:hover { box-shadow: var(--shadow-hover); }
+    .music-wrap iframe {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      border: 0;
+    }
+    .music-link {
+      display: inline-flex;
+      align-items: center; gap: 0.4rem;
+      margin-top: 1.25rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
+      padding: 0.5rem 0;
+      min-height: 44px;
+    }
+    .music-link:hover { border-bottom-color: var(--gold); }
+    .music-link:active { transform: scale(0.97); }
+    .music-link .arrow {
+      transition: transform 200ms var(--ease-out);
+      display: inline-block;
+    }
+    .music-link:hover .arrow { transform: translateX(4px); }
 
     /* ── GALLERY ───────────────────────────── */
     .gallery { background: var(--white); }
@@ -304,11 +668,32 @@
       content: '';
       position: absolute; inset: 0;
       background: rgba(0,0,0,0);
-      transition: background 0.4s;
+      transition: background 320ms var(--ease-out);
     }
-    .gallery-item:hover::after {
-      background: rgba(0,0,0,0.12);
+    .gallery-item::before {
+      /* Icono de zoom que aparece al hover (Phosphor-style) */
+      content: '⤢';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      color: var(--white);
+      font-size: 1.6rem;
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 280ms var(--ease-out),
+                  transform 280ms var(--ease-out);
     }
+    @media (hover: hover) and (pointer: fine) {
+      .gallery-item:hover::after {
+        background: rgba(0,0,0,0.28);
+      }
+      .gallery-item:hover::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+    .gallery-item:active img { transform: scale(1.02); }
 
     /* ── LIGHTBOX ──────────────────────────── */
     .lightbox {
@@ -317,32 +702,48 @@
       background: rgba(0,0,0,0.92);
       align-items: center; justify-content: center;
       cursor: pointer;
+      /* Fade-in suave al abrirse */
+      opacity: 0;
+      transition: opacity 220ms var(--ease-out);
     }
-    .lightbox.active { display: flex; }
+    .lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
     .lightbox img {
       max-width: 90vw; max-height: 85vh;
       object-fit: contain;
       border-radius: 2px;
       cursor: default;
+      /* Escala desde 0.95 — nada aparece de la nada (Emil) */
+      transform: scale(0.95);
+      transition: transform 260ms var(--ease-out);
     }
+    .lightbox.active img { transform: scale(1); }
     .lightbox-close {
       position: absolute; top: 2rem; right: 2rem;
       color: white; font-size: 2rem; cursor: pointer;
       width: 48px; height: 48px;
       display: flex; align-items: center; justify-content: center;
       border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
-      transition: all 0.3s;
+      /* Propiedades específicas — no 'all' */
+      transition: border-color 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
     }
     .lightbox-close:hover { border-color: white; }
+    .lightbox-close:active { transform: scale(0.92); }
     .lightbox-prev, .lightbox-next {
       position: absolute; top: 50%; transform: translateY(-50%);
       color: white; font-size: 2.5rem; cursor: pointer;
       width: 56px; height: 56px;
       display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.3s;
+      transition: opacity 220ms var(--ease-out),
+                  transform 200ms var(--ease-out);
       opacity: 0.6;
     }
     .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+    .lightbox-prev:active { transform: translateY(-50%) translateX(-4px); }
+    .lightbox-next:active { transform: translateY(-50%) translateX(4px); }
     .lightbox-prev { left: 1.5rem; }
     .lightbox-next { right: 1.5rem; }
 
@@ -367,12 +768,16 @@
     .form-group input,
     .form-group select,
     .form-group textarea {
-      font-family: 'Lora', serif; font-size: 0.95rem;
+      /* font-size 16px+ evita zoom auto en iOS al focus (mobile-responsiveness) */
+      font-family: 'Lora', serif; font-size: 1rem;
       color: var(--dark);
       background: var(--cream);
       border: 1px solid var(--border);
       padding: 0.85rem 1rem;
-      transition: var(--transition);
+      /* Transiciones específicas */
+      transition: border-color 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out),
+                  background 200ms var(--ease-out);
       width: 100%;
       resize: vertical;
     }
@@ -382,7 +787,20 @@
       outline: none;
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
+      background: var(--white);
     }
+    /* Validación: campo inválido tras intentar enviar (clase .submitted) */
+    .rsvp-form.submitted :invalid {
+      border-color: #b85c5c;
+      box-shadow: 0 0 0 3px rgba(184,92,92,0.08);
+    }
+    /* Animación shake al fallar envío */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .rsvp-card.shake { animation: shake 380ms var(--ease-out); }
     .radio-group {
       display: flex; gap: 2rem; padding-top: 0.5rem;
     }
@@ -405,64 +823,213 @@
       text-transform: uppercase;
       padding: 1rem 3rem;
       cursor: pointer;
-      transition: var(--transition);
+      /* Transiciones específicas — propiedades exactas, no 'all' */
+      transition: transform 160ms var(--ease-out),
+                  background 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out);
       margin-top: 1rem;
       align-self: center;
+      will-change: transform;
     }
     .btn:hover {
       background: var(--gold);
       color: var(--white);
+      box-shadow: 0 2px 8px rgba(201,169,110,0.18);
+    }
+    /* Feedback al pulsar — escala sutil que confirma input */
+    .btn:active {
+      transform: scale(0.97);
     }
     .btn:disabled {
       opacity: 0.5; cursor: not-allowed;
+      transform: none;
     }
 
     /* ── CONFIRMATION MESSAGE ──────────────── */
     .confirmation-msg {
       display: none; text-align: center; padding: 2rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 500ms var(--ease-out),
+                  transform 500ms var(--ease-out);
     }
-    .confirmation-msg.active { display: block; }
+    .confirmation-msg.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Check animado SVG — círculo dorado + tick que se dibuja */
+    .check-svg {
+      width: 72px; height: 72px;
+      display: block;
+      margin: 0 auto 1.5rem;
+    }
+    .check-svg circle {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 2;
+      stroke-dasharray: 188;
+      stroke-dashoffset: 188;
+      animation: drawCircle 700ms var(--ease-out) 200ms forwards;
+    }
+    .check-svg path {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 400ms var(--ease-out) 800ms forwards;
+    }
+    @keyframes drawCircle {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
     .confirmation-msg .check-icon {
       font-size: 3rem; color: var(--gold); margin-bottom: 1rem;
-      display: block;
+      display: none; /* sustituido por SVG */
     }
     .confirmation-msg h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem; color: var(--dark);
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      color: var(--dark);
       margin-bottom: 0.5rem;
     }
-    .confirmation-msg p { color: var(--text); }
+    .confirmation-msg p { color: var(--text); max-width: 480px; margin: 0 auto; }
+    .reset-rsvp {
+      margin-top: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      transition: color 200ms var(--ease-out);
+      min-height: 44px;
+    }
+    .reset-rsvp:hover { color: var(--gold); }
 
     /* ── GIFTS ─────────────────────────────── */
     .gifts {
       text-align: center;
       background: var(--white);
     }
-    .gifts p {
-      max-width: 450px; margin: 0 auto;
+    .gifts > .container > p {
+      max-width: 480px; margin: 0 auto;
       line-height: 1.8;
     }
+    .gift-card {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 2rem 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      text-align: center;
+      transition: border-color 250ms var(--ease-out),
+                  box-shadow 250ms var(--ease-out),
+                  transform 250ms var(--ease-out);
+    }
+    .gift-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .gift-card .gift-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .gift-card .gift-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--dark);
+      letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums;
+      margin: 0 0 0.5rem;
+    }
+    .gift-card .gift-owner {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .gift-copy {
+      display: inline-flex;
+      align-items: center; gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      transition: background 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
+      min-height: 44px;
+    }
+    .gift-copy:hover { background: var(--gold); color: var(--white); }
+    .gift-copy:active { transform: scale(0.97); }
+    .gift-copy.copied { background: var(--gold); color: var(--white); }
 
     /* ── FOOTER ────────────────────────────── */
     .footer {
       text-align: center;
-      padding: 4rem 2rem;
+      padding: clamp(3rem, 7vw, 5rem) 2rem;
       background: var(--dark);
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.55);
       font-size: 0.8rem;
       letter-spacing: 0.15em;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Acento decorativo sutil — luz dorada en la parte superior */
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 320px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.6;
     }
     .footer .names {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem; color: var(--gold);
+      font-size: clamp(2rem, 5vw, 2.6rem);
+      color: var(--gold);
       margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
     }
     .footer .ornament {
       color: var(--gold);
+      font-feature-settings: 'tnum' 1;
     }
     .footer .ornament::before,
     .footer .ornament::after {
       background: var(--gold);
+    }
+    .footer-thanks {
+      margin-top: 1.25rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.75);
+      text-transform: none;
     }
 
     /* ── PHOTO UPLOAD ──────────────────────── */
@@ -476,12 +1043,25 @@
       border: 2px dashed var(--gold);
       background: var(--white);
       cursor: pointer;
-      transition: var(--transition);
+      transition: border-color 200ms var(--ease-out),
+                  background 200ms var(--ease-out),
+                  transform 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out);
       text-align: center;
+      min-height: 44px;
     }
     .upload-label:hover {
       border-color: var(--gold-dark);
       background: #fdfaf3;
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .upload-label:active { transform: translateY(0) scale(0.99); }
+    /* Drag-and-drop visual feedback */
+    .upload-label.drag-over {
+      border-color: var(--gold-dark);
+      background: var(--pastel-cream);
+      transform: scale(1.01);
     }
     .upload-label .upload-icon {
       font-size: 2.5rem; color: var(--gold);
@@ -548,12 +1128,47 @@
     /* ── FADE IN ANIMATION ─────────────────── */
     .fade-in {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(24px);
+      /* Duración menor + easing fuerte (Emil) */
+      transition: opacity 700ms var(--ease-out),
+                  transform 700ms var(--ease-out);
+      will-change: opacity, transform;
     }
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Stagger interno: hijos directos en grids tipo bento */
+    .fade-in.visible .stagger > * {
+      animation: staggerIn 600ms var(--ease-out) backwards;
+    }
+    .fade-in.visible .stagger > *:nth-child(1) { animation-delay: 60ms; }
+    .fade-in.visible .stagger > *:nth-child(2) { animation-delay: 120ms; }
+    .fade-in.visible .stagger > *:nth-child(3) { animation-delay: 180ms; }
+    .fade-in.visible .stagger > *:nth-child(4) { animation-delay: 240ms; }
+    .fade-in.visible .stagger > *:nth-child(5) { animation-delay: 300ms; }
+    .fade-in.visible .stagger > *:nth-child(6) { animation-delay: 360ms; }
+    .fade-in.visible .stagger > *:nth-child(7) { animation-delay: 420ms; }
+    .fade-in.visible .stagger > *:nth-child(8) { animation-delay: 480ms; }
+
+    @keyframes staggerIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Respetar preferencia de movimiento reducido (accesibilidad) */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        transition: opacity 300ms ease;
+        transform: none;
+      }
+      .fade-in.visible .stagger > * { animation: none; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 200ms !important;
+      }
     }
 
     /* ── AUDIO TOGGLE ──────────────────────── */
@@ -568,27 +1183,76 @@
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.2rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
+      box-shadow: var(--shadow-soft);
+      /* Transiciones específicas (Emil) */
+      transition: border-color 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
     }
     .audio-toggle:hover {
       border-color: var(--gold); color: var(--gold);
+      box-shadow: var(--shadow-hover);
     }
+    .audio-toggle:active { transform: scale(0.92); }
 
     /* ── RESPONSIVE ────────────────────────── */
     @media (max-width: 768px) {
-      .hero-names { font-size: 3rem; }
-      .section-title { font-size: 2rem; }
+      .container { padding: 0 1.25rem; }
       .details-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      .countdown-grid { gap: 1.5rem; }
-      .countdown-number { font-size: 2.5rem; }
+      .countdown-grid { gap: 1.2rem; }
+      .countdown-number { font-size: 2.2rem; }
       .form-row { grid-template-columns: 1fr; }
       .rsvp-card { padding: 2rem 1.5rem; }
-      .nav-inner { gap: 1.2rem; flex-wrap: wrap; }
-      .nav a { font-size: 0.75rem; }
-      .detail-card .map-iframe { height: 280px; }
+      .nav-inner {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+      }
+      .nav a {
+        font-size: 0.7rem;
+        padding: 0.6rem 0.5rem;
+        letter-spacing: 0.12em;
+      }
+      .detail-card { padding: 2.2rem 1.5rem; }
+      .detail-card .map-iframe { height: 240px; }
       .photos-gallery { grid-template-columns: repeat(2, 1fr); }
+      .audio-toggle {
+        bottom: 1.2rem; right: 1.2rem;
+        width: 44px; height: 44px;
+      }
+      .hero { padding: 1.5rem 1rem; }
+      .hero-badge {
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 1.5rem;
+      }
+      .hero-date { font-size: 1rem; }
+      /* Lightbox botones más cerca en móvil */
+      .lightbox-close { top: 1rem; right: 1rem; }
+      .lightbox-prev { left: 0.5rem; }
+      .lightbox-next { right: 0.5rem; }
+    }
+
+    /* Pantallas muy pequeñas (iPhone SE, móviles antiguos) */
+    @media (max-width: 380px) {
+      .container { padding: 0 1rem; }
+      .nav a {
+        font-size: 0.65rem;
+        padding: 0.5rem 0.3rem;
+      }
+      .nav-inner { gap: 0.3rem; }
+      .countdown-grid { gap: 0.8rem; }
+      .countdown-item { min-width: 64px; }
+      .countdown-number { font-size: 1.8rem; }
+      .rsvp-card { padding: 1.5rem 1rem; }
+    }
+
+    /* Pantallas muy bajas en altura (landscape móvil) */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .hero { min-height: auto; padding: 4rem 2rem; }
     }
 
     /* ── ENVELOPE OVERLAY ──────────────────── */
@@ -1027,9 +1691,98 @@
       50% { opacity: 1; }
     }
 
+    /* ── PÉTALOS AMBIENT ────────────────────── */
+    /* Contenedor fixed, no bloquea clicks, detrás del contenido */
+    .petals {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .petal {
+      position: absolute;
+      top: -40px;
+      width: 18px; height: 18px;
+      opacity: 0;
+      will-change: transform, opacity;
+      /* Cada pétalo recibe duración/delay/posición via inline style desde JS */
+      animation-name: petalFall;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+      animation-fill-mode: forwards;
+    }
+    /* SVG inline como background — pétalo dorado con gradiente */
+    .petal svg {
+      width: 100%; height: 100%;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.06));
+    }
+
+    /* Caída con balanceo lateral suave */
+    @keyframes petalFall {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      8% { opacity: 0.85; }
+      50% {
+        transform: translate3d(40px, 50vh, 0) rotate(180deg);
+      }
+      92% { opacity: 0.85; }
+      100% {
+        transform: translate3d(-30px, 105vh, 0) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Reducir pétalos si usuario pide menos movimiento */
+    @media (prefers-reduced-motion: reduce) {
+      .petals { display: none; }
+    }
+
+    /* En móvil: menos pétalos y más pequeños (perf + estética) */
+    @media (max-width: 768px) {
+      .petal { width: 14px; height: 14px; }
+    }
+
+    /* ── PRINT STYLESHEET ───────────────────── */
+    /* Si alguien imprime la invitación, ocultar elementos interactivos */
+    @media print {
+      .nav,
+      .audio-toggle,
+      .petals,
+      .env-overlay,
+      .photo-upload,
+      .upload-area,
+      #recuerdos,
+      .lightbox,
+      .calendar-buttons,
+      .gift-copy,
+      .reset-rsvp,
+      .hero-scroll,
+      .skip-link,
+      iframe { display: none !important; }
+
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      .section { padding: 1rem 0; page-break-inside: avoid; }
+      .hero { min-height: auto; padding: 2rem; }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+      a { color: black !important; text-decoration: none; }
+      .footer { background: white !important; color: black !important; padding: 1rem; }
+      .footer .names, .footer .ornament { color: #9c7e4a !important; }
+      .gold, .section-tag, .hero-badge { color: #9c7e4a !important; }
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Skip link accesibilidad (visible al hacer Tab) -->
+  <a href="#inicio" class="skip-link">Saltar al contenido</a>
+
+  <!-- Pétalos ambient cayendo (background decorativo) -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
 
   <!-- ── ENVELOPE OVERLAY ─────────────────── -->
   <div class="env-overlay" id="envOverlay">
@@ -1127,7 +1880,7 @@
   </div>
 
   <!-- ── NAVEGACIÓN ──────────────────────── -->
-  <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio">Inicio</a>
       <a href="#detalles">Detalles</a>
@@ -1149,10 +1902,10 @@
       <span>Christine</span>
     </h1>
     <p class="hero-date">10 de Octubre de 2026</p>
-    <div class="hero-scroll">
+    <a class="hero-scroll" href="#detalles" aria-label="Ir a los detalles">
       Desliza
-      <span></span>
-    </div>
+      <span aria-hidden="true"></span>
+    </a>
   </section>
 
   <!-- ── CUENTA REGRESIVA ────────────────── -->
@@ -1183,11 +1936,12 @@
   <section class="section welcome fade-in">
     <div class="container">
       <p class="section-tag">Bienvenidos</p>
-      <p class="welcome-text">
-        "El amor no es solo mirarse el uno al otro,<br>
-        es mirar juntos en la misma dirección."
-      </p>
-      <p class="welcome-text" style="margin-top: 2rem; font-size: 1rem;">
+      <blockquote class="pull-quote">
+        El amor no es solo mirarse el uno al otro,<br>
+        es mirar juntos en la misma dirección.
+        <span class="pull-quote-attr">Antoine de Saint-Exupéry</span>
+      </blockquote>
+      <p class="welcome-text" style="margin-top: 3rem; font-size: 1rem; font-style: normal;">
         Con inmensa alegría les invitamos a celebrar el día más importante de nuestras vidas.
         Será un honor contar con su presencia en este momento tan especial.
       </p>
@@ -1199,49 +1953,49 @@
     <div class="container">
       <p class="section-tag">Nuestros padrinos</p>
       <h2 class="section-title">Padrinos de boda</h2>
-      <p style="margin-top: 1rem; color: var(--text); max-width: 500px; margin-left: auto; margin-right: auto;">
-        Porque cada historia de amor también se escribe con quienes nos han querido desde siempre, hoy elegimos a personas muy especiales para que         nos acompañen como padrinos y madrinas en el día más importante de nuestras vidas.
+      <p class="sponsor-intro">
+        Porque cada historia de amor también se escribe con quienes nos han querido desde siempre, hoy elegimos a personas muy especiales para que nos acompañen como padrinos y madrinas en el día más importante de nuestras vidas.
       </p>
-      <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 2.5rem; flex-wrap: wrap;">
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Ramil Evangelista</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Erlinda Madriaga</div>
+      <div class="sponsors-grid stagger">
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Ramil Evangelista</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Erlinda Madriaga</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Bonifacio Gadiano</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Erlinda Rivera</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Bonifacio Gadiano</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Erlinda Rivera</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Eleuterio Jaurigue</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Emma Ocampo</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Eleuterio Jaurigue</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Emma Ocampo</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Roldan Ocampo</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Anacleta Villegas</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Roldan Ocampo</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Anacleta Villegas</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Arturo Domingo</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Lilibeth Domingo</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Arturo Domingo</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Lilibeth Domingo</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Alberto Cumarat</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Maria Luisa Cumarat</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Alberto Cumarat</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Maria Luisa Cumarat</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Miguel Vizcarra</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Rowena Durán</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Miguel Vizcarra</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Rowena Durán</div>
         </div>
-        <div style="text-align: center; max-width: 280px;">
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">Mr. Carlos Alfredo Bazurto</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark); margin-bottom: 0.3rem;">&amp;</div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--dark);">Mrs. Lilian Mercedes Andino</div>
+        <div class="sponsor-pair">
+          <div class="sponsor-name">Mr. Carlos Alfredo Bazurto</div>
+          <span class="sponsor-and">&amp;</span>
+          <div class="sponsor-name">Mrs. Lilian Mercedes Andino</div>
         </div>
       </div>
     </div>
@@ -1253,13 +2007,17 @@
       <p class="section-tag">El evento</p>
       <h2 class="section-title">Detalles de la boda</h2>
 
-      <div class="details-grid">
+      <div class="details-grid stagger">
         <div class="detail-card">
           <span class="detail-icon">&#x1F4C5;</span>
           <h3>Fecha</h3>
           <p class="time-main">10.10.26</p>
           <p>Sábado, 10 de Octubre<br>de 2026</p>
           <p style="margin-top: 0.5rem; color: var(--text-light);">17:00 h</p>
+          <div class="calendar-buttons">
+            <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
+            <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
+          </div>
         </div>
 
         <div class="detail-card">
@@ -1295,9 +2053,27 @@
         <p>Mujeres: Vestido largo</p>
         <p>Hombres: Traje oscuro</p>
       </div>
-      <p style="margin-top: 1.5rem; color: var(--text-light); font-size: 0.9rem;">
-        Colores sugeridos: dorado, negro, verde esmeralda, vino.
+      <p style="margin-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;">
+        Colores sugeridos
       </p>
+      <div class="palette stagger">
+        <div class="palette-swatch">
+          <span class="swatch-color" style="background:#c9a96e;" aria-label="Dorado"></span>
+          <span class="swatch-label">Dorado</span>
+        </div>
+        <div class="palette-swatch">
+          <span class="swatch-color" style="background:#1a1a1a;" aria-label="Negro"></span>
+          <span class="swatch-label">Negro</span>
+        </div>
+        <div class="palette-swatch">
+          <span class="swatch-color" style="background:#0d4f3c;" aria-label="Verde esmeralda"></span>
+          <span class="swatch-label">Esmeralda</span>
+        </div>
+        <div class="palette-swatch">
+          <span class="swatch-color" style="background:#722f37;" aria-label="Vino"></span>
+          <span class="swatch-label">Vino</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1307,7 +2083,7 @@
       <p class="section-tag">Nuestra historia</p>
       <h2 class="section-title">Galería de fotos</h2>
 
-      <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-grid stagger" id="galleryGrid">
         <div class="gallery-item" data-src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80">
           <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="Pareja" loading="lazy">
         </div>
@@ -1351,11 +2127,14 @@
       </p>
 
       <div class="rsvp-card" id="rsvpCard">
-        <div class="confirmation-msg" id="confirmationMsg">
-          <span class="check-icon">&#10003;</span>
+        <div class="confirmation-msg" id="confirmationMsg" role="status" aria-live="polite">
+          <svg class="check-svg" viewBox="0 0 72 72" aria-hidden="true">
+            <circle cx="36" cy="36" r="30"/>
+            <path d="M22 37 L33 48 L51 27"/>
+          </svg>
           <h3 id="confirmationTitle">¡Gracias por confirmar!</h3>
           <p id="confirmationText"></p>
-          <button class="btn" onclick="resetRSVP()" style="margin-top: 2rem;">
+          <button type="button" class="reset-rsvp" onclick="resetRSVP()">
             Cambiar respuesta
           </button>
         </div>
@@ -1422,15 +2201,15 @@
     <div class="container">
       <p class="section-tag">Música</p>
       <h2 class="section-title">Banda sonora de la fiesta</h2>
-      <p style="margin-top: 1rem; color: var(--text); max-width: 500px; margin-left: auto; margin-right: auto;">
+      <p class="sponsor-intro">
         ¿Tienes alguna canción que no puede faltar? Abre la playlist y añádela — es colaborativa.
       </p>
-      <div style="margin-top: 2rem;">
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1XOZ6VKG3Clte6KtewGWq7?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <div class="music-wrap">
+        <iframe title="Playlist colaborativa de la boda" src="https://open.spotify.com/embed/playlist/1XOZ6VKG3Clte6KtewGWq7?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.85rem;">
-         <a href="https://open.spotify.com/playlist/1XOZ6VKG3Clte6KtewGWq7?si=9070c708a5804015&pt=cbae1da7ea85acc7cc7c726b62d3a6f4" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">Abrir en Spotify →</a>
-      </p>
+      <a class="music-link" href="https://open.spotify.com/playlist/1XOZ6VKG3Clte6KtewGWq7?si=9070c708a5804015&pt=cbae1da7ea85acc7cc7c726b62d3a6f4" target="_blank" rel="noopener">
+        Abrir en Spotify <span class="arrow">→</span>
+      </a>
     </div>
   </section>
 
@@ -1474,9 +2253,13 @@
       <p>
         Vuestra presencia es el mejor regalo. Si además deseáis tener un detalle con nosotros, agradeceríamos una aportación económica para comenzar nuestra nueva etapa.
       </p>
-      <div class="dress-code-box" style="margin-top: 2rem;">
-        <p style="font-size: 0.95rem;">Bizum: 672 90 92 44</p>
-        <p style="font-size: 0.95rem;">Titular: Michael Jess Tejada Caguisano</p>
+      <div class="gift-card">
+        <span class="gift-label">Bizum</span>
+        <p class="gift-number" id="bizumNumber">672 90 92 44</p>
+        <p class="gift-owner">Michael Jess Tejada Caguisano</p>
+        <button type="button" class="gift-copy" id="bizumCopy" aria-label="Copiar número Bizum">
+          <span class="gift-copy-text">Copiar número</span>
+        </button>
       </div>
     </div>
   </section>
@@ -1485,7 +2268,7 @@
   <footer class="footer">
     <p class="names">J &amp; C</p>
     <div class="ornament">X · X · MMXXVI</div>
-    <p style="margin-top: 1rem;">¡Te esperamos!</p>
+    <p class="footer-thanks">¡Te esperamos!</p>
   </footer>
 
   <!-- ── AUDIO TOGGLE ─────────────────────── -->
@@ -1516,6 +2299,8 @@
         if (hintEl) hintEl.textContent = 'Toca para entrar';
         var music = document.getElementById('envMusic');
         if (music) music.play().catch(function() {});
+        // Burst de pétalos al abrir sobre — momento mágico
+        if (window.__petalBurst) window.__petalBurst(20);
       }
 
       // Click enters the site
@@ -1606,6 +2391,10 @@
         if (data.asistencia === 'si') {
           msgTitle.textContent = '¡Gracias por confirmar!';
           msgText.textContent = `${data.nombre}, nos alegra muchísimo que nos acompañes en este día tan especial. ¡Te esperamos!`;
+          // Celebración: burst de pétalos al confirmar asistencia
+          if (window.__petalBurst) {
+            setTimeout(function() { window.__petalBurst(30); }, 400);
+          }
         } else {
           msgTitle.textContent = 'Gracias por avisarnos';
           msgText.textContent = `${data.nombre}, lamentamos que no puedas acompañarnos. Te tendremos presente en este día tan especial.`;
@@ -1614,6 +2403,18 @@
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
+
+        // Validación nativa antes de enviar — shake si hay errores
+        form.classList.add('submitted');
+        if (!form.checkValidity()) {
+          card.classList.remove('shake');
+          // Forzar reflow para reiniciar animación
+          void card.offsetWidth;
+          card.classList.add('shake');
+          const firstInvalid = form.querySelector(':invalid');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
 
         const data = {
           nombre: document.getElementById('nombre').value.trim(),
@@ -1723,23 +2524,31 @@
       });
     })();
 
-    // ── FADE IN ON SCROLL ───────────────────
+    // ── FADE IN ON SCROLL (IntersectionObserver — más eficiente) ──
     (function() {
       const fadeEls = document.querySelectorAll('.fade-in');
 
-      function checkFade() {
-        fadeEls.forEach(el => {
-          const rect = el.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          if (rect.top < windowHeight * 0.85) {
-            el.classList.add('visible');
-          }
-        });
+      // Fallback si el navegador no soporta IO
+      if (!('IntersectionObserver' in window)) {
+        fadeEls.forEach(el => el.classList.add('visible'));
+        return;
       }
 
-      checkFade();
-      window.addEventListener('scroll', checkFade, { passive: true });
-      window.addEventListener('resize', checkFade, { passive: true });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Una sola animación: dejar de observar tras revelar
+            io.unobserve(entry.target);
+          }
+        });
+      }, {
+        // Disparar cuando el elemento esté un 15% dentro del viewport
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
+      });
+
+      fadeEls.forEach(el => io.observe(el));
     })();
 
     // ── AUDIO ───────────────────────────────
@@ -1771,17 +2580,7 @@
       updateBtn();
     })();
 
-    // ── NAV SCROLL SHADOW ───────────────────
-    (function() {
-      const nav = document.getElementById('nav');
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-          nav.style.boxShadow = '0 1px 12px rgba(0,0,0,0.06)';
-        } else {
-          nav.style.boxShadow = 'none';
-        }
-      }, { passive: true });
-    })();
+    // (Smart nav reemplaza el handler antiguo de sombra — ver bloque "SMART NAV" más arriba)
 
     // ── PHOTO UPLOAD ────────────────────────
     (function() {
@@ -1799,9 +2598,14 @@
 
       var pendingFile = null;
 
-      photoInput.addEventListener('change', function() {
-        var file = photoInput.files[0];
+      // Función común — valida y previsualiza fichero
+      function handleFile(file) {
         if (!file) return;
+        if (!file.type.startsWith('image/')) {
+          uploadStatus.textContent = 'Solo se admiten imágenes';
+          uploadStatus.className = 'upload-status error';
+          return;
+        }
         if (file.size > 10 * 1024 * 1024) {
           uploadStatus.textContent = 'La foto no debe superar 10 MB';
           uploadStatus.className = 'upload-status error';
@@ -1818,7 +2622,36 @@
           uploadPreview.style.display = 'block';
         };
         reader.readAsDataURL(file);
+      }
+
+      photoInput.addEventListener('change', function() {
+        handleFile(photoInput.files[0]);
       });
+
+      // Drag-and-drop sobre el label
+      var uploadLabel = document.querySelector('.upload-label');
+      if (uploadLabel) {
+        ['dragenter', 'dragover'].forEach(function(evt) {
+          uploadLabel.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadLabel.classList.add('drag-over');
+          });
+        });
+        ['dragleave', 'drop'].forEach(function(evt) {
+          uploadLabel.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadLabel.classList.remove('drag-over');
+          });
+        });
+        uploadLabel.addEventListener('drop', function(e) {
+          var dt = e.dataTransfer;
+          if (dt && dt.files && dt.files[0]) {
+            handleFile(dt.files[0]);
+          }
+        });
+      }
 
       cancelBtn.addEventListener('click', function() {
         photoInput.value = '';
@@ -1926,6 +2759,261 @@
       }
 
       loadSavedPhotos();
+    })();
+
+    // ── SCROLL SPY (nav resalta sección visible) ──
+    (function() {
+      const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+      if (!navLinks.length) return;
+
+      const sections = [];
+      navLinks.forEach(function(link) {
+        const id = link.getAttribute('href').slice(1);
+        const sec = document.getElementById(id);
+        if (sec) sections.push({ link: link, sec: sec });
+      });
+
+      if (!('IntersectionObserver' in window)) return;
+
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(function(l) {
+              if (l.getAttribute('href') === '#' + id) {
+                l.setAttribute('aria-current', 'true');
+              } else {
+                l.removeAttribute('aria-current');
+              }
+            });
+          }
+        });
+      }, { threshold: 0.45 });
+
+      sections.forEach(function(s) { io.observe(s.sec); });
+    })();
+
+    // ── HERO SCROLL CUE entry (compatible con float anim) ──
+    window.addEventListener('load', function() {
+      const cue = document.querySelector('.hero-scroll');
+      if (cue) cue.classList.add('visible');
+    });
+
+    // ── IMÁGENES: decoding async + loading lazy ──
+    // Mejora paint blocking. Aplica a todas las imágenes que no lo tienen.
+    (function() {
+      document.querySelectorAll('img').forEach(function(img) {
+        if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+        if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+      });
+    })();
+
+    // ── AÑADIR AL CALENDARIO ──────────────────
+    (function() {
+      // Datos del evento — UTC para evitar problemas zona horaria
+      // Sábado 10 Oct 2026 17:00 (hora Madrid CEST = UTC+2)
+      const event = {
+        title: 'Boda Jaybie & Christine',
+        startUTC: '20261010T150000Z',   // 17:00 Madrid = 15:00 UTC
+        endUTC:   '20261010T230000Z',   // ~5 horas evento estimado
+        location: 'Parroquia Santa María Micaela y San Enrique, Madrid',
+        details:  'Te esperamos en el día más importante de nuestras vidas. https://michaelmj15.github.io/Boda-Jaybe-Christine/'
+      };
+
+      const gBtn = document.getElementById('calGoogle');
+      const aBtn = document.getElementById('calApple');
+      if (!gBtn || !aBtn) return;
+
+      // Google Calendar URL
+      gBtn.addEventListener('click', function() {
+        const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+          '&text=' + encodeURIComponent(event.title) +
+          '&dates=' + event.startUTC + '/' + event.endUTC +
+          '&details=' + encodeURIComponent(event.details) +
+          '&location=' + encodeURIComponent(event.location);
+        window.open(url, '_blank', 'noopener');
+      });
+
+      // .ics descargable (Apple Calendar, Outlook, Thunderbird)
+      aBtn.addEventListener('click', function() {
+        const ics = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Boda Jaybie Christine//ES',
+          'CALSCALE:GREGORIAN',
+          'METHOD:PUBLISH',
+          'BEGIN:VEVENT',
+          'UID:boda-jc-20261010@michaelmj15',
+          'DTSTAMP:20260101T000000Z',
+          'DTSTART:' + event.startUTC,
+          'DTEND:' + event.endUTC,
+          'SUMMARY:' + event.title,
+          'DESCRIPTION:' + event.details.replace(/\n/g, '\\n'),
+          'LOCATION:' + event.location,
+          'STATUS:CONFIRMED',
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ].join('\r\n');
+
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Boda-Jaybie-Christine.ics';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 500);
+      });
+    })();
+
+    // ── COPIAR BIZUM AL PORTAPAPELES ──────────
+    (function() {
+      const btn = document.getElementById('bizumCopy');
+      const num = document.getElementById('bizumNumber');
+      if (!btn || !num) return;
+      const txt = btn.querySelector('.gift-copy-text');
+      const original = txt.textContent;
+
+      btn.addEventListener('click', async function() {
+        const value = num.textContent.replace(/\s+/g, '');
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch (e) {
+          // Fallback navegadores viejos: selección manual
+          const range = document.createRange();
+          range.selectNode(num);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          try { document.execCommand('copy'); } catch (_) {}
+          sel.removeAllRanges();
+        }
+        btn.classList.add('copied');
+        txt.textContent = '✓ Copiado';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          txt.textContent = original;
+        }, 2000);
+      });
+    })();
+
+    // ── SMART NAV (oculta al bajar, muestra al subir) ──
+    (function() {
+      const nav = document.getElementById('nav');
+      if (!nav) return;
+      let lastY = window.scrollY;
+      let ticking = false;
+
+      function onScroll() {
+        const y = window.scrollY;
+        const dy = y - lastY;
+
+        // Sombra sutil al hacer scroll
+        if (y > 20) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+
+        // Ocultar solo cuando scrolleas hacia abajo más allá del hero
+        if (y > 200 && dy > 6) {
+          nav.classList.add('hidden');
+        } else if (dy < -4) {
+          nav.classList.remove('hidden');
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          // requestAnimationFrame — no satura main thread
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    // ── PÉTALOS AMBIENT (decorativo, low-cost) ──
+    (function() {
+      const container = document.getElementById('petals');
+      if (!container) return;
+
+      // Si el usuario prefiere menos movimiento, no hacer nada
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // Detectar móvil para limitar pétalos simultáneos
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const MAX_PETALS = isMobile ? 8 : 16;
+      const SPAWN_MS = isMobile ? 2200 : 1400;
+
+      // SVG de pétalo dorado — forma orgánica gota inclinada
+      const PETAL_SVG = `
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f0d99a" stop-opacity="0.95"/>
+              <stop offset="50%" stop-color="#d4b87a" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#9c7e4a" stop-opacity="0.85"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 1 C 17 6, 19 13, 14 21 C 10 23, 7 21, 6 17 C 5 11, 8 5, 12 1 Z"
+                fill="url(#pg)"/>
+        </svg>
+      `;
+
+      function spawnPetal() {
+        // Limitar nº pétalos vivos simultáneos
+        if (container.childElementCount >= MAX_PETALS) return;
+
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.innerHTML = PETAL_SVG;
+
+        // Posición horizontal aleatoria
+        petal.style.left = Math.random() * 100 + 'vw';
+        // Duración entre 12s y 20s
+        const duration = 12 + Math.random() * 8;
+        petal.style.animationDuration = duration + 's';
+        // Pequeña variación de tamaño
+        const scale = 0.7 + Math.random() * 0.6;
+        petal.style.setProperty('--scale', scale);
+        const baseW = isMobile ? 14 : 18;
+        petal.style.width = (baseW * scale) + 'px';
+        petal.style.height = (baseW * scale) + 'px';
+
+        container.appendChild(petal);
+
+        // Limpiar tras acabar la animación
+        petal.addEventListener('animationend', function() {
+          petal.remove();
+        }, { once: true });
+      }
+
+      // Exponer función burst para momentos especiales (apertura sobre)
+      window.__petalBurst = function(n) {
+        const count = Math.min(n || 12, isMobile ? 12 : 24);
+        for (let i = 0; i < count; i++) {
+          setTimeout(spawnPetal, i * 80);
+        }
+      };
+
+      // Spawn inicial ligero
+      for (let i = 0; i < 3; i++) {
+        setTimeout(spawnPetal, i * 600);
+      }
+
+      // Loop spawn — usar setInterval pausable
+      let spawnTimer = setInterval(spawnPetal, SPAWN_MS);
+
+      // Pausar pétalos cuando la pestaña no está visible (perf + batería)
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          clearInterval(spawnTimer);
+          spawnTimer = null;
+        } else if (!spawnTimer) {
+          spawnTimer = setInterval(spawnPetal, SPAWN_MS);
+        }
+      });
     })();
   </script>
 </body>
