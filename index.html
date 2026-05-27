@@ -690,6 +690,102 @@
       .palette-swatch .swatch-color { width: 44px; height: 44px; }
     }
 
+    /* ── FAQ ACCORDION ──────────────────────── */
+    .faq-list {
+      max-width: 720px;
+      margin: 3rem auto 0;
+      text-align: left;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      background: transparent;
+      border: none;
+      padding: 1.4rem 0.5rem;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      transition: color 200ms var(--ease-out);
+      min-height: 56px;
+    }
+    .faq-question:hover { color: var(--gold); }
+    .faq-question .faq-toggle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      line-height: 1;
+      transition: transform 280ms var(--ease-out);
+      flex-shrink: 0;
+    }
+    .faq-item[open] .faq-toggle { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 380ms var(--ease-in-out);
+    }
+    .faq-item[open] .faq-answer { max-height: 400px; }
+    .faq-answer-inner {
+      padding: 0 0.5rem 1.4rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+      .faq-question { font-size: 0.95rem; padding: 1.2rem 0.25rem; }
+    }
+
+    /* ── MAP LAZY (carga al hacer click) ────── */
+    .map-lazy {
+      position: relative;
+      width: 100%; height: 220px;
+      margin-top: 1rem;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #e8e3dc 0%, #d4c8b3 100%);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 200ms var(--ease-out);
+    }
+    .map-lazy::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 30% 40%, rgba(255,255,255,0.4) 0, transparent 30%),
+        radial-gradient(circle at 70% 60%, rgba(201,169,110,0.3) 0, transparent 30%);
+      opacity: 0.5;
+    }
+    .map-lazy-cta {
+      position: relative;
+      z-index: 1;
+      padding: 0.6rem 1.2rem;
+      background: var(--white);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  transform 160ms var(--ease-out);
+    }
+    .map-lazy:hover .map-lazy-cta {
+      background: var(--gold);
+      color: var(--white);
+    }
+    .map-lazy:active .map-lazy-cta { transform: scale(0.97); }
+
     /* ── MUSIC SPOTIFY ──────────────────────── */
     .music-wrap {
       max-width: 720px;
@@ -2133,6 +2229,7 @@
       <a href="#padrinos">Padrinos</a>
       <a href="#galeria">Galería</a>
       <a href="#rsvp">Confirmar</a>
+      <a href="#faq">FAQ</a>
       <a href="#musica">Música</a>
       <a href="#recuerdos">Recuerdos</a>
       <a href="#regalos">Regalos</a>
@@ -2270,7 +2367,9 @@
           <span class="detail-icon">&#x26EA;</span>
           <h3>Iglesia</h3>
           <p>Parroquia Santa María<br>Micaela y San Enrique</p>
-          <iframe class="map-iframe" src="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
+            <span class="map-lazy-cta">Ver mapa</span>
+          </div>
           <p style="margin-top: 0.5rem;">
             <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Abrir en Google Maps →</a>
           </p>
@@ -2280,7 +2379,9 @@
           <span class="detail-icon">&#x1F37D;</span>
           <h3>Restaurante</h3>
           <p>Restaurante San Francisco</p>
-          <iframe class="map-iframe" src="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
+            <span class="map-lazy-cta">Ver mapa</span>
+          </div>
           <p style="margin-top: 0.5rem;">
             <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Abrir en Google Maps →</a>
           </p>
@@ -2453,6 +2554,104 @@
           </div>
           <button type="submit" class="btn" id="rsvpBtn">Enviar confirmación</button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ─────────────────────────────── -->
+  <section class="section fade-in" id="faq" style="background: var(--cream);">
+    <div class="container">
+      <p class="section-tag" style="display:block;text-align:center;">Preguntas frecuentes</p>
+      <h2 class="section-title" style="text-align:center;">FAQ</h2>
+      <div class="faq-list stagger">
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿A qué hora debo llegar?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              La ceremonia comienza a las 17:00 h. Te recomendamos llegar entre 16:30 y 16:45 para encontrar sitio con tranquilidad.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Hay aparcamiento cerca?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sí, en las inmediaciones de la parroquia y del restaurante hay aparcamiento gratuito en la calle y parkings públicos cercanos. También puedes utilizar el autobús privado que ponemos a disposición.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Cómo funciona el autobús privado?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              El autobús saldrá desde la parroquia hacia el restaurante después de la ceremonia, y a la vuelta tras el banquete. Es gratuito. Indícanos en el formulario si lo vas a usar para reservar tu plaza.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Puedo llevar niños?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Si en tu invitación se incluye a los niños, ¡estaremos encantados de verles! Si tienes dudas, escríbenos directamente y lo aclaramos.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Y si tengo alergias o intolerancias?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Indícanoslo en el formulario de confirmación, en el campo de alérgenos. El restaurante adaptará el menú para ti.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Hasta cuándo puedo confirmar?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              La fecha límite para confirmar asistencia es el <strong>15 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Cuál es el dress code?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Formal — etiqueta de noche. Vestido largo para mujeres, traje oscuro para hombres. Colores sugeridos: dorado, negro, verde esmeralda o vino. Por respeto a la novia, evita el blanco.
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>¿Qué pasa si llueve?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Tanto la ceremonia como el banquete son en interior, así que no te preocupes por el tiempo. ¡La fiesta sigue!
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -3243,6 +3442,34 @@
         a.click();
         document.body.removeChild(a);
         setTimeout(function() { URL.revokeObjectURL(url); }, 500);
+      });
+    })();
+
+    // ── MAPAS LAZY (carga iframe al hacer click) ──
+    // Evita cargar 2 iframes Google Maps al abrir página. Click → carga.
+    (function() {
+      document.querySelectorAll('.map-lazy').forEach(function(el) {
+        function load() {
+          const src = el.getAttribute('data-map');
+          if (!src) return;
+          const iframe = document.createElement('iframe');
+          iframe.className = 'map-iframe';
+          iframe.src = src;
+          iframe.loading = 'lazy';
+          iframe.referrerPolicy = 'no-referrer-when-downgrade';
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.style.width = '100%';
+          iframe.style.height = '220px';
+          iframe.style.border = '0';
+          el.replaceWith(iframe);
+        }
+        el.addEventListener('click', load);
+        el.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            load();
+          }
+        });
       });
     })();
 
