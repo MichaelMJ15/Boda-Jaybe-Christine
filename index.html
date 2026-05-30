@@ -794,7 +794,7 @@
     /* ── MAP LAZY (carga al hacer click) ────── */
     .map-lazy {
       position: relative;
-      width: 100%; height: 220px;
+      width: 100%; height: 260px;
       margin-top: 1rem;
       cursor: pointer;
       overflow: hidden;
@@ -803,7 +803,28 @@
       display: flex; align-items: center; justify-content: center;
       transition: opacity 200ms var(--ease-out);
     }
-    .map-lazy::before {
+    /* Cuando tiene imagen via data-bg: capa imagen + overlay para legibilidad CTA */
+    .map-lazy[data-bg] {
+      background: var(--cream);
+    }
+    .map-lazy[data-bg]::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: var(--bg);
+      background-size: cover;
+      background-position: center;
+      transition: transform 500ms var(--ease-out);
+    }
+    .map-lazy[data-bg]::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(250,248,245,0.18);
+      transition: background 200ms var(--ease-out);
+    }
+    .map-lazy[data-bg]:hover::before { transform: scale(1.04); }
+    .map-lazy[data-bg]:hover::after { background: rgba(250,248,245,0.08); }
+    /* Placeholder sin imagen — mantener radial decorativo */
+    .map-lazy:not([data-bg])::before {
       content: '';
       position: absolute; inset: 0;
       background-image:
@@ -814,14 +835,15 @@
     .map-lazy-cta {
       position: relative;
       z-index: 1;
-      padding: 0.6rem 1.2rem;
+      padding: 0.7rem 1.4rem;
       background: var(--white);
       border: 1px solid var(--gold);
       color: var(--gold);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       transition: background 200ms var(--ease-out),
                   color 200ms var(--ease-out),
                   transform 160ms var(--ease-out);
@@ -2319,7 +2341,7 @@
           <span class="detail-icon">&#x26EA;</span>
           <h3>Iglesia</h3>
           <p>Parroquia Santa María<br>Micaela y San Enrique</p>
-          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
+          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
             <span class="map-lazy-cta">Ver mapa</span>
           </div>
           <p style="margin-top: 0.5rem;">
@@ -2331,7 +2353,7 @@
           <span class="detail-icon">&#x1F37D;</span>
           <h3>Restaurante</h3>
           <p>Restaurante San Francisco</p>
-          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
+          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
             <span class="map-lazy-cta">Ver mapa</span>
           </div>
           <p style="margin-top: 0.5rem;">
