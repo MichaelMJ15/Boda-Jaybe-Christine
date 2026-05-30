@@ -595,6 +595,52 @@
     .calendar-btn:active { transform: scale(0.97); }
 
     /* ── PADRINOS ──────────────────────────── */
+    .sponsor-principal {
+      max-width: 380px;
+      margin: 3rem auto 1.5rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border: 1px solid var(--gold);
+      background: var(--white);
+      position: relative;
+      transition: box-shadow 250ms var(--ease-out),
+                  transform 250ms var(--ease-out);
+    }
+    .sponsor-principal:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .sponsor-principal .sponsor-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .sponsor-principal .sponsor-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--dark);
+      line-height: 1.4;
+    }
+    .sponsor-principal::before,
+    .sponsor-principal::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      border: 1px solid var(--gold);
+    }
+    .sponsor-principal::before {
+      top: -1px; left: -1px;
+      border-right: none; border-bottom: none;
+    }
+    .sponsor-principal::after {
+      bottom: -1px; right: -1px;
+      border-left: none; border-top: none;
+    }
+
     .sponsors-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -2199,6 +2245,12 @@
       <p class="sponsor-intro">
         Porque cada historia de amor también se escribe con quienes nos han querido desde siempre, hoy elegimos a personas muy especiales para que nos acompañen como padrinos y madrinas en el día más importante de nuestras vidas.
       </p>
+
+      <div class="sponsor-principal">
+        <span class="sponsor-badge">Padrino principal</span>
+        <p class="sponsor-name">Christian Careaga Guzmán</p>
+      </div>
+
       <div class="sponsors-grid stagger">
         <div class="sponsor-pair">
           <div class="sponsor-name">Mr. Ramil Evangelista</div>
