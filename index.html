@@ -2562,6 +2562,74 @@
     </div>
   </section>
 
+  <!-- ── SPOTIFY ──────────────────────────── -->
+  <section class="section dress-code fade-in" id="musica">
+    <div class="container">
+      <p class="section-tag">Música</p>
+      <h2 class="section-title">Banda sonora de la fiesta</h2>
+      <p class="sponsor-intro">
+        ¿Tienes alguna canción que no puede faltar? Abre la playlist y añádela — es colaborativa.
+      </p>
+      <div class="music-wrap">
+        <iframe title="Playlist colaborativa de la boda" src="https://open.spotify.com/embed/playlist/1XOZ6VKG3Clte6KtewGWq7?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <a class="music-link" href="https://open.spotify.com/playlist/1XOZ6VKG3Clte6KtewGWq7?si=9070c708a5804015&pt=cbae1da7ea85acc7cc7c726b62d3a6f4" target="_blank" rel="noopener">
+        Abrir en Spotify <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOTOS / RECUERDOS ────────────────── -->
+  <section class="section photos fade-in" id="recuerdos">
+    <div class="container">
+      <p class="section-tag">Recuerdos</p>
+      <h2 class="section-title">Vuestras fotos</h2>
+      <p style="text-align: center; color: var(--text); max-width: 500px; margin: 1rem auto 0;">
+        Comparte tus momentos con los novios. Sube tus fotos y las veremos todos.
+      </p>
+
+      <div class="upload-area">
+        <label class="upload-label" for="photoInput">
+          <span class="upload-icon">&#x1F4F7;</span>
+          <p>Haz clic para subir una foto</p>
+          <span>JPG o PNG, máx. 10 MB</span>
+        </label>
+        <input type="file" class="upload-input" id="photoInput" accept="image/jpeg,image/png,image/heic,image/webp">
+        <div class="upload-preview" id="uploadPreview">
+          <img src="" alt="" id="previewImg">
+          <p class="upload-name" id="previewName"></p>
+          <div class="upload-actions">
+            <button class="btn" id="uploadBtn" style="margin-top: 0; padding: 0.7rem 2rem;">Subir foto</button>
+            <button class="btn" id="cancelBtn" style="margin-top: 0; padding: 0.7rem 2rem; border-color: var(--text-light); color: var(--text-light);">Cancelar</button>
+          </div>
+        </div>
+        <p class="upload-status" id="uploadStatus"></p>
+      </div>
+
+      <div class="photos-empty active" id="photosEmpty">Aún no hay fotos. ¡Sé el primero en subir!</div>
+      <div class="photos-gallery" id="photosGallery"></div>
+    </div>
+  </section>
+
+  <!-- ── REGALOS ──────────────────────────── -->
+  <section class="section gifts fade-in" id="regalos">
+    <div class="container">
+      <p class="section-tag">Regalos</p>
+      <h2 class="section-title">Ideas de regalo</h2>
+      <p>
+        Vuestra presencia es el mejor regalo. Si además deseáis tener un detalle con nosotros, agradeceríamos una aportación económica para comenzar nuestra nueva etapa.
+      </p>
+      <div class="gift-card">
+        <span class="gift-label">Bizum</span>
+        <p class="gift-number" id="bizumNumber">672 90 92 44</p>
+        <p class="gift-owner">Michael Jess Tejada Caguisano</p>
+        <button type="button" class="gift-copy" id="bizumCopy" aria-label="Copiar número Bizum">
+          <span class="gift-copy-text">Copiar número</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- ── FAQ ─────────────────────────────── -->
   <section class="section fade-in" id="faq" style="background: var(--cream);">
     <div class="container">
@@ -2656,74 +2724,6 @@
             </div>
           </div>
         </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SPOTIFY ──────────────────────────── -->
-  <section class="section dress-code fade-in" id="musica">
-    <div class="container">
-      <p class="section-tag">Música</p>
-      <h2 class="section-title">Banda sonora de la fiesta</h2>
-      <p class="sponsor-intro">
-        ¿Tienes alguna canción que no puede faltar? Abre la playlist y añádela — es colaborativa.
-      </p>
-      <div class="music-wrap">
-        <iframe title="Playlist colaborativa de la boda" src="https://open.spotify.com/embed/playlist/1XOZ6VKG3Clte6KtewGWq7?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      <a class="music-link" href="https://open.spotify.com/playlist/1XOZ6VKG3Clte6KtewGWq7?si=9070c708a5804015&pt=cbae1da7ea85acc7cc7c726b62d3a6f4" target="_blank" rel="noopener">
-        Abrir en Spotify <span class="arrow">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── FOTOS / RECUERDOS ────────────────── -->
-  <section class="section photos fade-in" id="recuerdos">
-    <div class="container">
-      <p class="section-tag">Recuerdos</p>
-      <h2 class="section-title">Vuestras fotos</h2>
-      <p style="text-align: center; color: var(--text); max-width: 500px; margin: 1rem auto 0;">
-        Comparte tus momentos con los novios. Sube tus fotos y las veremos todos.
-      </p>
-
-      <div class="upload-area">
-        <label class="upload-label" for="photoInput">
-          <span class="upload-icon">&#x1F4F7;</span>
-          <p>Haz clic para subir una foto</p>
-          <span>JPG o PNG, máx. 10 MB</span>
-        </label>
-        <input type="file" class="upload-input" id="photoInput" accept="image/jpeg,image/png,image/heic,image/webp">
-        <div class="upload-preview" id="uploadPreview">
-          <img src="" alt="" id="previewImg">
-          <p class="upload-name" id="previewName"></p>
-          <div class="upload-actions">
-            <button class="btn" id="uploadBtn" style="margin-top: 0; padding: 0.7rem 2rem;">Subir foto</button>
-            <button class="btn" id="cancelBtn" style="margin-top: 0; padding: 0.7rem 2rem; border-color: var(--text-light); color: var(--text-light);">Cancelar</button>
-          </div>
-        </div>
-        <p class="upload-status" id="uploadStatus"></p>
-      </div>
-
-      <div class="photos-empty active" id="photosEmpty">Aún no hay fotos. ¡Sé el primero en subir!</div>
-      <div class="photos-gallery" id="photosGallery"></div>
-    </div>
-  </section>
-
-  <!-- ── REGALOS ──────────────────────────── -->
-  <section class="section gifts fade-in" id="regalos">
-    <div class="container">
-      <p class="section-tag">Regalos</p>
-      <h2 class="section-title">Ideas de regalo</h2>
-      <p>
-        Vuestra presencia es el mejor regalo. Si además deseáis tener un detalle con nosotros, agradeceríamos una aportación económica para comenzar nuestra nueva etapa.
-      </p>
-      <div class="gift-card">
-        <span class="gift-label">Bizum</span>
-        <p class="gift-number" id="bizumNumber">672 90 92 44</p>
-        <p class="gift-owner">Michael Jess Tejada Caguisano</p>
-        <button type="button" class="gift-copy" id="bizumCopy" aria-label="Copiar número Bizum">
-          <span class="gift-copy-text">Copiar número</span>
-        </button>
       </div>
     </div>
   </section>
