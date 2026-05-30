@@ -527,6 +527,12 @@
                   transform 250ms var(--ease-out);
       position: relative;
       background: var(--white);
+      /* Flex column → map-lazy queda al fondo, cards mismo alto */
+      display: flex;
+      flex-direction: column;
+    }
+    .detail-card .map-lazy {
+      margin-top: auto;          /* empuja mapa al fondo card */
     }
     .detail-card:hover {
       border-color: var(--gold);
@@ -794,7 +800,9 @@
     /* ── MAP LAZY (carga al hacer click) ────── */
     .map-lazy {
       position: relative;
-      width: 100%; height: 260px;
+      width: 100%;
+      aspect-ratio: 4 / 5;       /* misma proporción en ambas cards */
+      max-height: 320px;          /* tope desktop */
       margin-top: 1rem;
       cursor: pointer;
       overflow: hidden;
