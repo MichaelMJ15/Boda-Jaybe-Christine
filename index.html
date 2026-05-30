@@ -976,106 +976,6 @@
       box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
       background: var(--white);
     }
-    /* Counter +/− para nº de acompañantes */
-    .counter-control {
-      display: inline-flex;
-      align-items: stretch;
-      gap: 0;
-      border: 1px solid var(--border);
-      background: var(--white);
-      width: fit-content;
-      margin-top: 0.5rem;
-    }
-    .counter-btn {
-      width: 44px; height: 44px;
-      background: transparent;
-      border: none;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--gold);
-      cursor: pointer;
-      transition: background 200ms var(--ease-out),
-                  color 200ms var(--ease-out),
-                  transform 160ms var(--ease-out);
-      min-height: 44px;
-    }
-    .counter-btn:hover { background: var(--cream); }
-    .counter-btn:active { transform: scale(0.92); }
-    .counter-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .counter-control input[type="number"] {
-      width: 56px;
-      text-align: center;
-      border: none;
-      border-left: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      background: transparent;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--dark);
-      font-variant-numeric: tabular-nums;
-      appearance: textfield;
-      -moz-appearance: textfield;
-      padding: 0;
-    }
-    .counter-control input[type="number"]::-webkit-outer-spin-button,
-    .counter-control input[type="number"]::-webkit-inner-spin-button {
-      appearance: none;
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    .counter-hint {
-      margin-top: 0.6rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-light);
-    }
-
-    /* Tarjetas dinámicas por acompañante */
-    .companions-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-    .companion-card {
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-      background: var(--cream);
-      animation: companionIn 400ms var(--ease-out) backwards;
-    }
-    .companion-card .companion-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.85rem;
-    }
-    .companion-fields {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
-    }
-    .companion-fields .form-group label {
-      font-size: 0.75rem;
-    }
-    .companion-fields .form-group input {
-      font-size: 1rem;
-      background: var(--white);
-    }
-    @keyframes companionIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 480px) {
-      .companion-fields { grid-template-columns: 1fr; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .companion-card { animation: none; }
-    }
-
     /* Validación: campo inválido tras intentar enviar (clase .submitted) */
     .rsvp-form.submitted :invalid {
       border-color: #b85c5c;
@@ -2521,20 +2421,6 @@
             </div>
           </div>
 
-          <!-- Acompañantes — visible solo si asistencia=sí (controlado por JS) -->
-          <div class="form-group companions-group" id="companionsGroup" hidden>
-            <label for="numAcompanantes">Número de acompañantes</label>
-            <div class="counter-control">
-              <button type="button" class="counter-btn" id="companionsMinus" aria-label="Menos acompañantes">−</button>
-              <input type="number" id="numAcompanantes" name="numAcompanantes" min="0" max="10" value="0" inputmode="numeric" pattern="[0-9]*">
-              <button type="button" class="counter-btn" id="companionsPlus" aria-label="Más acompañantes">+</button>
-            </div>
-            <p class="counter-hint" id="companionsHint">Sin acompañantes</p>
-          </div>
-
-          <!-- Tarjetas dinámicas por acompañante — generadas por JS -->
-          <div class="companions-list" id="companionsList" hidden></div>
-
           <div class="form-group">
             <label>¿Usarás el autobús privado?</label>
             <div class="radio-group">
@@ -2841,94 +2727,6 @@
       const msgTitle = document.getElementById('confirmationTitle');
       const msgText = document.getElementById('confirmationText');
 
-      // Elementos acompañantes
-      const compGroup = document.getElementById('companionsGroup');
-      const compList = document.getElementById('companionsList');
-      const compInput = document.getElementById('numAcompanantes');
-      const compMinus = document.getElementById('companionsMinus');
-      const compPlus = document.getElementById('companionsPlus');
-      const compHint = document.getElementById('companionsHint');
-      const MAX_COMP = 10;
-
-      function readCompanionValues() {
-        // Captura valores actuales antes de re-render (no perder lo tecleado)
-        const cards = compList.querySelectorAll('.companion-card');
-        return Array.from(cards).map(function(c) {
-          return {
-            nombre: c.querySelector('input[data-field="nombre"]').value,
-            apellido: c.querySelector('input[data-field="apellido"]').value
-          };
-        });
-      }
-
-      function renderCompanions() {
-        const n = Math.max(0, Math.min(MAX_COMP, parseInt(compInput.value, 10) || 0));
-        compInput.value = n;
-        compMinus.disabled = (n <= 0);
-        compPlus.disabled  = (n >= MAX_COMP);
-
-        if (n === 0) {
-          compHint.textContent = 'Sin acompañantes';
-        } else if (n === 1) {
-          compHint.textContent = '1 acompañante';
-        } else {
-          compHint.textContent = n + ' acompañantes';
-        }
-
-        const prev = readCompanionValues();
-        compList.innerHTML = '';
-        compList.hidden = (n === 0);
-
-        for (let i = 0; i < n; i++) {
-          const prevVal = prev[i] || { nombre: '', apellido: '' };
-          const card = document.createElement('div');
-          card.className = 'companion-card';
-          card.style.animationDelay = (i * 60) + 'ms';
-          card.innerHTML =
-            '<p class="companion-title">Acompañante ' + (i + 1) + '</p>' +
-            '<div class="companion-fields">' +
-              '<div class="form-group">' +
-                '<label for="comp-nombre-' + i + '">Nombre</label>' +
-                '<input type="text" id="comp-nombre-' + i + '" data-field="nombre" placeholder="Nombre" required>' +
-              '</div>' +
-              '<div class="form-group">' +
-                '<label for="comp-apellido-' + i + '">Apellido</label>' +
-                '<input type="text" id="comp-apellido-' + i + '" data-field="apellido" placeholder="Apellido" required>' +
-              '</div>' +
-            '</div>';
-          compList.appendChild(card);
-          card.querySelector('input[data-field="nombre"]').value = prevVal.nombre;
-          card.querySelector('input[data-field="apellido"]').value = prevVal.apellido;
-        }
-      }
-
-      // Toggle visibilidad sección acompañantes según asistencia
-      function toggleCompanions() {
-        const r = document.querySelector('input[name="asistencia"]:checked');
-        const goes = r && r.value === 'si';
-        compGroup.hidden = !goes;
-        if (!goes) {
-          compInput.value = 0;
-          renderCompanions();
-        }
-      }
-
-      // Listeners counter
-      compMinus.addEventListener('click', function() {
-        compInput.value = Math.max(0, (parseInt(compInput.value, 10) || 0) - 1);
-        renderCompanions();
-      });
-      compPlus.addEventListener('click', function() {
-        compInput.value = Math.min(MAX_COMP, (parseInt(compInput.value, 10) || 0) + 1);
-        renderCompanions();
-      });
-      compInput.addEventListener('input', renderCompanions);
-
-      // Listener radios asistencia
-      document.querySelectorAll('input[name="asistencia"]').forEach(function(r) {
-        r.addEventListener('change', toggleCompanions);
-      });
-
       function loadRSVP() {
         const saved = localStorage.getItem('wedding_rsvp');
         if (saved) {
@@ -2940,21 +2738,9 @@
       function showConfirmation(data) {
         form.style.display = 'none';
         msg.classList.add('active');
-
-        // Lista de acompañantes formateada
-        let compTxt = '';
-        if (data.acompanantes && data.acompanantes.length > 0) {
-          const names = data.acompanantes
-            .map(function(a) { return (a.nombre + ' ' + a.apellido).trim(); })
-            .filter(function(s) { return s.length > 0; });
-          if (names.length > 0) {
-            compTxt = ' Vendrás con ' + names.join(', ') + '.';
-          }
-        }
-
         if (data.asistencia === 'si') {
           msgTitle.textContent = '¡Gracias por confirmar!';
-          msgText.textContent = `${data.nombre}, nos alegra muchísimo que nos acompañes en este día tan especial.${compTxt} ¡Os esperamos!`;
+          msgText.textContent = `${data.nombre}, nos alegra muchísimo que nos acompañes en este día tan especial. ¡Te esperamos!`;
           if (window.__petalBurst) {
             setTimeout(function() { window.__petalBurst(30); }, 400);
           }
@@ -2978,10 +2764,6 @@
           return;
         }
 
-        // Recoger acompañantes (solo si asistencia=sí)
-        const goes = document.querySelector('input[name="asistencia"]:checked').value === 'si';
-        const acompanantes = goes ? readCompanionValues() : [];
-
         const data = {
           nombre: document.getElementById('nombre').value.trim(),
           apellido: document.getElementById('apellido').value.trim(),
@@ -2989,25 +2771,18 @@
           autobus: document.querySelector('input[name="autobus"]:checked').value,
           asistencia: document.querySelector('input[name="asistencia"]:checked').value,
           alergenos: document.getElementById('alergenos').value.trim(),
-          mensaje: document.getElementById('mensaje').value.trim(),
-          numAcompanantes: acompanantes.length,
-          acompanantes: acompanantes
+          mensaje: document.getElementById('mensaje').value.trim()
         };
 
         var rsvpBtn = document.getElementById('rsvpBtn');
         rsvpBtn.disabled = true;
         rsvpBtn.textContent = 'Enviando...';
 
-        // Google Apps Script no acepta arrays — serializar como JSON string
-        const payload = Object.assign({}, data, {
-          acompanantes: JSON.stringify(data.acompanantes)
-        });
-
         fetch('https://script.google.com/macros/s/AKfycby4pheD3krM6_kGLd2SN-JisTpXnS93_7RFiw95QDLulsKNnO7DESKkHonpfID6l1rfBA/exec', {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(payload).toString()
+          body: new URLSearchParams(data).toString()
         })
         .then(function() {
           localStorage.setItem('wedding_rsvp', JSON.stringify(data));
@@ -3019,9 +2794,6 @@
         });
       });
 
-      // Estado inicial
-      toggleCompanions();
-      renderCompanions();
       loadRSVP();
     })();
 
