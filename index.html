@@ -570,16 +570,35 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       padding: 4rem 0;
+      text-align: center;
+    }
+    .countdown-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 2.2rem;
     }
     .countdown-grid {
-      display: flex; justify-content: center; gap: 3rem;
+      display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap;
     }
+    /* Cada unidad como tarjeta editorial con filo dorado arriba */
     .countdown-item {
-      text-align: center; min-width: 90px;
+      text-align: center; min-width: 96px;
+      padding: 1.5rem 0.7rem 1.2rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold);
+      border-radius: 3px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+    }
+    .countdown-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
     }
     .countdown-number {
       font-family: 'Playfair Display', serif;
-      font-size: 3.5rem; font-weight: 600;
+      font-size: 3rem; font-weight: 600;
       color: var(--gold);
       line-height: 1;
       display: block;
@@ -587,12 +606,21 @@
       font-variant-numeric: tabular-nums;
       font-feature-settings: 'tnum' 1;
     }
+    /* Animación al cambiar el número (tick) */
+    .countdown-number.tick { animation: cdTick 0.5s var(--ease-out); }
+    @keyframes cdTick {
+      0%   { opacity: 0.25; transform: translateY(-7px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .countdown-number.tick { animation: none; }
+    }
     .countdown-label {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem; letter-spacing: 0.25em;
+      font-size: 0.72rem; letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-light);
-      margin-top: 0.5rem;
+      margin-top: 0.7rem;
       display: block;
     }
 
@@ -699,9 +727,32 @@
     }
     .detail-card a:hover { border-color: var(--gold); }
     .detail-card .map-iframe {
-      width: 100%; height: 220px;
-      border: none; margin-top: 1rem;
-      border-radius: 2px;
+      width: 100%; height: 230px;
+      border: 1px solid var(--border); margin-top: 1rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow-soft);
+    }
+    /* Acciones del mapa: ver + cómo llegar */
+    .map-actions {
+      display: flex; flex-direction: column; gap: 0.55rem;
+      margin-top: 0.9rem; align-items: center;
+    }
+    .map-actions a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem; letter-spacing: 0.06em;
+    }
+    /* "Cómo llegar" como botón dorado suave (acción principal) */
+    .map-actions .map-dir {
+      display: inline-block;
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      color: var(--gold-dark);
+      min-height: 40px; line-height: 1.6;
+      transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+    }
+    .map-actions .map-dir:hover {
+      background: var(--gold); color: #fff; border-color: var(--gold);
     }
     /* Botones añadir al calendario */
     .calendar-buttons {
@@ -2134,6 +2185,7 @@
   <!-- ── CUENTA REGRESIVA ────────────────── -->
   <section class="countdown-section">
     <div class="container">
+      <p class="countdown-kicker">Cuenta atrás para el gran día</p>
       <div class="countdown-grid" id="countdown">
         <div class="countdown-item">
           <span class="countdown-number" id="days">00</span>
@@ -2256,9 +2308,10 @@
           <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
             <span class="map-lazy-cta">Ver mapa</span>
           </div>
-          <p style="margin-top: 0.5rem;">
-            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Abrir en Google Maps →</a>
-          </p>
+          <div class="map-actions">
+            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
         </div>
 
         <div class="detail-card">
@@ -2268,9 +2321,10 @@
           <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
             <span class="map-lazy-cta">Ver mapa</span>
           </div>
-          <p style="margin-top: 0.5rem;">
-            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Abrir en Google Maps →</a>
-          </p>
+          <div class="map-actions">
+            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
         </div>
       </div>
     </div>
@@ -2751,30 +2805,33 @@
 
       function pad(n) { return String(n).padStart(2, '0'); }
 
-      function updateCountdown() {
-        const now = Date.now();
-        let diff = weddingDate - now;
+      // Actualiza un número; si cambió, dispara la animación 'tick'
+      function setNum(id, val) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const txt = pad(val);
+        if (el.textContent === txt) return;
+        el.textContent = txt;
+        el.classList.remove('tick');
+        void el.offsetWidth;        // reinicia la animación
+        el.classList.add('tick');
+      }
 
+      function updateCountdown() {
+        let diff = weddingDate - Date.now();
         if (diff <= 0) {
-          document.getElementById('days').textContent = '00';
-          document.getElementById('hours').textContent = '00';
-          document.getElementById('minutes').textContent = '00';
-          document.getElementById('seconds').textContent = '00';
+          ['days', 'hours', 'minutes', 'seconds'].forEach(function(id) { setNum(id, 0); });
           return;
         }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        diff -= days * 1000 * 60 * 60 * 24;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        diff -= hours * 1000 * 60 * 60;
-        const minutes = Math.floor(diff / (1000 * 60));
-        diff -= minutes * 1000 * 60;
+        const days = Math.floor(diff / 86400000);   diff -= days * 86400000;
+        const hours = Math.floor(diff / 3600000);   diff -= hours * 3600000;
+        const minutes = Math.floor(diff / 60000);   diff -= minutes * 60000;
         const seconds = Math.floor(diff / 1000);
 
-        document.getElementById('days').textContent = pad(days);
-        document.getElementById('hours').textContent = pad(hours);
-        document.getElementById('minutes').textContent = pad(minutes);
-        document.getElementById('seconds').textContent = pad(seconds);
+        setNum('days', days);
+        setNum('hours', hours);
+        setNum('minutes', minutes);
+        setNum('seconds', seconds);
       }
 
       updateCountdown();
@@ -3291,14 +3348,12 @@
           const src = el.getAttribute('data-map');
           if (!src) return;
           const iframe = document.createElement('iframe');
-          iframe.className = 'map-iframe';
+          iframe.className = 'map-iframe';   // estilo (tamaño, marco redondeado) desde CSS
           iframe.src = src;
           iframe.loading = 'lazy';
           iframe.referrerPolicy = 'no-referrer-when-downgrade';
           iframe.setAttribute('allowfullscreen', '');
-          iframe.style.width = '100%';
-          iframe.style.height = '220px';
-          iframe.style.border = '0';
+          iframe.title = 'Mapa';
           el.replaceWith(iframe);
         }
         el.addEventListener('click', load);
