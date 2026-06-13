@@ -17,6 +17,7 @@
 
   <!-- Open Graph (preview bonito al compartir en WhatsApp, Telegram, Insta, etc.) -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jaybieychristine.github.io/">
   <meta property="og:title" content="Jaybie & Christine — Nuestra Boda">
   <meta property="og:description" content="10 de Octubre de 2026. Acompáñanos en nuestro gran día.">
   <meta property="og:locale" content="es_ES">
@@ -52,7 +53,7 @@
       }
     ],
     "description": "Acompáñanos en nuestra boda el 10 de octubre de 2026.",
-    "url": "https://michaelmj15.github.io/Boda-Jaybe-Christine/"
+    "url": "https://jaybieychristine.github.io/"
   }
   </script>
 
@@ -100,6 +101,12 @@
       /* Acentos pastel cálidos (editorial minimal) */
       --pastel-cream: #FBF3DB;
       --pastel-cream-text: #956400;
+
+      /* Acentos de color (del dress code) — uso puntual, dorado sigue dominando */
+      --emerald: #0d4f3c;       /* esmeralda */
+      --emerald-soft: #e7efeb;  /* esmeralda muy tenue para fondos */
+      --wine: #722f37;          /* vino */
+      --wine-soft: #f3eaeb;     /* vino muy tenue para fondos */
     }
 
     html {
@@ -200,6 +207,12 @@
     .countdown-section::before,
     .countdown-section::after { display: none; }
 
+    /* Divisores alternan color al hacer scroll (dorado → esmeralda → vino) */
+    section:nth-of-type(3n+2) + .section::before { background: linear-gradient(180deg, transparent, var(--emerald)); }
+    section:nth-of-type(3n+2) + .section::after  { background: var(--emerald); }
+    section:nth-of-type(3n+3) + .section::before { background: linear-gradient(180deg, transparent, var(--wine)); }
+    section:nth-of-type(3n+3) + .section::after  { background: var(--wine); }
+
     .section-tag {
       display: inline-block;
       font-family: 'Cormorant Garamond', serif;
@@ -218,6 +231,100 @@
       transform: translateX(-50%);
       width: 40px; height: 1px;
       background: var(--gold);
+    }
+    /* Variante esmeralda del tag (acento puntual, ej. Nuestra Historia) */
+    .section-tag--alt { color: var(--emerald); }
+    .section-tag--alt::after { background: var(--emerald); }
+
+    /* ── SECCIÓN NUESTRA HISTORIA (timeline) ── */
+    .historia { background: var(--emerald-soft); }   /* tinte cálido para diferenciar bloque */
+    .historia .container { max-width: 820px; }
+
+    .timeline {
+      position: relative;
+      margin-top: 3rem;
+      padding: 1rem 0;
+    }
+    /* Línea vertical central */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--gold) 12%, var(--gold) 88%, transparent);
+      opacity: 0.55;
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 2.5rem 2.5rem;
+      box-sizing: border-box;
+    }
+    /* Alternar lados en desktop */
+    .timeline-item:nth-child(odd)  { left: 0; text-align: right; }
+    .timeline-item:nth-child(even) { left: 50%; text-align: left; }
+
+    /* Punto/diamante sobre la línea */
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      top: 0.35rem;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 0 4px var(--emerald-soft);
+    }
+    .timeline-item:nth-child(odd)::after  { right: -5px; }
+    .timeline-item:nth-child(even)::after { left: -5px; }
+
+    .timeline-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .timeline-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    /* Hueco de foto preparado (vacío hasta tener fotos reales) */
+    .historia-foto {
+      margin-top: 1rem;
+      aspect-ratio: 4 / 3;
+      border-radius: 4px;
+      background: var(--cream);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* Móvil: timeline en una sola columna a la izquierda */
+    @media (max-width: 768px) {
+      .timeline::before { left: 7px; transform: none; }
+      .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        text-align: left !important;
+        padding: 0 0 2rem 2rem;
+      }
+      .timeline-item::after { left: 2px !important; right: auto !important; }
     }
 
     .section-title {
@@ -336,7 +443,9 @@
     /* Entry animation hero — cada elemento aparece en cascada al cargar */
     .hero-badge,
     .hero-names span,
-    .hero-date {
+    .hero-tagline,
+    .hero-date,
+    .hero-place {
       opacity: 0;
       transform: translateY(20px);
       animation: heroEntry 900ms var(--ease-out) forwards;
@@ -345,7 +454,9 @@
     .hero-names span:nth-child(1) { animation-delay: 400ms; }
     .hero-names .and  { animation-delay: 550ms; }
     .hero-names span:nth-child(3) { animation-delay: 700ms; }
-    .hero-date        { animation-delay: 950ms; }
+    .hero-tagline     { animation-delay: 900ms; }
+    .hero-date        { animation-delay: 1100ms; }
+    .hero-place       { animation-delay: 1250ms; }
     /* .hero-scroll entry separado para no chocar con su anim de float */
     .hero-scroll {
       opacity: 0;
@@ -360,7 +471,9 @@
     @media (prefers-reduced-motion: reduce) {
       .hero-badge,
       .hero-names span,
+      .hero-tagline,
       .hero-date,
+      .hero-place,
       .hero-scroll {
         animation: none;
         opacity: 1;
@@ -379,22 +492,33 @@
 
     .hero-names {
       font-family: 'Playfair Display', serif;
-      /* clamp() escala suave entre móvil y desktop sin breakpoints */
-      font-size: clamp(2.5rem, 9vw, 5rem);
+      /* clamp() escala suave entre móvil y desktop sin breakpoints — nombres dominan pantalla */
+      font-size: clamp(3rem, 11vw, 6.5rem);
       font-weight: 500;
       color: var(--dark);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
     }
     .hero-names span { display: block; }
     .hero-names .and {
-      font-size: 1.6rem;
+      /* Ampersand decorativo con presencia */
+      font-size: clamp(2rem, 5vw, 3rem);
       font-style: italic;
-      color: var(--gold);
+      color: var(--emerald);
       display: block;
-      margin: 0.5rem 0 1rem;
+      margin: 0.6rem 0 1.2rem;
       font-weight: 400;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
+    }
+
+    /* Frase personal bajo los nombres (editable) */
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-style: italic;
+      color: var(--text);
+      margin-top: 1.5rem;
+      letter-spacing: 0.02em;
     }
 
     .hero-date {
@@ -402,7 +526,16 @@
       font-size: 1.2rem;
       letter-spacing: 0.15em;
       color: var(--text);
-      margin-top: 2rem;
+      margin-top: 1.5rem;
+    }
+    /* Lugar bajo la fecha */
+    .hero-place {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 0.6rem;
     }
 
     .hero-scroll {
@@ -1573,441 +1706,252 @@
       .hero { min-height: auto; padding: 4rem 2rem; }
     }
 
-    /* ── ENVELOPE OVERLAY ──────────────────── */
-    .env-overlay {
+    /* ── INTRO PUERTAS IGLESIA ──────────────── */
+    .intro {
       position: fixed; inset: 0; z-index: 10000;
-      display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 40% 40%, #1a1408 0%, #110e06 60%, #0d0b04 100%);
+      background: var(--cream);
       overflow: hidden;
-      transition: opacity 0.6s ease 0.8s;
+      transition: opacity 0.8s ease;
+      /* Coordenadas del portal — FRACCIÓN DE LA IMAGEN (459x1024), no del viewport.
+         Así las puertas encajan igual en cualquier pantalla. AJUSTABLES. */
+      --door-x: 50%;
+      --door-y: 72%;
+      --door-w: 21%;
+      --door-h: 10%;
     }
-    .env-overlay::before {
-      content: '';
+    .intro.done { opacity: 0; pointer-events: none; }
+    .intro.hidden { display: none; }
+
+    /* Escena que hace zoom hacia el portal al abrir */
+    .intro-stage {
       position: absolute; inset: 0;
-      background-image:
-        radial-gradient(ellipse at 25% 25%, rgba(201,169,110,0.08) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 75%, rgba(180,140,70,0.06) 0%, transparent 55%);
-      pointer-events: none;
+      perspective: 1200px;
+      transform-origin: 50% var(--door-y);
+      transition: transform 2.6s var(--ease-in-out);
+      will-change: transform;
     }
-    .env-overlay.hidden { display: none; }
-    .env-overlay.done { opacity: 0; pointer-events: none; }
+    .intro.abierta .intro-stage { transform: scale(2.6); }
 
-    .env-wrapper {
-      position: relative;
-      width: 100vw; height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    /* ── ENVELOPE (dark navy, 3D realista) ── */
-    .env-envelope {
-      position: relative;
-      width: min(86vw, 500px);
-      aspect-ratio: 3 / 2;
-      perspective: 1800px;
-      z-index: 2;
-      transition: opacity 0.5s ease 0.2s;
-      filter:
-        drop-shadow(0 32px 64px rgba(0,0,0,0.8))
-        drop-shadow(0 6px 18px rgba(0,0,0,0.55));
-    }
-    .env-overlay.abierto .env-envelope {
-      opacity: 0; pointer-events: none;
-    }
-    @media (max-height: 600px) {
-      .env-envelope { width: min(78vw, 400px); }
-    }
-
-    /* Envelope front body - dorado y crema */
-    .env-body {
-      position: absolute; inset: 0;
-      background:
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.1 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>"),
-        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.22) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 85%, rgba(60,40,10,0.3) 0%, transparent 55%),
-        linear-gradient(160deg, #c9a96e 0%, #d4b87a 45%, #b8923a 100%);
-      border: 2px solid #9c7e4a;
-      border-radius: 3px;
-      z-index: 2;
-      overflow: hidden;
-      box-shadow:
-        0 50px 120px rgba(0,0,0,0.75),
-        0 20px 40px rgba(0,0,0,0.5),
-        0 4px 10px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.5),
-        inset 0 -2px 6px rgba(60,40,10,0.3);
-    }
-    .env-body::before { display: none; }
-    .env-body::after  { display: none; }
-
-    /* Pliegues laterales e inferior (patrón X sutil) */
-    .env-fold-l {
-      position: absolute; inset: 0; z-index: 1;
-      clip-path: polygon(0 0, 0 100%, 50% 50%);
-      background: linear-gradient(135deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.18) 100%);
-      mix-blend-mode: multiply;
-    }
-    .env-fold-r {
-      position: absolute; inset: 0; z-index: 1;
-      clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-      background: linear-gradient(225deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.18) 100%);
-      mix-blend-mode: multiply;
-    }
-    .env-fold-b {
-      position: absolute; inset: 0; z-index: 1;
-      clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-      background: linear-gradient(0deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 100%);
-      mix-blend-mode: multiply;
-    }
-
-    /* Interior dorado — solo visible cuando la solapa abre */
-    .env-interior {
-      position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(180deg, #f5ede0 0%, #ede0c6 100%);
-    }
-    .env-interior-line { display: none; }
-
-    /* Flap - triángulo navy oscuro */
-    .env-flap {
-      position: absolute; top: 0; left: 0; right: 0; height: 52%;
-      z-index: 4;
-      transform-origin: top center;
-      transform: rotateX(0deg);
-      transition: transform 1.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      backface-visibility: hidden;
-    }
-    .env-flap::before {
-      content: '';
-      position: absolute; inset: 0;
-      clip-path: polygon(0 0, 50% 100%, 100% 0);
-      background:
-        repeating-linear-gradient(125deg, transparent 0, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 3px),
-        repeating-linear-gradient(45deg, transparent 0, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 4px),
-        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.5) 0%, transparent 60%),
-        linear-gradient(175deg, #faf5ec 0%, #f5ede0 50%, #e8dcc4 100%);
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
-    }
-    .env-flap-border {
+    /* Wrap con el ratio exacto de la ilustración (459/1024) — iglesia COMPLETA visible
+       (contain), centrada y llenando el alto. El margen sobrante usa color papel (ver
+       fondo .intro) para que parezca una lámina enmarcada, sin barras negras.
+       Las puertas se posicionan respecto a ESTE wrap = fracción de la imagen. */
+    .intro-church-wrap {
       position: absolute;
-      top: -2px; left: -2px; right: -2px;
-      height: calc(100% + 2px);
-      clip-path: polygon(0 0, 50% 100%, 100% 0);
-      z-index: -1;
-      background: #9c7e4a;
-    }
-    .env-overlay.abierto .env-flap { transform: rotateX(-180deg); }
-
-    .env-flap-inner {
-      position: absolute; top: 0; left: 0; right: 0; height: 52%;
-      z-index: 3;
-      transform: rotateX(180deg);
-      backface-visibility: hidden; pointer-events: none;
-    }
-    .env-flap-inner::before {
-      content: '';
-      position: absolute; inset: 0;
-      clip-path: polygon(0 0, 50% 100%, 100% 0);
-      background: linear-gradient(180deg, #ede0c6 0%, #f5ede0 100%);
-    }
-
-    /* Sello de cera - dorado realista 3D */
-    .env-seal {
-      position: absolute;
-      left: 50%; top: 46%;
-      transform: translate(-50%, -50%) rotate(-8deg);
-      z-index: 10;
-      width: 72px; height: 72px;
-      border-radius: 44% 56% 52% 48% / 51% 47% 55% 45%;
-      background:
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.18 0 0 0 0 0.03 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
-        radial-gradient(circle at 30% 24%, rgba(255,248,210,0.85) 0%, rgba(255,235,160,0.5) 18%, transparent 38%),
-        radial-gradient(circle at 68% 76%, rgba(30,16,2,0.7) 0%, transparent 42%),
-        radial-gradient(ellipse at 35% 30%,
-          #fff3c0 0%,
-          #e8b830 18%,
-          #c48a10 40%,
-          #9a6508 62%,
-          #6e4405 80%,
-          #4a2d03 100%
-        );
-      display: flex; align-items: center; justify-content: center;
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.55),
-        0 5px 12px rgba(0,0,0,0.4),
-        inset 0 6px 14px rgba(255,238,170,0.9),
-        inset 0 -10px 20px rgba(35,18,2,0.85),
-        inset 4px 0 10px rgba(255,220,120,0.25),
-        inset -4px 0 10px rgba(40,20,2,0.5);
-      cursor: pointer;
-      animation: sealGlow 3s ease-in-out infinite;
-      transition: transform 0.3s ease, opacity 0.2s ease;
-      user-select: none;
-    }
-    .env-seal::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border-radius: 50%;
-      border: 2px solid rgba(90,58,10,0.5);
-      box-shadow:
-        inset 0 3px 6px rgba(255,240,160,0.7),
-        inset 0 -4px 7px rgba(30,15,2,0.55),
-        0 2px 4px rgba(255,230,130,0.65),
-        0 -1px 2px rgba(30,15,2,0.35);
-      pointer-events: none;
-    }
-    .env-seal::after {
-      content: '';
-      position: absolute;
-      inset: 13px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 35%,
-        rgba(255,235,150,0.1) 0%,
-        rgba(0,0,0,0.05) 60%,
-        rgba(0,0,0,0.15) 100%
-      );
-      pointer-events: none;
-    }
-    .env-seal:hover {
-      transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
-    }
-    .env-overlay.abierto .env-seal { opacity: 0; pointer-events: none; }
-
-    @keyframes sealGlow {
-      0%, 100% {
-        box-shadow:
-          0 10px 28px rgba(0,0,0,0.55),
-          0 5px 12px rgba(0,0,0,0.4),
-          inset 0 6px 14px rgba(255,238,170,0.9),
-          inset 0 -10px 20px rgba(35,18,2,0.85),
-          inset 4px 0 10px rgba(255,220,120,0.25),
-          inset -4px 0 10px rgba(40,20,2,0.5),
-          0 0 0 0 rgba(212,168,50,0);
-      }
-      50% {
-        box-shadow:
-          0 10px 28px rgba(0,0,0,0.55),
-          0 5px 12px rgba(0,0,0,0.4),
-          inset 0 6px 14px rgba(255,238,170,0.9),
-          inset 0 -10px 20px rgba(35,18,2,0.85),
-          inset 4px 0 10px rgba(255,220,120,0.25),
-          inset -4px 0 10px rgba(40,20,2,0.5),
-          0 0 14px 4px rgba(212,168,50,0.25);
-      }
-    }
-
-    /* Monograma bajo el sello — efecto embossed (presionado) */
-    .env-monogram {
-      position: absolute;
-      left: 50%; top: 75%;
+      left: 50%; top: 50%;
       transform: translate(-50%, -50%);
-      z-index: 6;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.25em;
-      color: rgba(80, 50, 10, 0.45);
-      pointer-events: none;
-      text-align: center;
-      line-height: 1.6;
-      text-shadow:
-        0 1px 0 rgba(255, 245, 220, 0.6),
-        0 -1px 0 rgba(40, 25, 5, 0.25);
-      font-weight: 500;
-    }
-
-    .env-ribbon { display: none; }
-
-    /* ── INVITATION CARD (fullscreen) ────── */
-    .env-card {
-      position: fixed;
-      left: 0;
-      top: 100%;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 10001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      transition:
-        top 1.2s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.4s ease 0.3s;
-    }
-
-    .env-overlay.abierto .env-card {
-      top: 0;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .env-overlay.done .env-card {
-      opacity: 0;
-      transition: opacity 0.4s ease 0.8s;
-    }
-
-    .env-card-inner {
-      width: 100%;
-      max-width: 460px;
       height: 100%;
-      max-height: 680px;
-      padding: 3rem 2.2rem;
+      aspect-ratio: 459 / 1024;
+      box-shadow: 0 0 60px rgba(0,0,0,0.12);
+    }
+    .intro-church {
+      position: absolute; inset: 0;
+      background: #e9e4da url('img/iglesia.jpg') center / cover no-repeat;
+    }
+
+    /* Conjunto de puertas posicionado sobre el portal (coords = fracción imagen) */
+    .intro-doors {
+      position: absolute;
+      left: var(--door-x); top: var(--door-y);
+      width: var(--door-w); height: var(--door-h);
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+    }
+    /* Luz cálida interior (se ve al abrir las hojas) */
+    .intro-threshold {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 55%, #f3d79a 0%, #b07d28 35%, #3a2606 75%, #1a1102 100%);
+    }
+    /* Hojas de la puerta — REJILLA METÁLICA (celosía gris-bronce, como la real) */
+    .intro-door {
+      position: absolute; top: 0; bottom: 0; width: 50%;
+      background:
+        /* barras verticales de la rejilla */
+        repeating-linear-gradient(90deg, #514a3d 0 1.5px, transparent 1.5px 7px),
+        /* barras horizontales de la rejilla */
+        repeating-linear-gradient(0deg, #514a3d 0 1.5px, transparent 1.5px 8px),
+        /* trama diagonal sutil (aspecto entrelazado) */
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 6px),
+        /* base metálica gris-bronce con reflejo */
+        linear-gradient(135deg, #cac4b6 0%, #ada695 42%, #918a7b 72%, #7d7668 100%);
+      border: 3px solid #655d4e;
+      box-shadow:
+        inset 0 0 8px rgba(0,0,0,0.35),
+        inset 0 0 0 1px rgba(255,255,255,0.18);
+      backface-visibility: hidden;
+      transition: transform 1.4s var(--ease-drawer);
+    }
+    /* Marco interior metálico (doble recuadro, como la puerta real) */
+    .intro-door::before {
+      content: '';
+      position: absolute; inset: 8% 10%;
+      border: 2px solid rgba(70,63,50,0.7);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .intro-door--l { left: 0;  transform-origin: left center;  border-right: none; }
+    .intro-door--r { right: 0; transform-origin: right center; border-left: none; }
+    .intro.abierta .intro-door--l { transform: rotateY(-110deg); }
+    .intro.abierta .intro-door--r { transform: rotateY(110deg); }
+
+    /* Hoja de invitación (aparece dentro tras abrir las puertas) */
+    .intro-page {
+      position: fixed; inset: 0; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.9rem; text-align: center; padding: 2rem;
+      /* fondo papel con vignette sutil (no plano) */
+      background: radial-gradient(ellipse at 50% 40%, #ffffff 0%, var(--cream) 58%, #f1ece2 100%);
+      opacity: 0; transform: scale(0.96);
+      pointer-events: none;
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .intro-page.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
+    /* Marco fino dorado (passe-partout) */
+    .intro-page::before {
+      content: '';
+      position: absolute; inset: clamp(14px, 3vw, 34px);
+      border: 1px solid rgba(201,169,110,0.40);
+      pointer-events: none;
+    }
+
+    /* ── MARCO ART-DECO ── */
+    .intro-deco {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90vw, 460px); height: auto;
+      aspect-ratio: 400 / 560;
+      z-index: -1; pointer-events: none; overflow: visible;
+    }
+    /* Líneas del marco: se trazan */
+    .intro-deco .dline {
+      stroke-dasharray: 2300; stroke-dashoffset: 2300;
+    }
+    .intro-page.visible .intro-deco .dline {
+      animation: dDraw 1.7s var(--ease-in-out) 0.15s forwards;
+    }
+    @keyframes dDraw { to { stroke-dashoffset: 0; } }
+    /* Abanicos (rising-sun deco): escalan desde su vértice */
+    .intro-deco #fanTop { transform-box: fill-box; transform-origin: 50% 100%; }
+    .intro-deco #fanBot { transform-box: fill-box; transform-origin: 50% 0%; }
+    .intro-deco .fan { opacity: 0; }
+    .intro-page.visible .intro-deco .fan {
+      animation: dFan 0.9s var(--ease-out) 0.6s forwards;
+    }
+    @keyframes dFan {
+      from { opacity: 0; transform: scaleY(0.08) scaleX(0.55); }
+      to   { opacity: 1; transform: none; }
+    }
+    /* Studs/diamantes de esquina: aparecen */
+    .intro-deco .dpop {
+      opacity: 0; transform-box: fill-box; transform-origin: center;
+    }
+    .intro-page.visible .intro-deco .dpop {
+      animation: dPop 0.5s var(--ease-out) 1.2s forwards;
+    }
+    @keyframes dPop {
+      from { opacity: 0; transform: scale(0); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-deco .dline { stroke-dashoffset: 0; animation: none; }
+      .intro-deco .fan, .intro-deco .dpop { opacity: 1; animation: none; transform: none; }
+    }
+
+    /* Stagger de entrada de los elementos (excluye el marco SVG) */
+    .intro-page > *:not(.intro-deco) { opacity: 0; transform: translateY(14px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .intro-page.visible > *:not(.intro-deco) { opacity: 1; transform: none; }
+    .intro-page.visible .intro-page-kicker { transition-delay: 0.15s; }
+    .intro-page.visible .intro-page-names  { transition-delay: 0.30s; }
+    .intro-page.visible .intro-page-orn    { transition-delay: 0.50s; }
+    .intro-page.visible .intro-page-date   { transition-delay: 0.62s; }
+    .intro-page.visible .intro-page-place  { transition-delay: 0.74s; }
+    .intro-page.visible .intro-page-enter  { transition-delay: 0.95s; }
+
+    .intro-page-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .intro-page-names {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 9vw, 4.5rem);
+      font-weight: 500; color: var(--dark); line-height: 1.08;
+    }
+    .intro-page-names span { display: block; }
+    .intro-page-names .and {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-style: italic; color: var(--emerald);
+      margin: 0.2rem 0; font-weight: 400;
+    }
+    /* Ornamento: línea — diamante — línea */
+    .intro-page-orn {
+      display: flex; align-items: center; justify-content: center; gap: 0.85rem;
+      margin: 0.2rem 0;
+    }
+    .intro-page-orn::before, .intro-page-orn::after {
+      content: ''; width: 48px; height: 1px;
+    }
+    .intro-page-orn::before { background: linear-gradient(90deg, transparent, var(--gold)); }
+    .intro-page-orn::after  { background: linear-gradient(90deg, var(--gold), transparent); }
+    .intro-page-orn i {
+      width: 6px; height: 6px; background: var(--gold);
+      transform: rotate(45deg); display: block;
+    }
+    .intro-page-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; letter-spacing: 0.15em; color: var(--text);
+    }
+    .intro-page-place {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-light); max-width: 22rem;
+    }
+    .intro-page-enter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--gold); margin-top: 1.4rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    }
+    .intro-page-enter .chev {
+      width: 9px; height: 9px;
+      border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+      transform: rotate(45deg);
+      animation: chevBob 2s ease-in-out infinite;
+    }
+    @keyframes chevBob {
+      0%, 100% { transform: rotate(45deg) translate(0,0); opacity: 0.5; }
+      50%      { transform: rotate(45deg) translate(2px,2px); opacity: 1; }
+    }
+
+    /* Pista inferior */
+    .intro-hint {
+      position: absolute; left: 0; right: 0; bottom: 2rem; z-index: 3;
       text-align: center;
-      border: 2px solid var(--gold);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      overflow-y: auto;
-    }
-
-    /* Gold corner decorations */
-    .env-card-inner::before {
-      content: '';
-      position: absolute;
-      top: 0.8rem; left: 0.8rem;
-      width: 24px; height: 24px;
-      border-top: 2px solid var(--gold);
-      border-left: 2px solid var(--gold);
-      opacity: 0.6;
-    }
-    .env-card-inner::after {
-      content: '';
-      position: absolute;
-      bottom: 0.8rem; right: 0.8rem;
-      width: 24px; height: 24px;
-      border-bottom: 2px solid var(--gold);
-      border-right: 2px solid var(--gold);
-      opacity: 0.6;
-    }
-
-    /* Extra corners (top-right & bottom-left) via pseudo elements */
-    .env-card-inner .corner-tr,
-    .env-card-inner .corner-bl {
-      position: absolute;
-      width: 24px; height: 24px;
-      opacity: 0.6;
-    }
-    .env-card-inner .corner-tr {
-      top: 0.8rem; right: 0.8rem;
-      border-top: 2px solid var(--gold);
-      border-right: 2px solid var(--gold);
-    }
-    .env-card-inner .corner-bl {
-      bottom: 0.8rem; left: 0.8rem;
-      border-bottom: 2px solid var(--gold);
-      border-left: 2px solid var(--gold);
-    }
-
-    .env-card-badge {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .env-card-seal {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.5rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.6rem;
-      color: var(--gold);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      box-shadow: 0 2px 8px rgba(201,169,110,0.1);
-    }
-
-    .env-card-names {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 500;
-      color: var(--dark);
-      line-height: 1.15;
-      letter-spacing: 0.02em;
-    }
-    .env-card-names span { display: block; }
-    .env-card-names .env-and {
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--gold);
-      display: block;
-      margin: 0.1rem 0;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-    }
-
-    .env-card-ornament {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7rem;
-      color: var(--gold);
-      font-size: 0.4rem;
-      letter-spacing: 0.3em;
-      margin: 0.3rem 0;
-    }
-    .env-card-ornament::before,
-    .env-card-ornament::after {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .env-card-text {
-      font-family: 'Lora', serif;
-      font-size: 0.85rem;
-      line-height: 1.9;
-      color: var(--text);
-      max-width: 340px;
-      margin: 0.3rem auto;
-      font-style: italic;
-    }
-
-    .env-card-date {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--gold);
-      margin-top: 0.3rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-    }
-
-    .env-card-footer {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-top: 0.3rem;
-    }
-
-    .env-card-hint {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      color: var(--text-light);
-      margin-top: 1rem;
+      font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
       animation: hintPulse 2.2s ease-in-out infinite;
+      pointer-events: none;
     }
+    .intro.abierta .intro-hint,
+    .intro.done .intro-hint { display: none; }
 
     @keyframes hintPulse {
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
     }
+
+    /* Coords del portal = fracción de imagen → iguales en móvil y desktop (no override) */
+
+    /* Reduced motion: sin zoom ni rotación, solo crossfade */
+    @media (prefers-reduced-motion: reduce) {
+      .intro.abierta .intro-stage { transform: none; }
+      .intro.abierta .intro-door--l,
+      .intro.abierta .intro-door--r { transform: none; opacity: 0; }
+      .intro-stage, .intro-door { transition: opacity 0.6s ease; }
+    }
+
+
 
     /* ── PÉTALOS AMBIENT ────────────────────── */
     /* Contenedor fixed, no bloquea clicks, detrás del contenido */
@@ -2067,7 +2011,7 @@
       .nav,
       .audio-toggle,
       .petals,
-      .env-overlay,
+      .intro,
       .photo-upload,
       .upload-area,
       #recuerdos,
@@ -2102,98 +2046,54 @@
   <!-- Pétalos ambient cayendo (background decorativo) -->
   <div class="petals" id="petals" aria-hidden="true"></div>
 
-  <!-- ── ENVELOPE OVERLAY ─────────────────── -->
-  <div class="env-overlay" id="envOverlay">
-    <div class="env-wrapper">
-      <div class="env-envelope" id="envEnvelope">
-        <div class="env-body">
-          <div class="env-interior"></div>
-          <div class="env-fold-l"></div>
-          <div class="env-fold-r"></div>
-          <div class="env-fold-b"></div>
-          <div class="env-flap">
-            <div class="env-flap-border"></div>
-          </div>
-          <div class="env-flap-inner"></div>
-          <div class="env-ribbon"></div>
-          <div class="env-seal" id="envSeal">
-            <svg width="54" height="54" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Pétalos exteriores - 12 pétalos forma gota -->
-              <g fill="rgba(42,24,3,0.52)">
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(30 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(60 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(90 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(120 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(150 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(180 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(210 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(240 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(270 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(300 30 30)"/>
-                <path d="M30,30 C26,20 26,11 30,9 C34,11 34,20 30,30" transform="rotate(330 30 30)"/>
-              </g>
-              <!-- Pétalos interiores - 12 más cortos intercalados -->
-              <g fill="rgba(42,24,3,0.32)">
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(15 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(45 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(75 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(105 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(135 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(165 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(195 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(225 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(255 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(285 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(315 30 30)"/>
-                <path d="M30,30 C28,24 28,18 30,16 C32,18 32,24 30,30" transform="rotate(345 30 30)"/>
-              </g>
-              <!-- Disco central -->
-              <circle cx="30" cy="30" r="8.5" fill="rgba(38,20,2,0.78)"/>
-              <!-- Semillas en espiral fibonacci -->
-              <circle cx="30" cy="23" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="34.2" cy="25" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="36" cy="29.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="34.2" cy="34.2" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="30" cy="36.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="25.8" cy="34.2" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="24" cy="29.5" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="25.8" cy="25" r="1.1" fill="rgba(55,32,4,0.55)"/>
-              <circle cx="30" cy="27.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
-              <circle cx="32" cy="29.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
-              <circle cx="30" cy="31.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
-              <circle cx="28" cy="29.5" r="0.9" fill="rgba(55,32,4,0.45)"/>
-            </svg>
-          </div>
-          <div class="env-monogram">Jaybie<br><span style="font-style:italic;font-size:0.75rem;opacity:0.7">y</span><br>Christine</div>
-        </div>
-      </div>
-
-      <div class="env-card">
-        <div class="env-card-inner">
-          <span class="corner-tr"></span>
-          <span class="corner-bl"></span>
-          <p class="env-card-badge">Invitación</p>
-          <div class="env-card-seal">J &amp; C</div>
-          <h1 class="env-card-names">
-            <span>Jaybie</span>
-            <span class="env-and">&amp;</span>
-            <span>Christine</span>
-          </h1>
-          <div class="env-card-ornament">✦</div>
-          <p class="env-card-text">
-            Con la bendición de Dios y el amor de nuestras familias,<br>
-            queremos compartir con usted uno de los momentos más importantes de nuestras vidas,<br>
-            y tenemos el honor de invitarle a la celebración de nuestro enlace matrimonial.
-          </p>
-          <div class="env-card-ornament">✦</div>
-          <p class="env-card-date">Sábado, 10 de Octubre de 2026</p>
-          <div class="env-card-ornament">✦</div>
-          <p class="env-card-footer">Te esperamos</p>
-          <p class="env-card-hint">Toca para continuar</p>
+  <!-- ── INTRO PUERTAS IGLESIA ─────────────── -->
+  <div class="intro" id="intro">
+    <div class="intro-stage" id="introStage">
+      <div class="intro-church-wrap">
+        <div class="intro-church"></div>
+        <div class="intro-doors">
+          <div class="intro-threshold"></div>
+          <div class="intro-door intro-door--l"></div>
+          <div class="intro-door intro-door--r"></div>
         </div>
       </div>
     </div>
+
+    <!-- Hoja de invitación (aparece al entrar) -->
+    <div class="intro-page" id="introPage">
+      <!-- Marco art-deco: doble marco que se traza + abanicos (rising-sun) + studs esquina -->
+      <svg class="intro-deco" id="introDeco" viewBox="0 0 400 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="decoGold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e6cf94"/>
+            <stop offset="0.55" stop-color="#c9a96e"/>
+            <stop offset="1" stop-color="#9c7e4a"/>
+          </linearGradient>
+        </defs>
+        <!-- Doble marco -->
+        <rect class="dline" x="22" y="22" width="356" height="516" fill="none" stroke="url(#decoGold)" stroke-width="1.5"/>
+        <rect class="dline" x="31" y="31" width="338" height="498" fill="none" stroke="url(#decoGold)" stroke-width="0.7" opacity="0.6"/>
+        <!-- Studs/diamantes en las 4 esquinas -->
+        <path class="dpop" d="M22,13 L31,22 L22,31 L13,22 Z" fill="url(#decoGold)"/>
+        <path class="dpop" d="M378,13 L387,22 L378,31 L369,22 Z" fill="url(#decoGold)"/>
+        <path class="dpop" d="M22,529 L31,538 L22,547 L13,538 Z" fill="url(#decoGold)"/>
+        <path class="dpop" d="M378,529 L387,538 L378,547 L369,538 Z" fill="url(#decoGold)"/>
+        <!-- Abanicos generados por JS -->
+        <g id="fanTop" class="fan"></g>
+        <g id="fanBot" class="fan"></g>
+      </svg>
+      <p class="intro-page-kicker">Nos casamos</p>
+      <h1 class="intro-page-names">
+        <span>Jaybie</span>
+        <span class="and">&amp;</span>
+        <span>Christine</span>
+      </h1>
+      <div class="intro-page-orn"><i></i></div>
+      <p class="intro-page-date">Sábado, 10 de Octubre de 2026</p>
+      <p class="intro-page-enter">Toca para entrar<span class="chev"></span></p>
+    </div>
+
+    <p class="intro-hint" id="introHint">Toca para abrir las puertas</p>
     <audio id="envMusic" src="https://res.cloudinary.com/dkerabcck/video/upload/v1777921696/A_Thousand_Years_-_Christina_Perri_-_reduzida_w41azh.mp3" preload="auto" loop></audio>
   </div>
 
@@ -2203,6 +2103,7 @@
       <a href="#inicio">Inicio</a>
       <a href="#detalles">Detalles</a>
       <a href="#padrinos">Padrinos</a>
+      <a href="#historia">Historia</a>
       <a href="#galeria">Galería</a>
       <a href="#rsvp">Confirmar</a>
       <a href="#faq">FAQ</a>
@@ -2220,7 +2121,10 @@
       <span class="and">&amp;</span>
       <span>Christine</span>
     </h1>
+    <!-- Frase personal de la pareja — EDITABLE -->
+    <p class="hero-tagline">Empieza nuestra historia juntos.</p>
     <p class="hero-date">10 de Octubre de 2026</p>
+    <p class="hero-place">Parroquia Santa María Micaela y San Enrique</p>
     <a class="hero-scroll" href="#detalles" aria-label="Ir a los detalles">
       Desliza
       <span aria-hidden="true"></span>
@@ -2411,9 +2315,42 @@
   </section>
 
   <!-- ── GALERÍA ──────────────────────────── -->
+  <!-- ── NUESTRA HISTORIA (timeline) ─────── -->
+  <section class="section historia fade-in" id="historia">
+    <div class="container">
+      <p class="section-tag section-tag--alt">Nuestra historia</p>
+      <h2 class="section-title">Cómo llegamos hasta aquí</h2>
+
+      <!-- Timeline — TEXTOS Y FECHAS EDITABLES. Añade/quita hitos según vuestra historia -->
+      <div class="timeline stagger">
+        <div class="timeline-item">
+          <p class="timeline-year">El comienzo</p>
+          <h3 class="timeline-title">Cómo nos conocimos</h3>
+          <p class="timeline-text">Aquí va la historia de cómo os conocisteis. Sustituye este texto por vuestro momento real.</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-year">Primeros pasos</p>
+          <h3 class="timeline-title">Nuestra primera cita</h3>
+          <p class="timeline-text">El día que todo empezó de verdad. Cuenta aquí ese recuerdo especial.</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-year">La pregunta</p>
+          <h3 class="timeline-title">La pedida</h3>
+          <p class="timeline-text">El momento en que dijisteis "sí". Describe cómo y dónde ocurrió.</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-year">10 · 10 · 2026</p>
+          <h3 class="timeline-title">El gran día</h3>
+          <p class="timeline-text">Y por fin, el día que estábamos esperando. ¡Queremos compartirlo contigo!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALERÍA ─────────────────────────── -->
   <section class="section gallery fade-in" id="galeria">
     <div class="container">
-      <p class="section-tag">Nuestra historia</p>
+      <p class="section-tag">Galería</p>
       <h2 class="section-title">Galería de fotos</h2>
 
       <div class="gallery-grid stagger" id="galleryGrid">
@@ -2697,59 +2634,113 @@
 
   <!-- ── SCRIPTS ──────────────────────────── -->
   <script>
-    // ── ENVELOPE ────────────────────────────
+    // ── INTRO PUERTAS IGLESIA ───────────────
+    // Máquina de 3 estados: 0 = iglesia cerrada, 1 = puertas abiertas + hoja, 2 = entrar a la web
+    // Se repite SIEMPRE (sin sessionStorage).
     document.addEventListener('DOMContentLoaded', function() {
-      var overlay = document.getElementById('envOverlay');
-      if (!overlay) return;
+      var intro = document.getElementById('intro');
+      if (!intro) return;
 
-      var alreadyOpened = sessionStorage.getItem('envelope_opened');
-      if (alreadyOpened) {
-        overlay.classList.add('hidden');
-        return;
-      }
+      var stage = document.getElementById('introStage');
+      var page  = document.getElementById('introPage');
+      var hint  = document.getElementById('introHint');
+      var music = document.getElementById('envMusic');
 
-      var state = 0;
-      var seal = document.getElementById('envSeal');
-      var hintEl = document.querySelector('.env-card-hint');
+      var state = 0;       // estado actual
+      var ready = false;   // true cuando la hoja ya es visible (permite entrar)
 
-      // Click on seal or envelope opens the flap
-      function handleOpen() {
+      // ── Construir marco art-deco: abanicos "rising-sun" geométricos ──
+      (function buildDeco() {
+        var NS = 'http://www.w3.org/2000/svg';
+        function rayLine(g, cx, cy, ang, r1, r2, w) {
+          var rad = ang * Math.PI / 180;
+          var l = document.createElementNS(NS, 'line');
+          l.setAttribute('x1', (cx + Math.cos(rad) * r1).toFixed(1));
+          l.setAttribute('y1', (cy + Math.sin(rad) * r1).toFixed(1));
+          l.setAttribute('x2', (cx + Math.cos(rad) * r2).toFixed(1));
+          l.setAttribute('y2', (cy + Math.sin(rad) * r2).toFixed(1));
+          l.setAttribute('stroke', 'url(#decoGold)');
+          l.setAttribute('stroke-width', w);
+          l.setAttribute('stroke-linecap', 'round');
+          g.appendChild(l);
+        }
+        function buildFan(gid, cx, cy, baseAng) {
+          var g = document.getElementById(gid);
+          if (!g) return;
+          var n = 9, spread = 150, r1 = 7, r2 = 86;
+          for (var i = 0; i < n; i++) {
+            var a = baseAng + (i / (n - 1) - 0.5) * spread;
+            rayLine(g, cx, cy, a, r1, r2, (i % 2 ? 0.8 : 1.4));
+          }
+          // Arco exterior que une las puntas
+          var a0 = (baseAng - spread / 2) * Math.PI / 180;
+          var a1 = (baseAng + spread / 2) * Math.PI / 180;
+          var x0 = (cx + Math.cos(a0) * r2).toFixed(1), y0 = (cy + Math.sin(a0) * r2).toFixed(1);
+          var x1 = (cx + Math.cos(a1) * r2).toFixed(1), y1 = (cy + Math.sin(a1) * r2).toFixed(1);
+          var sweep = baseAng < 0 ? 1 : 0;
+          var arc = document.createElementNS(NS, 'path');
+          arc.setAttribute('d', 'M' + x0 + ',' + y0 + ' A' + r2 + ',' + r2 + ' 0 0 ' + sweep + ' ' + x1 + ',' + y1);
+          arc.setAttribute('fill', 'none');
+          arc.setAttribute('stroke', 'url(#decoGold)');
+          arc.setAttribute('stroke-width', '1');
+          g.appendChild(arc);
+          // Diamante macizo en el vértice
+          var s = 6;
+          var dia = document.createElementNS(NS, 'path');
+          dia.setAttribute('d', 'M' + cx + ',' + (cy - s) + ' L' + (cx + s) + ',' + cy + ' L' + cx + ',' + (cy + s) + ' L' + (cx - s) + ',' + cy + ' Z');
+          dia.setAttribute('fill', 'url(#decoGold)');
+          g.appendChild(dia);
+        }
+        buildFan('fanTop', 200, 142, -90);  // vértice abajo, rayos hacia arriba (corona)
+        buildFan('fanBot', 200, 418, 90);   // vértice arriba, rayos hacia abajo
+      })();
+
+      // Click 1: abrir puertas + zoom + música + mostrar la hoja
+      function abrir() {
         if (state !== 0) return;
         state = 1;
-        overlay.classList.add('abierto');
-        if (hintEl) hintEl.textContent = 'Toca para entrar';
-        var music = document.getElementById('envMusic');
+        intro.classList.add('abierta');
         if (music) music.play().catch(function() {});
-        // Burst de pétalos al abrir sobre — momento mágico
-        if (window.__petalBurst) window.__petalBurst(20);
-      }
+        if (window.__petalBurst) window.__petalBurst(16);
 
-      // Click enters the site
-      function handleEnter() {
-        if (state !== 1) return;
-        state = 2;
-        overlay.classList.add('done');
-        sessionStorage.setItem('envelope_opened', '1');
-        // Remove overlay completely after transition finishes
-        setTimeout(function() {
-          overlay.classList.add('hidden');
-        }, 1200);
-      }
-
-      // First click: open envelope
-      overlay.addEventListener('click', function(e) {
-        if (state === 0) {
-          handleOpen();
+        // Mostrar la hoja cuando termine el zoom (transitionend) o por fallback temporal
+        var mostrado = false;
+        function mostrarHoja() {
+          if (mostrado) return;
+          mostrado = true;
+          if (page) page.classList.add('visible');
+          ready = true;
         }
-      });
+        if (stage) {
+          stage.addEventListener('transitionend', function te(e) {
+            if (e.propertyName === 'transform') {
+              stage.removeEventListener('transitionend', te);
+              mostrarHoja();
+            }
+          });
+        }
+        setTimeout(mostrarHoja, 2700);  // fallback por si no dispara transitionend
+      }
 
-      // Second click on card: enter the site
-      var card = document.querySelector('.env-card');
-      if (card) {
-        card.addEventListener('click', function(e) {
-          if (state === 1) {
-            handleEnter();
-          }
+      // Click 2 (con la hoja visible): entrar a la web con efectos
+      function entrar() {
+        if (state !== 1 || !ready) return;
+        state = 2;
+        intro.classList.add('done');
+        if (window.__petalBurst) window.__petalBurst(28);
+        setTimeout(function() {
+          intro.classList.add('hidden');
+        }, 1000);
+      }
+
+      // Primer click en cualquier parte del intro abre las puertas
+      intro.addEventListener('click', function() {
+        if (state === 0) abrir();
+      });
+      // Segundo click sobre la hoja entra a la web
+      if (page) {
+        page.addEventListener('click', function() {
+          if (state === 1) entrar();
         });
       }
     });
@@ -3242,7 +3233,7 @@
         startUTC: '20261010T094500Z',   // 11:45 Madrid = 09:45 UTC
         endUTC:   '20261010T200000Z',   // hasta 22:00 Madrid (ceremonia + banquete)
         location: 'Parroquia Santa María Micaela y San Enrique, Madrid',
-        details:  'Te esperamos en el día más importante de nuestras vidas. https://michaelmj15.github.io/Boda-Jaybe-Christine/'
+        details:  'Te esperamos en el día más importante de nuestras vidas. https://jaybieychristine.github.io/'
       };
 
       const gBtn = document.getElementById('calGoogle');
@@ -3268,7 +3259,7 @@
           'CALSCALE:GREGORIAN',
           'METHOD:PUBLISH',
           'BEGIN:VEVENT',
-          'UID:boda-jc-20261010@michaelmj15',
+          'UID:boda-jc-20261010@jaybieychristine',
           'DTSTAMP:20260101T000000Z',
           'DTSTART:' + event.startUTC,
           'DTEND:' + event.endUTC,
