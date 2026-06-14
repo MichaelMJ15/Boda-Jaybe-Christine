@@ -830,6 +830,29 @@
       text-align: center;
       line-height: 1.8;
     }
+    /* ── HOMENAJE (a las madres) ── */
+    .homenaje { background: var(--emerald-soft); }
+    .homenaje-madres { text-align: center; margin: 1.5rem 0 2rem; }
+    .homenaje-nombre {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 500; color: var(--emerald); line-height: 1.4;
+    }
+    .homenaje-y {
+      display: block;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--gold-dark); margin: 0.3rem 0;
+    }
+    .homenaje-texto {
+      max-width: 640px; margin: 0 auto;
+      text-align: center; color: var(--text); line-height: 1.9;
+    }
+    .homenaje-texto p { margin-bottom: 1rem; }
+    .homenaje-cierre {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.15rem; color: var(--emerald); margin-top: 1.5rem;
+    }
     @media (max-width: 768px) {
       .sponsors-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -978,6 +1001,10 @@
     }
     .map-lazy[data-bg]:hover::before { transform: scale(1.04); }
     .map-lazy[data-bg]:hover::after { background: rgba(250,248,245,0.08); }
+    /* Ilustración vertical (iglesia): mostrarla completa, sin recorte ni velo */
+    .map-lazy--full { aspect-ratio: 3 / 4; max-height: 420px; }
+    .map-lazy--full[data-bg]::before { background-size: contain; background-repeat: no-repeat; }
+    .map-lazy--full[data-bg]::after { display: none; }
     /* Placeholder sin imagen — mantener radial decorativo */
     .map-lazy:not([data-bg])::before {
       content: '';
@@ -1917,11 +1944,18 @@
 
     /* Pista inferior */
     .intro-hint {
-      position: absolute; left: 0; right: 0; bottom: 2rem; z-index: 3;
-      text-align: center;
+      position: absolute; left: 50%; bottom: 6rem; z-index: 3;
+      transform: translateX(-50%);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
+      font-size: 0.9rem; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold-dark);
+      background: rgba(250,248,245,0.85);
+      padding: 0.55rem 1.5rem;
+      border: 1px solid rgba(156,126,74,0.5);
+      border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      white-space: nowrap;
       animation: hintPulse 2.2s ease-in-out infinite;
       pointer-events: none;
     }
@@ -2082,15 +2116,15 @@
         </text>
       </svg>
       <h1 class="intro-page-names">
-        <span>Jaybie</span>
+        <span>Jaybie Ramos</span>
         <span class="and">&amp;</span>
-        <span>Christine</span>
+        <span>Christine Tejada</span>
       </h1>
       <p class="intro-page-date">Sábado, 10 de Octubre de 2026</p>
       <p class="intro-page-enter">Toca para entrar<span class="chev"></span></p>
     </div>
 
-    <p class="intro-hint" id="introHint">Toca para abrir las puertas</p>
+    <p class="intro-hint" id="introHint">Tap to continue</p>
     <audio id="envMusic" src="https://res.cloudinary.com/dkerabcck/video/upload/v1777921696/A_Thousand_Years_-_Christina_Perri_-_reduzida_w41azh.mp3" preload="auto" loop></audio>
   </div>
 
@@ -2098,15 +2132,16 @@
   <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio">Inicio</a>
+      <a href="#homenaje">Homenaje</a>
       <a href="#detalles">Detalles</a>
       <a href="#padrinos">Padrinos</a>
       <a href="#historia">Historia</a>
       <a href="#galeria">Galería</a>
       <a href="#rsvp">Confirmar</a>
-      <a href="#faq">FAQ</a>
       <a href="#musica">Música</a>
       <a href="#recuerdos">Recuerdos</a>
       <a href="#regalos">Regalos</a>
+      <a href="#faq">FAQ</a>
     </div>
   </nav>
 
@@ -2114,9 +2149,9 @@
   <section class="hero" id="inicio">
     <p class="hero-badge">Nos casamos</p>
     <h1 class="hero-names">
-      <span>Jaybie</span>
+      <span>Jaybie Ramos</span>
       <span class="and">&amp;</span>
-      <span>Christine</span>
+      <span>Christine Tejada</span>
     </h1>
     <!-- Frase personal de la pareja — EDITABLE -->
     <p class="hero-tagline">Empieza nuestra historia juntos.</p>
@@ -2166,6 +2201,74 @@
         Con inmensa alegría les invitamos a celebrar el día más importante de nuestras vidas.
         Será un honor contar con su presencia en este momento tan especial.
       </p>
+    </div>
+  </section>
+
+  <!-- ── HOMENAJE (a las madres) ──────────── -->
+  <section class="section homenaje fade-in" id="homenaje">
+    <div class="container">
+      <p class="section-tag section-tag--alt">A nuestras madres</p>
+      <h2 class="section-title">Homenaje</h2>
+      <div class="homenaje-madres">
+        <span class="homenaje-nombre">Marivic Caguisano</span>
+        <span class="homenaje-y">y</span>
+        <span class="homenaje-nombre">Melinda Notarte</span>
+      </div>
+      <div class="homenaje-texto">
+        <p>Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
+        <p>Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.</p>
+        <p>Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.</p>
+        <p>Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.</p>
+        <p class="homenaje-cierre">Con todo nuestro amor y gratitud, este día también os pertenece.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DETALLES DEL EVENTO ─────────────── -->
+  <section class="section details fade-in" id="detalles">
+    <div class="container">
+      <p class="section-tag">El evento</p>
+      <h2 class="section-title">Detalles de la boda</h2>
+
+      <div class="details-grid stagger">
+        <div class="detail-card">
+          <span class="detail-icon">&#x1F4C5;</span>
+          <h3>Fecha</h3>
+          <p class="time-main">10.10.26</p>
+          <p>Sábado, 10 de Octubre<br>de 2026</p>
+          <p style="margin-top: 0.5rem; color: var(--text-light);">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
+          <div class="calendar-buttons">
+            <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
+            <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <span class="detail-icon">&#x26EA;</span>
+          <h3>Iglesia</h3>
+          <p>Parroquia Santa María<br>Micaela y San Enrique</p>
+          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
+            <span class="map-lazy-cta">Ver mapa</span>
+          </div>
+          <div class="map-actions">
+            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <span class="detail-icon">&#x1F37D;</span>
+          <h3>Restaurante</h3>
+          <p>Restaurante San Francisco</p>
+          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
+            <span class="map-lazy-cta">Ver mapa</span>
+          </div>
+          <div class="map-actions">
+            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2227,54 +2330,6 @@
     </div>
   </section>
 
-  <!-- ── DETALLES DEL EVENTO ─────────────── -->
-  <section class="section details fade-in" id="detalles">
-    <div class="container">
-      <p class="section-tag">El evento</p>
-      <h2 class="section-title">Detalles de la boda</h2>
-
-      <div class="details-grid stagger">
-        <div class="detail-card">
-          <span class="detail-icon">&#x1F4C5;</span>
-          <h3>Fecha</h3>
-          <p class="time-main">10.10.26</p>
-          <p>Sábado, 10 de Octubre<br>de 2026</p>
-          <p style="margin-top: 0.5rem; color: var(--text-light);">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
-          <div class="calendar-buttons">
-            <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
-            <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
-          </div>
-        </div>
-
-        <div class="detail-card">
-          <span class="detail-icon">&#x26EA;</span>
-          <h3>Iglesia</h3>
-          <p>Parroquia Santa María<br>Micaela y San Enrique</p>
-          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
-            <span class="map-lazy-cta">Ver mapa</span>
-          </div>
-          <div class="map-actions">
-            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener">Cómo llegar</a>
-          </div>
-        </div>
-
-        <div class="detail-card">
-          <span class="detail-icon">&#x1F37D;</span>
-          <h3>Restaurante</h3>
-          <p>Restaurante San Francisco</p>
-          <div class="map-lazy" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
-            <span class="map-lazy-cta">Ver mapa</span>
-          </div>
-          <div class="map-actions">
-            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener">Cómo llegar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── CÓDIGO DE VESTIMENTA ────────────── -->
   <section class="section dress-code fade-in">
     <div class="container">
@@ -2325,17 +2380,17 @@
         <div class="timeline-item">
           <p class="timeline-year">El comienzo</p>
           <h3 class="timeline-title">Cómo nos conocimos</h3>
-          <p class="timeline-text">Aquí va la historia de cómo os conocisteis. Sustituye este texto por vuestro momento real.</p>
+          <p class="timeline-text">Nos cruzamos gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera fue el inicio de nuestra historia.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">Primeros pasos</p>
           <h3 class="timeline-title">Nuestra primera cita</h3>
-          <p class="timeline-text">El día que todo empezó de verdad. Cuenta aquí ese recuerdo especial.</p>
+          <p class="timeline-text">Un picnic en el parque de El Capricho, en Madrid. Desde aquel día volvemos cada año al lugar donde empezó todo.</p>
         </div>
         <div class="timeline-item">
-          <p class="timeline-year">La pregunta</p>
-          <h3 class="timeline-title">La pedida</h3>
-          <p class="timeline-text">El momento en que dijisteis "sí". Describe cómo y dónde ocurrió.</p>
+          <p class="timeline-year">28 · 07 · 2025</p>
+          <h3 class="timeline-title">La pedida de mano</h3>
+          <p class="timeline-text">Tras una cena especial en el Four Seasons, se arrodilló al volver a casa. Entre lágrimas y sonrisas, dijimos que sí.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">10 · 10 · 2026</p>
