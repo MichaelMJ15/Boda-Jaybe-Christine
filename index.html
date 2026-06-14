@@ -36,7 +36,7 @@
     "@context": "https://schema.org",
     "@type": "Event",
     "name": "Boda Jaybie & Christine",
-    "startDate": "2026-10-10T11:45:00+02:00",
+    "startDate": "2026-10-10T12:00:00+02:00",
     "endDate": "2026-10-11T00:00:00+02:00",
     "eventStatus": "https://schema.org/EventScheduled",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -579,38 +579,36 @@
       margin-bottom: 2.2rem;
     }
     .countdown-grid {
-      display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap;
+      display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2rem); flex-wrap: wrap;
     }
-    /* Cada unidad como tarjeta editorial con filo dorado arriba */
+    /* Cada unidad: círculo con anillo dorado + etiqueta debajo */
     .countdown-item {
-      text-align: center; min-width: 96px;
-      padding: 1.5rem 0.7rem 1.2rem;
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--gold);
-      border-radius: 3px;
-      box-shadow: var(--shadow-soft);
-      transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
-    }
-    .countdown-item:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
+      display: flex; flex-direction: column; align-items: center; gap: 0.85rem;
     }
     .countdown-number {
+      /* Anillo circular */
+      width: clamp(78px, 17vw, 108px);
+      height: clamp(78px, 17vw, 108px);
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: var(--cream);
+      box-shadow: var(--shadow-soft), inset 0 0 0 4px var(--white);
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 3rem; font-weight: 600;
-      color: var(--gold);
+      font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 600;
+      color: var(--gold-dark);
       line-height: 1;
-      display: block;
       /* Anchura uniforme — los dígitos no saltan al cambiar de 9 a 10 */
       font-variant-numeric: tabular-nums;
       font-feature-settings: 'tnum' 1;
+      transition: transform 250ms var(--ease-out);
     }
-    /* Animación al cambiar el número (tick) */
-    .countdown-number.tick { animation: cdTick 0.5s var(--ease-out); }
+    .countdown-item:hover .countdown-number { transform: translateY(-2px); }
+    /* Animación al cambiar el número (tick) — fundido suave, sin mover el círculo */
+    .countdown-number.tick { animation: cdTick 0.45s var(--ease-out); }
     @keyframes cdTick {
-      0%   { opacity: 0.25; transform: translateY(-7px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0%   { opacity: 0.35; }
+      100% { opacity: 1; }
     }
     @media (prefers-reduced-motion: reduce) {
       .countdown-number.tick { animation: none; }
@@ -620,7 +618,6 @@
       font-size: 0.72rem; letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-light);
-      margin-top: 0.7rem;
       display: block;
     }
 
@@ -785,50 +782,16 @@
     .calendar-btn:active { transform: scale(0.97); }
 
     /* ── PADRINOS ──────────────────────────── */
+    /* Padrino principal: solo el nombre centrado, sin recuadro */
     .sponsor-principal {
-      max-width: 380px;
       margin: 3rem auto 1.5rem;
-      padding: 2rem 1.5rem;
       text-align: center;
-      border: 1px solid var(--gold);
-      background: var(--white);
-      position: relative;
-      transition: box-shadow 250ms var(--ease-out),
-                  transform 250ms var(--ease-out);
-    }
-    .sponsor-principal:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
-    }
-    .sponsor-principal .sponsor-badge {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 1rem;
     }
     .sponsor-principal .sponsor-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.2rem;
       color: var(--dark);
       line-height: 1.4;
-    }
-    .sponsor-principal::before,
-    .sponsor-principal::after {
-      content: '';
-      position: absolute;
-      width: 12px; height: 12px;
-      border: 1px solid var(--gold);
-    }
-    .sponsor-principal::before {
-      top: -1px; left: -1px;
-      border-right: none; border-bottom: none;
-    }
-    .sponsor-principal::after {
-      bottom: -1px; right: -1px;
-      border-left: none; border-top: none;
     }
 
     .sponsors-grid {
@@ -1857,66 +1820,44 @@
       transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
     }
     .intro-page.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
-    /* Marco fino dorado (passe-partout) */
-    .intro-page::before {
-      content: '';
-      position: absolute; inset: clamp(14px, 3vw, 34px);
-      border: 1px solid rgba(201,169,110,0.40);
-      pointer-events: none;
+    /* ── SELLO / MONOGRAMA J&C ── */
+    .intro-seal {
+      width: clamp(168px, 44vw, 248px);
+      height: clamp(168px, 44vw, 248px);
+      margin-bottom: 0.6rem;
+    }
+    .intro-seal .seal-ring { fill: none; stroke: url(#sealGold); }
+    .intro-seal .seal-arc-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; letter-spacing: 3px;
+      fill: #9c7e4a;
+    }
+    .intro-seal .seal-mono {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px; font-weight: 600; fill: var(--dark);
+      letter-spacing: 4px;
+    }
+    .intro-seal .seal-mono .amp {
+      fill: var(--emerald); font-style: italic;
+      font-size: 34px;   /* & algo más pequeño, no choca con J/C */
+    }
+    .intro-seal .seal-dot { fill: url(#sealGold); }
+    /* Aparición del sello: escala + giro suave (como al estampar) */
+    .intro-page.visible .intro-seal { animation: sealIn 0.9s var(--ease-out) 0.15s both; }
+    @keyframes sealIn {
+      from { opacity: 0; transform: scale(0.55) rotate(-14deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0); }
     }
 
-    /* ── MARCO ART-DECO ── */
-    .intro-deco {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(90vw, 460px); height: auto;
-      aspect-ratio: 400 / 560;
-      z-index: -1; pointer-events: none; overflow: visible;
-    }
-    /* Líneas del marco: se trazan */
-    .intro-deco .dline {
-      stroke-dasharray: 2300; stroke-dashoffset: 2300;
-    }
-    .intro-page.visible .intro-deco .dline {
-      animation: dDraw 1.7s var(--ease-in-out) 0.15s forwards;
-    }
-    @keyframes dDraw { to { stroke-dashoffset: 0; } }
-    /* Abanicos (rising-sun deco): escalan desde su vértice */
-    .intro-deco #fanTop { transform-box: fill-box; transform-origin: 50% 100%; }
-    .intro-deco #fanBot { transform-box: fill-box; transform-origin: 50% 0%; }
-    .intro-deco .fan { opacity: 0; }
-    .intro-page.visible .intro-deco .fan {
-      animation: dFan 0.9s var(--ease-out) 0.6s forwards;
-    }
-    @keyframes dFan {
-      from { opacity: 0; transform: scaleY(0.08) scaleX(0.55); }
-      to   { opacity: 1; transform: none; }
-    }
-    /* Studs/diamantes de esquina: aparecen */
-    .intro-deco .dpop {
-      opacity: 0; transform-box: fill-box; transform-origin: center;
-    }
-    .intro-page.visible .intro-deco .dpop {
-      animation: dPop 0.5s var(--ease-out) 1.2s forwards;
-    }
-    @keyframes dPop {
-      from { opacity: 0; transform: scale(0); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .intro-deco .dline { stroke-dashoffset: 0; animation: none; }
-      .intro-deco .fan, .intro-deco .dpop { opacity: 1; animation: none; transform: none; }
-    }
-
-    /* Stagger de entrada de los elementos (excluye el marco SVG) */
-    .intro-page > *:not(.intro-deco) { opacity: 0; transform: translateY(14px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
-    .intro-page.visible > *:not(.intro-deco) { opacity: 1; transform: none; }
-    .intro-page.visible .intro-page-kicker { transition-delay: 0.15s; }
-    .intro-page.visible .intro-page-names  { transition-delay: 0.30s; }
-    .intro-page.visible .intro-page-orn    { transition-delay: 0.50s; }
-    .intro-page.visible .intro-page-date   { transition-delay: 0.62s; }
-    .intro-page.visible .intro-page-place  { transition-delay: 0.74s; }
+    /* Stagger de entrada de los elementos (excluye el sello SVG) */
+    .intro-page > *:not(.intro-seal) { opacity: 0; transform: translateY(14px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .intro-page.visible > *:not(.intro-seal) { opacity: 1; transform: none; }
+    .intro-page.visible .intro-page-names  { transition-delay: 0.55s; }
+    .intro-page.visible .intro-page-date   { transition-delay: 0.72s; }
     .intro-page.visible .intro-page-enter  { transition-delay: 0.95s; }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-page.visible .intro-seal { animation: none; }
+    }
 
     .intro-page-kicker {
       font-family: 'Cormorant Garamond', serif;
@@ -2112,34 +2053,39 @@
 
     <!-- Hoja de invitación (aparece al entrar) -->
     <div class="intro-page" id="introPage">
-      <!-- Marco art-deco: doble marco que se traza + abanicos (rising-sun) + studs esquina -->
-      <svg class="intro-deco" id="introDeco" viewBox="0 0 400 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      <!-- Sello / monograma J&C: doble anillo dorado + "NUESTRA BODA" en arco + J&C -->
+      <svg class="intro-seal" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
-          <linearGradient id="decoGold" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="sealGold" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#e6cf94"/>
             <stop offset="0.55" stop-color="#c9a96e"/>
             <stop offset="1" stop-color="#9c7e4a"/>
           </linearGradient>
+          <!-- Arco para el texto curvo (semicírculo superior, r70) -->
+          <path id="sealArc" d="M30,100 A70,70 0 0 0 170,100"/>
+          <!-- Arco inferior para la fecha (semicírculo inferior, r70) -->
+          <path id="sealArcBottom" d="M30,100 A70,70 0 0 1 170,100"/>
         </defs>
-        <!-- Doble marco -->
-        <rect class="dline" x="22" y="22" width="356" height="516" fill="none" stroke="url(#decoGold)" stroke-width="1.5"/>
-        <rect class="dline" x="31" y="31" width="338" height="498" fill="none" stroke="url(#decoGold)" stroke-width="0.7" opacity="0.6"/>
-        <!-- Studs/diamantes en las 4 esquinas -->
-        <path class="dpop" d="M22,13 L31,22 L22,31 L13,22 Z" fill="url(#decoGold)"/>
-        <path class="dpop" d="M378,13 L387,22 L378,31 L369,22 Z" fill="url(#decoGold)"/>
-        <path class="dpop" d="M22,529 L31,538 L22,547 L13,538 Z" fill="url(#decoGold)"/>
-        <path class="dpop" d="M378,529 L387,538 L378,547 L369,538 Z" fill="url(#decoGold)"/>
-        <!-- Abanicos generados por JS -->
-        <g id="fanTop" class="fan"></g>
-        <g id="fanBot" class="fan"></g>
+        <circle class="seal-ring" cx="100" cy="100" r="94" stroke-width="1.6"/>
+        <circle class="seal-ring" cx="100" cy="100" r="86" stroke-width="0.8" opacity="0.55"/>
+        <text class="seal-arc-text">
+          <textPath href="#sealArc" startOffset="50%" text-anchor="middle">X · X · MMXXVI</textPath>
+        </text>
+        <text class="seal-mono" x="100" y="112" text-anchor="middle">J<tspan class="amp">&amp;</tspan>C</text>
+        <!-- Diamante central (separador entre J&C y la fecha) + puntos laterales -->
+        <path class="seal-dot" d="M100,131 L104,137 L100,143 L96,137 Z"/>
+        <circle class="seal-dot" cx="30" cy="100" r="2.6"/>
+        <circle class="seal-dot" cx="170" cy="100" r="2.6"/>
+        <!-- "NUESTRA BODA" (este arco renderiza arriba) -->
+        <text class="seal-arc-text">
+          <textPath href="#sealArcBottom" startOffset="50%" text-anchor="middle">N U E S T R A · B O D A</textPath>
+        </text>
       </svg>
-      <p class="intro-page-kicker">Nos casamos</p>
       <h1 class="intro-page-names">
         <span>Jaybie</span>
         <span class="and">&amp;</span>
         <span>Christine</span>
       </h1>
-      <div class="intro-page-orn"><i></i></div>
       <p class="intro-page-date">Sábado, 10 de Octubre de 2026</p>
       <p class="intro-page-enter">Toca para entrar<span class="chev"></span></p>
     </div>
@@ -2233,8 +2179,7 @@
       </p>
 
       <div class="sponsor-principal">
-        <span class="sponsor-badge">Padrino principal</span>
-        <p class="sponsor-name">Christian Careaga Guzmán</p>
+        <p class="sponsor-name">Sr. Christian Careaga Guzmán</p>
       </div>
 
       <div class="sponsors-grid stagger">
@@ -2294,7 +2239,7 @@
           <h3>Fecha</h3>
           <p class="time-main">10.10.26</p>
           <p>Sábado, 10 de Octubre<br>de 2026</p>
-          <p style="margin-top: 0.5rem; color: var(--text-light);">11:45 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
+          <p style="margin-top: 0.5rem; color: var(--text-light);">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
           <div class="calendar-buttons">
             <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
             <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
@@ -2602,7 +2547,7 @@
           </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              La ceremonia comienza a las 11:45 h en la iglesia. Te recomendamos llegar entre 11:15 y 11:30 para encontrar sitio con tranquilidad.
+              La ceremonia comienza a las 12:00 h en la iglesia. Te recomendamos llegar unos 15 minutos antes (sobre las 11:45) para encontrar sitio con tranquilidad.
             </div>
           </div>
         </details>
@@ -2703,52 +2648,6 @@
       var state = 0;       // estado actual
       var ready = false;   // true cuando la hoja ya es visible (permite entrar)
 
-      // ── Construir marco art-deco: abanicos "rising-sun" geométricos ──
-      (function buildDeco() {
-        var NS = 'http://www.w3.org/2000/svg';
-        function rayLine(g, cx, cy, ang, r1, r2, w) {
-          var rad = ang * Math.PI / 180;
-          var l = document.createElementNS(NS, 'line');
-          l.setAttribute('x1', (cx + Math.cos(rad) * r1).toFixed(1));
-          l.setAttribute('y1', (cy + Math.sin(rad) * r1).toFixed(1));
-          l.setAttribute('x2', (cx + Math.cos(rad) * r2).toFixed(1));
-          l.setAttribute('y2', (cy + Math.sin(rad) * r2).toFixed(1));
-          l.setAttribute('stroke', 'url(#decoGold)');
-          l.setAttribute('stroke-width', w);
-          l.setAttribute('stroke-linecap', 'round');
-          g.appendChild(l);
-        }
-        function buildFan(gid, cx, cy, baseAng) {
-          var g = document.getElementById(gid);
-          if (!g) return;
-          var n = 9, spread = 150, r1 = 7, r2 = 86;
-          for (var i = 0; i < n; i++) {
-            var a = baseAng + (i / (n - 1) - 0.5) * spread;
-            rayLine(g, cx, cy, a, r1, r2, (i % 2 ? 0.8 : 1.4));
-          }
-          // Arco exterior que une las puntas
-          var a0 = (baseAng - spread / 2) * Math.PI / 180;
-          var a1 = (baseAng + spread / 2) * Math.PI / 180;
-          var x0 = (cx + Math.cos(a0) * r2).toFixed(1), y0 = (cy + Math.sin(a0) * r2).toFixed(1);
-          var x1 = (cx + Math.cos(a1) * r2).toFixed(1), y1 = (cy + Math.sin(a1) * r2).toFixed(1);
-          var sweep = baseAng < 0 ? 1 : 0;
-          var arc = document.createElementNS(NS, 'path');
-          arc.setAttribute('d', 'M' + x0 + ',' + y0 + ' A' + r2 + ',' + r2 + ' 0 0 ' + sweep + ' ' + x1 + ',' + y1);
-          arc.setAttribute('fill', 'none');
-          arc.setAttribute('stroke', 'url(#decoGold)');
-          arc.setAttribute('stroke-width', '1');
-          g.appendChild(arc);
-          // Diamante macizo en el vértice
-          var s = 6;
-          var dia = document.createElementNS(NS, 'path');
-          dia.setAttribute('d', 'M' + cx + ',' + (cy - s) + ' L' + (cx + s) + ',' + cy + ' L' + cx + ',' + (cy + s) + ' L' + (cx - s) + ',' + cy + ' Z');
-          dia.setAttribute('fill', 'url(#decoGold)');
-          g.appendChild(dia);
-        }
-        buildFan('fanTop', 200, 142, -90);  // vértice abajo, rayos hacia arriba (corona)
-        buildFan('fanBot', 200, 418, 90);   // vértice arriba, rayos hacia abajo
-      })();
-
       // Click 1: abrir puertas + zoom + música + mostrar la hoja
       function abrir() {
         if (state !== 0) return;
@@ -2801,7 +2700,7 @@
 
     // ── COUNTDOWN ──────────────────────────
     (function() {
-      const weddingDate = new Date('2026-10-10T17:00:00+02:00').getTime();
+      const weddingDate = new Date('2026-10-10T12:00:00+02:00').getTime();
 
       function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -3284,10 +3183,10 @@
     // ── AÑADIR AL CALENDARIO ──────────────────
     (function() {
       // Datos del evento — UTC para evitar problemas zona horaria
-      // Sábado 10 Oct 2026 11:45 (hora Madrid CEST = UTC+2)
+      // Sábado 10 Oct 2026 12:00 (hora Madrid CEST = UTC+2)
       const event = {
         title: 'Boda Jaybie & Christine',
-        startUTC: '20261010T094500Z',   // 11:45 Madrid = 09:45 UTC
+        startUTC: '20261010T100000Z',   // 12:00 Madrid = 10:00 UTC
         endUTC:   '20261010T200000Z',   // hasta 22:00 Madrid (ceremonia + banquete)
         location: 'Parroquia Santa María Micaela y San Enrique, Madrid',
         details:  'Te esperamos en el día más importante de nuestras vidas. https://boda-jaybiey-christine.netlify.app/'
