@@ -242,15 +242,15 @@
 
     .timeline {
       position: relative;
-      margin-top: 3rem;
+      margin: 3rem auto 0;
+      max-width: 680px;
       padding: 1rem 0;
     }
-    /* Línea vertical central */
+    /* Línea vertical (izquierda, 1 columna) */
     .timeline::before {
       content: '';
       position: absolute;
-      top: 0; bottom: 0; left: 50%;
-      transform: translateX(-50%);
+      top: 0; bottom: 0; left: 8px;
       width: 1px;
       background: linear-gradient(180deg, transparent, var(--gold) 12%, var(--gold) 88%, transparent);
       opacity: 0.55;
@@ -258,26 +258,23 @@
 
     .timeline-item {
       position: relative;
-      width: 50%;
-      padding: 0 2.5rem 2.5rem;
+      width: 100%;
+      text-align: left;
+      padding: 0 0 2.5rem 2.5rem;
       box-sizing: border-box;
     }
-    /* Alternar lados en desktop */
-    .timeline-item:nth-child(odd)  { left: 0; text-align: right; }
-    .timeline-item:nth-child(even) { left: 50%; text-align: left; }
 
     /* Punto/diamante sobre la línea */
     .timeline-item::after {
       content: '';
       position: absolute;
       top: 0.35rem;
+      left: 3px;
       width: 10px; height: 10px;
       background: var(--gold);
       transform: rotate(45deg);
       box-shadow: 0 0 0 4px var(--emerald-soft);
     }
-    .timeline-item:nth-child(odd)::after  { right: -5px; }
-    .timeline-item:nth-child(even)::after { left: -5px; }
 
     .timeline-year {
       font-family: 'Cormorant Garamond', serif;
@@ -299,7 +296,9 @@
       font-size: 0.95rem;
       color: var(--text);
       line-height: 1.7;
+      margin-bottom: 0.8rem;
     }
+    .timeline-text:last-child { margin-bottom: 0; }
     /* Hueco de foto preparado (vacío hasta tener fotos reales) */
     .historia-foto {
       margin-top: 1rem;
@@ -315,16 +314,9 @@
       letter-spacing: 0.1em;
     }
 
-    /* Móvil: timeline en una sola columna a la izquierda */
+    /* Móvil: padding más ajustado */
     @media (max-width: 768px) {
-      .timeline::before { left: 7px; transform: none; }
-      .timeline-item {
-        width: 100%;
-        left: 0 !important;
-        text-align: left !important;
-        padding: 0 0 2rem 2rem;
-      }
-      .timeline-item::after { left: 2px !important; right: auto !important; }
+      .timeline-item { padding: 0 0 2rem 2rem; }
     }
 
     .section-title {
@@ -795,14 +787,16 @@
     }
 
     .sponsors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 2rem 1.5rem;
       margin-top: 3rem;
       max-width: 1000px;
       margin-left: auto; margin-right: auto;
     }
     .sponsor-pair {
+      flex: 0 1 280px;          /* ancho base; última fila queda centrada, sin hueco */
       text-align: center;
       padding: 1.5rem 1rem;
       border-top: 1px solid var(--border);
@@ -855,10 +849,9 @@
     }
     @media (max-width: 768px) {
       .sponsors-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 1.5rem 1rem;
       }
-      .sponsor-pair { padding: 1.2rem 0.5rem; }
+      .sponsor-pair { flex-basis: 150px; padding: 1.2rem 0.5rem; }
       .sponsor-name { font-size: 0.85rem; }
     }
 
@@ -2132,8 +2125,8 @@
   <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio">Inicio</a>
-      <a href="#homenaje">Homenaje</a>
       <a href="#detalles">Detalles</a>
+      <a href="#homenaje">Homenaje</a>
       <a href="#padrinos">Padrinos</a>
       <a href="#historia">Historia</a>
       <a href="#galeria">Galería</a>
@@ -2204,26 +2197,6 @@
     </div>
   </section>
 
-  <!-- ── HOMENAJE (a las madres) ──────────── -->
-  <section class="section homenaje fade-in" id="homenaje">
-    <div class="container">
-      <p class="section-tag section-tag--alt">A nuestras madres</p>
-      <h2 class="section-title">Homenaje</h2>
-      <div class="homenaje-madres">
-        <span class="homenaje-nombre">Marivic Caguisano</span>
-        <span class="homenaje-y">y</span>
-        <span class="homenaje-nombre">Melinda Notarte</span>
-      </div>
-      <div class="homenaje-texto">
-        <p>Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
-        <p>Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.</p>
-        <p>Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.</p>
-        <p>Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.</p>
-        <p class="homenaje-cierre">Con todo nuestro amor y gratitud, este día también os pertenece.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ── DETALLES DEL EVENTO ─────────────── -->
   <section class="section details fade-in" id="detalles">
     <div class="container">
@@ -2272,6 +2245,26 @@
     </div>
   </section>
 
+  <!-- ── HOMENAJE (a las madres) ──────────── -->
+  <section class="section homenaje fade-in" id="homenaje">
+    <div class="container">
+      <p class="section-tag section-tag--alt">A nuestras madres</p>
+      <h2 class="section-title">Homenaje</h2>
+      <div class="homenaje-madres">
+        <span class="homenaje-nombre">Marivic Caguisano</span>
+        <span class="homenaje-y">y</span>
+        <span class="homenaje-nombre">Melinda Notarte</span>
+      </div>
+      <div class="homenaje-texto">
+        <p>Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
+        <p>Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.</p>
+        <p>Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.</p>
+        <p>Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.</p>
+        <p class="homenaje-cierre">Con todo nuestro amor y gratitud, este día también os pertenece.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── PADRINOS ────────────────────────── -->
   <section class="section dress-code fade-in" id="padrinos">
     <div class="container">
@@ -2282,7 +2275,7 @@
       </p>
 
       <div class="sponsor-principal">
-        <p class="sponsor-name">Sr. Christian Careaga Guzmán</p>
+        <p class="sponsor-name">Mrs. Christian Careaga Guzmán</p>
       </div>
 
       <div class="sponsors-grid stagger">
@@ -2380,17 +2373,20 @@
         <div class="timeline-item">
           <p class="timeline-year">El comienzo</p>
           <h3 class="timeline-title">Cómo nos conocimos</h3>
-          <p class="timeline-text">Nos cruzamos gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera fue el inicio de nuestra historia.</p>
+          <p class="timeline-text">A veces los momentos más bonitos llegan sin esperarlos… Nuestro camino se cruzó gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera se convirtió en el inicio de una historia llena de cariño, momentos inolvidables y mucho amor.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">Primeros pasos</p>
           <h3 class="timeline-title">Nuestra primera cita</h3>
-          <p class="timeline-text">Un picnic en el parque de El Capricho, en Madrid. Desde aquel día volvemos cada año al lugar donde empezó todo.</p>
+          <p class="timeline-text">Nuestra primera cita fue un instante que siempre llevaremos en el corazón: un picnic en el encantador parque de El Capricho, en Madrid. Rodeados de naturaleza, compartimos risas, sueños y conversaciones que hicieron que el tiempo se detuviera. Sin saberlo, aquel día estábamos escribiendo la primera página de nuestra historia de amor.</p>
+          <p class="timeline-text">Desde entonces, ese lugar guarda un significado muy especial para nosotros y se convirtió en nuestra pequeña tradición: volver cada año al parque donde empezó todo, para recordar aquel primer día y celebrar todo lo que hemos construido juntos.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">28 · 07 · 2025</p>
           <h3 class="timeline-title">La pedida de mano</h3>
-          <p class="timeline-text">Tras una cena especial en el Four Seasons, se arrodilló al volver a casa. Entre lágrimas y sonrisas, dijimos que sí.</p>
+          <p class="timeline-text">El 28 de julio de 2025 será siempre una fecha guardada en lo más profundo de nuestros corazones. Él preparó una noche que parecía una cita más, una cena especial en el restaurante Dani del Four Seasons, sin que yo imaginara que estaba a punto de vivir uno de los momentos más bonitos de nuestra historia.</p>
+          <p class="timeline-text">Al volver a casa, donde tantos recuerdos compartimos, me regaló una de las mayores muestras de amor. Con la emoción en sus ojos y el corazón lleno de palabras, me habló de nuestro camino, de todo lo vivido y de todos los sueños que aún nos quedaban por cumplir juntos.</p>
+          <p class="timeline-text">Y entonces llegó ese instante que parecía sacado de un sueño… se arrodilló y me pidió que camináramos juntos hacia siempre. Entre lágrimas, sonrisas y un amor inmenso, dijimos que sí a seguir escribiendo nuestra historia.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">10 · 10 · 2026</p>
@@ -2574,18 +2570,10 @@
   <section class="section gifts fade-in" id="regalos">
     <div class="container">
       <p class="section-tag">Regalos</p>
-      <h2 class="section-title">Ideas de regalo</h2>
+      <h2 class="section-title">Vuestra presencia</h2>
       <p>
-        Vuestra presencia es el mejor regalo. Si además deseáis tener un detalle con nosotros, agradeceríamos una aportación económica para comenzar nuestra nueva etapa.
+        Vuestra presencia es nuestro mejor regalo. Gracias por acompañarnos y formar parte de nuestra historia.
       </p>
-      <div class="gift-card">
-        <span class="gift-label">Bizum</span>
-        <p class="gift-number" id="bizumNumber">672 90 92 44</p>
-        <p class="gift-owner">Michael Jess Tejada Caguisano</p>
-        <button type="button" class="gift-copy" id="bizumCopy" aria-label="Copiar número Bizum">
-          <span class="gift-copy-text">Copiar número</span>
-        </button>
-      </div>
     </div>
   </section>
 
@@ -3317,37 +3305,6 @@
             load();
           }
         });
-      });
-    })();
-
-    // ── COPIAR BIZUM AL PORTAPAPELES ──────────
-    (function() {
-      const btn = document.getElementById('bizumCopy');
-      const num = document.getElementById('bizumNumber');
-      if (!btn || !num) return;
-      const txt = btn.querySelector('.gift-copy-text');
-      const original = txt.textContent;
-
-      btn.addEventListener('click', async function() {
-        const value = num.textContent.replace(/\s+/g, '');
-        try {
-          await navigator.clipboard.writeText(value);
-        } catch (e) {
-          // Fallback navegadores viejos: selección manual
-          const range = document.createRange();
-          range.selectNode(num);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-          try { document.execCommand('copy'); } catch (_) {}
-          sel.removeAllRanges();
-        }
-        btn.classList.add('copied');
-        txt.textContent = '✓ Copiado';
-        setTimeout(function() {
-          btn.classList.remove('copied');
-          txt.textContent = original;
-        }, 2000);
       });
     })();
 
