@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-title" content="J & C">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
-  <title>Jaybie & Christine — Nuestra Boda · 10 Octubre 2026</title>
+  <title>Jaybie & Christine — Nuestra Boda · 10 octubre 2026</title>
   <meta name="description" content="Acompáñanos en nuestra boda el 10 de octubre de 2026. Confirma tu asistencia y descubre todos los detalles del gran día.">
   <meta name="theme-color" content="#c9a96e">
   <meta name="color-scheme" content="light">
@@ -19,13 +19,16 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://boda-jaybiey-christine.netlify.app/">
   <meta property="og:title" content="Jaybie & Christine — Nuestra Boda">
-  <meta property="og:description" content="10 de Octubre de 2026. Acompáñanos en nuestro gran día.">
+  <meta property="og:description" content="10 de octubre de 2026. Acompáñanos en nuestro gran día.">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80">
+  <meta property="og:image" content="https://boda-jaybiey-christine.netlify.app/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Jaybie & Christine — Nuestra Boda">
-  <meta name="twitter:description" content="10 de Octubre de 2026.">
+  <meta name="twitter:description" content="10 de octubre de 2026.">
+  <meta name="twitter:image" content="https://boda-jaybiey-christine.netlify.app/img/og.jpg">
 
   <!-- Favicon SVG inline — J&C dorado, sin archivo externo -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23faf8f5' rx='12'/%3E%3Ctext x='32' y='42' font-family='Playfair Display,serif' font-size='28' fill='%23c9a96e' text-anchor='middle' font-weight='500'%3EJ%26amp;C%3C/text%3E%3C/svg%3E">
@@ -61,9 +64,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Preload de la imagen hero (LCP optimization) -->
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80" fetchpriority="high">
-  <!-- Fuentes con display=swap — texto visible mientras cargan -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/hero.jpg" fetchpriority="high">
+  <!-- Fuentes con display=swap — texto visible mientras cargan.
+       Solo las variantes usadas (400/500/600 + itálicas reales; 300 y 700 no se usan).
+       Carga asíncrona (media=print → all al cargar): no bloquea el primer render. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -214,13 +221,14 @@
     section:nth-of-type(3n+3) + .section::after  { background: var(--wine); }
 
     .section-tag {
-      display: inline-block;
+      display: block;
+      width: max-content; max-width: 100%;
+      margin: 0 auto 1.5rem;     /* centrado en todas las secciones */
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.85rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.5rem;
       position: relative;
       padding-bottom: 0.75rem;
     }
@@ -328,6 +336,7 @@
       letter-spacing: 0.02em;
       margin-bottom: 1rem;
       line-height: 1.2;
+      text-align: center;     /* títulos de sección centrados en toda la web */
     }
 
     .ornament {
@@ -411,7 +420,7 @@
       inset: 0;
       z-index: -2;
       background:
-        url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80')
+        url('img/hero.jpg')
         center / cover no-repeat;
       animation: kenBurns 24s ease-in-out infinite alternate;
       will-change: transform;
@@ -422,7 +431,8 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: linear-gradient(rgba(250,248,245,0.78), rgba(250,248,245,0.85));
+      /* Velo más ligero arriba (cielo claro, texto legible) y algo más denso abajo (hierba/pareja) */
+      background: linear-gradient(rgba(250,248,245,0.45), rgba(250,248,245,0.62));
     }
     @keyframes kenBurns {
       0%   { transform: scale(1.04) translate(0, 0); }
@@ -433,6 +443,7 @@
     }
 
     /* Entry animation hero — cada elemento aparece en cascada al cargar */
+    .hero-seal,
     .hero-badge,
     .hero-names span,
     .hero-tagline,
@@ -442,6 +453,7 @@
       transform: translateY(20px);
       animation: heroEntry 900ms var(--ease-out) forwards;
     }
+    .hero-seal        { animation-delay: 80ms; }
     .hero-badge       { animation-delay: 200ms; }
     .hero-names span:nth-child(1) { animation-delay: 400ms; }
     .hero-names .and  { animation-delay: 550ms; }
@@ -461,6 +473,7 @@
     }
     /* En reduced motion: aparece sin moverse */
     @media (prefers-reduced-motion: reduce) {
+      .hero-seal,
       .hero-badge,
       .hero-names span,
       .hero-tagline,
@@ -473,19 +486,43 @@
       }
     }
 
+    /* Monograma sello mini en el hero — eco del sello de la intro */
+    .hero-seal {
+      width: clamp(104px, 15vw, 150px);
+      height: auto;
+      margin-bottom: 1.4rem;
+      filter: drop-shadow(0 1px 10px rgba(250,248,245,0.7));
+    }
+    .hero-seal-mono {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 600; fill: var(--dark);
+      letter-spacing: 4px;
+    }
+    .hero-seal-mono .amp {
+      fill: var(--emerald); font-style: italic;
+      font-size: 38px;
+    }
     .hero-badge {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.85rem;
       letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-dark);
       margin-bottom: 2.5rem;
     }
+    /* Halo crema — mantiene legibles los textos finos sobre la foto */
+    .hero-badge,
+    .hero-date,
+    .hero-place {
+      text-shadow: 0 0 6px rgba(250,248,245,0.95), 0 0 16px rgba(250,248,245,0.9);
+    }
+    .hero-names { text-shadow: 0 1px 18px rgba(250,248,245,0.6); }
 
     .hero-names {
       font-family: 'Playfair Display', serif;
-      /* clamp() escala suave entre móvil y desktop sin breakpoints — nombres dominan pantalla */
-      font-size: clamp(3rem, 11vw, 6.5rem);
+      /* clamp() escala suave entre móvil y desktop sin breakpoints — nombres dominan pantalla.
+         Min 2.2rem: con apellidos, "Christine Tejada" debe caber en móviles de 320-390px */
+      font-size: clamp(2.2rem, 9.5vw, 6.5rem);
       font-weight: 500;
       color: var(--dark);
       line-height: 1.05;
@@ -503,30 +540,32 @@
       letter-spacing: 0.05em;
     }
 
-    /* Frase personal bajo los nombres (editable) */
+    /* Frase personal bajo los nombres (editable) — --dark + halo fuerte: cae sobre zona
+       ajetreada de la foto (velo/traje) y necesita contraste */
     .hero-tagline {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-size: clamp(1.4rem, 3.4vw, 2.1rem);
       font-style: italic;
-      color: var(--text);
+      color: var(--dark);
       margin-top: 1.5rem;
       letter-spacing: 0.02em;
+      text-shadow: 0 0 6px rgba(250,248,245,0.95), 0 0 18px rgba(250,248,245,0.9), 0 1px 24px rgba(250,248,245,0.85);
     }
 
     .hero-date {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: clamp(1.7rem, 3.8vw, 2.4rem);
       letter-spacing: 0.15em;
-      color: var(--text);
+      color: var(--dark);
       margin-top: 1.5rem;
     }
-    /* Lugar bajo la fecha */
+    /* Lugar bajo la fecha — --text (no --text-light): sobre foto necesita más contraste */
     .hero-place {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--text-light);
+      color: var(--text);
       margin-top: 0.6rem;
     }
 
@@ -542,7 +581,8 @@
                   color 200ms var(--ease-out);
     }
     .hero-scroll:hover { color: var(--gold); }
-    .hero-scroll span {
+    /* Solo la línea decorativa (aria-hidden) — el otro span es el texto i18n */
+    .hero-scroll span[aria-hidden] {
       width: 1px; height: 40px; background: var(--gold);
       animation: heroLine 2s ease-in-out infinite;
       transform-origin: top;
@@ -1091,6 +1131,8 @@
       object-fit: cover;
       transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+    /* Foto mirador: la pareja está a la izquierda — anclar recorte ahí para que no se corte */
+    .gallery-item:nth-child(1) img { object-position: 12% center; }
     .gallery-item:hover img {
       transform: scale(1.06);
     }
@@ -1478,6 +1520,30 @@
       margin-bottom: 0.5rem;
       letter-spacing: 0.05em;
     }
+    /* Firma manuscrita — se "escribe" de izquierda a derecha al llegar al footer.
+       Wipe con mask animada; navegadores sin mask la muestran directamente. */
+    .signature {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3rem, 8vw, 4.6rem);
+      line-height: 1.2;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+      -webkit-mask-image: linear-gradient(100deg, #000 42%, transparent 58%);
+      mask-image: linear-gradient(100deg, #000 42%, transparent 58%);
+      -webkit-mask-size: 250% 100%;
+      mask-size: 250% 100%;
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+    }
+    .footer.visible .signature {
+      -webkit-mask-position: 0% 0;
+      mask-position: 0% 0;
+      transition: -webkit-mask-position 2.2s ease-out 0.3s, mask-position 2.2s ease-out 0.3s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .signature { -webkit-mask-image: none; mask-image: none; }
+    }
     .footer .ornament {
       color: var(--gold);
       font-feature-settings: 'tnum' 1;
@@ -1714,7 +1780,6 @@
         letter-spacing: 0.3em;
         margin-bottom: 1.5rem;
       }
-      .hero-date { font-size: 1rem; }
       /* Lightbox botones más cerca en móvil */
       .lightbox-close { top: 1rem; right: 1rem; }
       .lightbox-prev { left: 0.5rem; }
@@ -1918,15 +1983,23 @@
       font-size: 0.82rem; letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--text-light); max-width: 22rem;
     }
+    /* "Toca para entrar" — misma pill dorada que el hint inicial (debe verse a la primera) */
     .intro-page-enter {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.78rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--gold); margin-top: 1.4rem;
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 1rem; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: #fff; margin-top: 1.6rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      background: linear-gradient(180deg, #d4b57e, var(--gold) 55%, var(--gold-dark));
+      padding: 0.8rem 1.9rem;
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 999px;
+      box-shadow: 0 6px 22px rgba(156,126,74,0.45), 0 2px 6px rgba(0,0,0,0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.18);
     }
     .intro-page-enter .chev {
       width: 9px; height: 9px;
-      border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+      border-right: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
       transform: rotate(45deg);
       animation: chevBob 2s ease-in-out infinite;
     }
@@ -1935,19 +2008,20 @@
       50%      { transform: rotate(45deg) translate(2px,2px); opacity: 1; }
     }
 
-    /* Pista inferior */
+    /* Pista inferior — pill dorada sólida: debe verse a la primera (antes se fundía al 40%) */
     .intro-hint {
-      position: absolute; left: 50%; bottom: 6rem; z-index: 3;
+      position: absolute; left: 50%; bottom: 5rem; z-index: 3;
       transform: translateX(-50%);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem; font-weight: 600;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold-dark);
-      background: rgba(250,248,245,0.85);
-      padding: 0.55rem 1.5rem;
-      border: 1px solid rgba(156,126,74,0.5);
+      font-size: 1.05rem; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(180deg, #d4b57e, var(--gold) 55%, var(--gold-dark));
+      padding: 0.85rem 2rem;
+      border: 1px solid rgba(255,255,255,0.55);
       border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 22px rgba(156,126,74,0.45), 0 2px 6px rgba(0,0,0,0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.18);
       white-space: nowrap;
       animation: hintPulse 2.2s ease-in-out infinite;
       pointer-events: none;
@@ -1955,9 +2029,13 @@
     .intro.abierta .intro-hint,
     .intro.done .intro-hint { display: none; }
 
+    /* Latido sutil: escala + halo, sin bajar opacidad (siempre legible) */
     @keyframes hintPulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
+      0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 6px 22px rgba(156,126,74,0.45), 0 2px 6px rgba(0,0,0,0.15); }
+      50% { transform: translateX(-50%) scale(1.06); box-shadow: 0 8px 30px rgba(156,126,74,0.65), 0 2px 8px rgba(0,0,0,0.18); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-hint { animation: none; }
     }
 
     /* Coords del portal = fracción de imagen → iguales en móvil y desktop (no override) */
@@ -2026,7 +2104,86 @@
 
     /* ── PRINT STYLESHEET ───────────────────── */
     /* Si alguien imprime la invitación, ocultar elementos interactivos */
+    /* ── SELECTOR DE IDIOMA ES/EN ─────────── */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .lang-btn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      padding: 0.5rem 0.85rem;
+      min-height: 36px;
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color 200ms var(--ease-out), background-color 200ms var(--ease-out);
+    }
+    .lang-btn:hover { color: var(--gold-dark); }
+    .lang-btn.active {
+      background: var(--gold);
+      color: #fff;
+    }
+    /* En la intro: esquina superior derecha, por encima del escenario */
+    .lang-toggle--intro {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      z-index: 6;
+    }
+    /* En la nav: alineado con los enlaces */
+    .nav .lang-toggle { margin-left: 0.6rem; align-self: center; }
+    @media (max-width: 768px) {
+      .lang-btn { min-height: 42px; padding: 0.5rem 1rem; }
+    }
+
+    /* ── CTA FLOTANTE "CONFIRMAR ASISTENCIA" ── */
+    /* Aparece tras pasar el hero; se oculta en la sección RSVP y si ya confirmaste */
+    .rsvp-cta {
+      position: fixed; left: 50%; bottom: 1.4rem; z-index: 900;
+      transform: translate(-50%, 140%);
+      opacity: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #fff; text-decoration: none;
+      background: linear-gradient(180deg, #d4b57e, var(--gold) 55%, var(--gold-dark));
+      padding: 0.85rem 1.9rem;
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 999px;
+      box-shadow: 0 6px 22px rgba(156,126,74,0.45), 0 2px 6px rgba(0,0,0,0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+      white-space: nowrap;
+      transition: transform 350ms var(--ease-out), opacity 350ms var(--ease-out),
+                  box-shadow 200ms var(--ease-out);
+      pointer-events: none;
+    }
+    .rsvp-cta.visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .rsvp-cta:hover { box-shadow: 0 8px 30px rgba(156,126,74,0.65), 0 2px 8px rgba(0,0,0,0.18); }
+    .rsvp-cta:active { transform: translate(-50%, 0) scale(0.97); }
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .rsvp-cta { bottom: calc(1.4rem + env(safe-area-inset-bottom)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rsvp-cta { transition: opacity 350ms ease; transform: translate(-50%, 0); }
+    }
+
     @media print {
+      .rsvp-cta,
+      .lang-toggle,
       .nav,
       .audio-toggle,
       .petals,
@@ -2051,7 +2208,8 @@
       .fade-in { opacity: 1 !important; transform: none !important; }
       a { color: black !important; text-decoration: none; }
       .footer { background: white !important; color: black !important; padding: 1rem; }
-      .footer .names, .footer .ornament { color: #9c7e4a !important; }
+      .footer .names, .footer .signature, .footer .ornament { color: #9c7e4a !important; }
+      .signature { -webkit-mask-image: none !important; mask-image: none !important; }
       .gold, .section-tag, .hero-badge { color: #9c7e4a !important; }
     }
 
@@ -2060,7 +2218,7 @@
 <body>
 
   <!-- Skip link accesibilidad (visible al hacer Tab) -->
-  <a href="#inicio" class="skip-link">Saltar al contenido</a>
+  <a href="#inicio" class="skip-link" data-i18n="a11y.skip">Saltar al contenido</a>
 
   <!-- Pétalos ambient cayendo (background decorativo) -->
   <div class="petals" id="petals" aria-hidden="true"></div>
@@ -2105,7 +2263,7 @@
         <circle class="seal-dot" cx="170" cy="100" r="2.6"/>
         <!-- "NUESTRA BODA" (este arco renderiza arriba) -->
         <text class="seal-arc-text">
-          <textPath href="#sealArcBottom" startOffset="50%" text-anchor="middle">N U E S T R A · B O D A</textPath>
+          <textPath href="#sealArcBottom" startOffset="50%" text-anchor="middle" data-i18n="intro.sealArc">N U E S T R A · B O D A</textPath>
         </text>
       </svg>
       <h1 class="intro-page-names">
@@ -2113,45 +2271,69 @@
         <span class="and">&amp;</span>
         <span>Christine Tejada</span>
       </h1>
-      <p class="intro-page-date">Sábado, 10 de Octubre de 2026</p>
-      <p class="intro-page-enter">Toca para entrar<span class="chev"></span></p>
+      <p class="intro-page-date" data-i18n="intro.date">Sábado, 10 de octubre de 2026</p>
+      <p class="intro-page-enter"><span data-i18n="intro.enter">Toca para entrar</span><span class="chev"></span></p>
     </div>
 
-    <p class="intro-hint" id="introHint">Tap to continue</p>
+    <p class="intro-hint" id="introHint" data-i18n="intro.hint">Toca para continuar</p>
+    <!-- Selector de idioma — visible desde el primer momento (la intro es lo primero que se ve) -->
+    <div class="lang-toggle lang-toggle--intro" role="group" aria-label="Idioma / Language">
+      <button type="button" class="lang-btn" data-lang="es">ES</button>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
     <audio id="envMusic" src="https://res.cloudinary.com/dkerabcck/video/upload/v1777921696/A_Thousand_Years_-_Christina_Perri_-_reduzida_w41azh.mp3" preload="auto" loop></audio>
   </div>
 
   <!-- ── NAVEGACIÓN ──────────────────────── -->
   <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
-      <a href="#inicio">Inicio</a>
-      <a href="#detalles">Detalles</a>
-      <a href="#homenaje">Homenaje</a>
-      <a href="#padrinos">Padrinos</a>
-      <a href="#historia">Historia</a>
-      <a href="#galeria">Galería</a>
-      <a href="#rsvp">Confirmar</a>
-      <a href="#musica">Música</a>
-      <a href="#recuerdos">Recuerdos</a>
-      <a href="#regalos">Regalos</a>
-      <a href="#faq">FAQ</a>
+      <a href="#inicio" data-i18n="nav.inicio">Inicio</a>
+      <a href="#detalles" data-i18n="nav.detalles">Detalles</a>
+      <a href="#homenaje" data-i18n="nav.homenaje">Homenaje</a>
+      <a href="#padrinos" data-i18n="nav.padrinos">Padrinos</a>
+      <a href="#historia" data-i18n="nav.historia">Historia</a>
+      <a href="#galeria" data-i18n="nav.galeria">Galería</a>
+      <a href="#rsvp" data-i18n="nav.rsvp">Confirmar</a>
+      <a href="#musica" data-i18n="nav.musica">Música</a>
+      <a href="#recuerdos" data-i18n="nav.recuerdos">Recuerdos</a>
+      <a href="#regalos" data-i18n="nav.regalos">Regalos</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+        <button type="button" class="lang-btn" data-lang="es">ES</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
     </div>
   </nav>
 
   <!-- ── HERO ────────────────────────────── -->
   <section class="hero" id="inicio">
-    <p class="hero-badge">Nos casamos</p>
+    <!-- Monograma sello J&C — versión mini del sello de la intro (cohesión visual) -->
+    <svg class="hero-seal" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <!-- Gradiente propio: el del intro puede no renderizar si su SVG está oculto -->
+        <linearGradient id="sealGoldHero" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e6cf94"/>
+          <stop offset="0.55" stop-color="#c9a96e"/>
+          <stop offset="1" stop-color="#9c7e4a"/>
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="url(#sealGoldHero)" stroke-width="2"/>
+      <circle cx="100" cy="100" r="84" fill="none" stroke="url(#sealGoldHero)" stroke-width="0.9" opacity="0.55"/>
+      <text class="hero-seal-mono" x="100" y="116" text-anchor="middle">J<tspan class="amp">&amp;</tspan>C</text>
+      <path fill="url(#sealGoldHero)" d="M100,138 L104,144 L100,150 L96,144 Z"/>
+    </svg>
+    <p class="hero-badge" data-i18n="hero.badge">Nos casamos</p>
     <h1 class="hero-names">
       <span>Jaybie Ramos</span>
       <span class="and">&amp;</span>
       <span>Christine Tejada</span>
     </h1>
     <!-- Frase personal de la pareja — EDITABLE -->
-    <p class="hero-tagline">Empieza nuestra historia juntos.</p>
-    <p class="hero-date">10 de Octubre de 2026</p>
-    <p class="hero-place">Parroquia Santa María Micaela y San Enrique</p>
-    <a class="hero-scroll" href="#detalles" aria-label="Ir a los detalles">
-      Desliza
+    <p class="hero-tagline" data-i18n="hero.tagline">Empieza nuestra historia juntos</p>
+    <p class="hero-date" data-i18n="hero.date">10 de octubre de 2026</p>
+    <!-- Parroquia quitada del hero a petición del usuario (2026-07-10) — sigue en Detalles -->
+    <a class="hero-scroll" href="#detalles" aria-label="Ir a los detalles" data-i18n-aria="hero.scrollAria">
+      <span data-i18n="hero.scroll">Desliza</span>
       <span aria-hidden="true"></span>
     </a>
   </section>
@@ -2159,23 +2341,23 @@
   <!-- ── CUENTA REGRESIVA ────────────────── -->
   <section class="countdown-section">
     <div class="container">
-      <p class="countdown-kicker">Cuenta atrás para el gran día</p>
+      <p class="countdown-kicker" data-i18n="count.kicker">Cuenta atrás para el gran día</p>
       <div class="countdown-grid" id="countdown">
         <div class="countdown-item">
           <span class="countdown-number" id="days">00</span>
-          <span class="countdown-label">Días</span>
+          <span class="countdown-label" data-i18n="count.days">Días</span>
         </div>
         <div class="countdown-item">
           <span class="countdown-number" id="hours">00</span>
-          <span class="countdown-label">Horas</span>
+          <span class="countdown-label" data-i18n="count.hours">Horas</span>
         </div>
         <div class="countdown-item">
           <span class="countdown-number" id="minutes">00</span>
-          <span class="countdown-label">Minutos</span>
+          <span class="countdown-label" data-i18n="count.minutes">Minutos</span>
         </div>
         <div class="countdown-item">
           <span class="countdown-number" id="seconds">00</span>
-          <span class="countdown-label">Segundos</span>
+          <span class="countdown-label" data-i18n="count.seconds">Segundos</span>
         </div>
       </div>
     </div>
@@ -2184,15 +2366,15 @@
   <!-- ── BIENVENIDA ──────────────────────── -->
   <section class="section welcome fade-in">
     <div class="container">
-      <p class="section-tag">Bienvenidos</p>
+      <p class="section-tag" data-i18n="welcome.tag">Bienvenidos</p>
       <blockquote class="pull-quote">
-        El amor no es solo mirarse el uno al otro,<br>
-        es mirar juntos en la misma dirección.
+        <span data-i18n-html="welcome.quote">El amor no es solo mirarse el uno al otro,<br>
+        es mirar juntos en la misma dirección.</span>
         <span class="pull-quote-attr">Antoine de Saint-Exupéry</span>
       </blockquote>
-      <p class="welcome-text" style="margin-top: 3rem; font-size: 1rem; font-style: normal;">
-        Con inmensa alegría les invitamos a celebrar el día más importante de nuestras vidas.
-        Será un honor contar con su presencia en este momento tan especial.
+      <p class="welcome-text" style="margin-top: 3rem; font-size: 1rem; font-style: normal;" data-i18n="welcome.text">
+        Con inmensa alegría os invitamos a celebrar el día más importante de nuestras vidas.
+        Será un honor contar con vuestra presencia en este momento tan especial.
       </p>
     </div>
   </section>
@@ -2200,16 +2382,16 @@
   <!-- ── DETALLES DEL EVENTO ─────────────── -->
   <section class="section details fade-in" id="detalles">
     <div class="container">
-      <p class="section-tag">El evento</p>
-      <h2 class="section-title">Detalles de la boda</h2>
+      <p class="section-tag" data-i18n="details.tag">El evento</p>
+      <h2 class="section-title" data-i18n="details.title">Detalles de la boda</h2>
 
       <div class="details-grid stagger">
         <div class="detail-card">
           <span class="detail-icon">&#x1F4C5;</span>
-          <h3>Fecha</h3>
+          <h3 data-i18n="details.dateH">Fecha</h3>
           <p class="time-main">10.10.26</p>
-          <p>Sábado, 10 de Octubre<br>de 2026</p>
-          <p style="margin-top: 0.5rem; color: var(--text-light);">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
+          <p data-i18n-html="details.dateFull">Sábado, 10 de octubre<br>de 2026</p>
+          <p style="margin-top: 0.5rem; color: var(--text-light);" data-i18n-html="details.time">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
           <div class="calendar-buttons">
             <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
             <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
@@ -2218,27 +2400,27 @@
 
         <div class="detail-card">
           <span class="detail-icon">&#x26EA;</span>
-          <h3>Iglesia</h3>
+          <h3 data-i18n="details.churchH">Iglesia</h3>
           <p>Parroquia Santa María<br>Micaela y San Enrique</p>
-          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia">
-            <span class="map-lazy-cta">Ver mapa</span>
+          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia" data-i18n-aria="details.mapChurchAria">
+            <span class="map-lazy-cta" data-i18n="details.viewMap">Ver mapa</span>
           </div>
           <div class="map-actions">
-            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener">Cómo llegar</a>
+            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener" data-i18n="details.gmaps">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener" data-i18n="details.directions">Cómo llegar</a>
           </div>
         </div>
 
         <div class="detail-card">
           <span class="detail-icon">&#x1F37D;</span>
-          <h3>Restaurante</h3>
+          <h3 data-i18n="details.restH">Restaurante</h3>
           <p>Restaurante San Francisco</p>
-          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante">
-            <span class="map-lazy-cta">Ver mapa</span>
+          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante" data-i18n-aria="details.mapRestAria">
+            <span class="map-lazy-cta" data-i18n="details.viewMap">Ver mapa</span>
           </div>
           <div class="map-actions">
-            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener">Cómo llegar</a>
+            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener" data-i18n="details.gmaps">Ver en Google Maps →</a>
+            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener" data-i18n="details.directions">Cómo llegar</a>
           </div>
         </div>
       </div>
@@ -2248,19 +2430,19 @@
   <!-- ── HOMENAJE (a las madres) ──────────── -->
   <section class="section homenaje fade-in" id="homenaje">
     <div class="container">
-      <p class="section-tag section-tag--alt">A nuestras madres</p>
-      <h2 class="section-title">Homenaje</h2>
+      <p class="section-tag section-tag--alt" data-i18n="tribute.tag">A nuestras madres</p>
+      <h2 class="section-title" data-i18n="tribute.title">Homenaje</h2>
       <div class="homenaje-madres">
         <span class="homenaje-nombre">Marivic Caguisano</span>
-        <span class="homenaje-y">y</span>
+        <span class="homenaje-y" data-i18n="tribute.and">y</span>
         <span class="homenaje-nombre">Melinda Notarte</span>
       </div>
       <div class="homenaje-texto">
-        <p>Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
-        <p>Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.</p>
-        <p>Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.</p>
-        <p>Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.</p>
-        <p class="homenaje-cierre">Con todo nuestro amor y gratitud, este día también os pertenece.</p>
+        <p data-i18n="tribute.p1">Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
+        <p data-i18n="tribute.p2">Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.</p>
+        <p data-i18n="tribute.p3">Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.</p>
+        <p data-i18n="tribute.p4">Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.</p>
+        <p class="homenaje-cierre" data-i18n="tribute.close">Con todo nuestro amor y gratitud, este día también os pertenece.</p>
       </div>
     </div>
   </section>
@@ -2268,9 +2450,9 @@
   <!-- ── PADRINOS ────────────────────────── -->
   <section class="section dress-code fade-in" id="padrinos">
     <div class="container">
-      <p class="section-tag">Nuestros padrinos</p>
-      <h2 class="section-title">Padrinos de boda</h2>
-      <p class="sponsor-intro">
+      <p class="section-tag" data-i18n="sponsors.tag">Nuestros padrinos</p>
+      <h2 class="section-title" data-i18n="sponsors.title">Padrinos de boda</h2>
+      <p class="sponsor-intro" data-i18n="sponsors.intro">
         Porque cada historia de amor también se escribe con quienes nos han querido desde siempre, hoy elegimos a personas muy especiales para que nos acompañen como padrinos y madrinas en el día más importante de nuestras vidas.
       </p>
 
@@ -2326,14 +2508,14 @@
   <!-- ── CÓDIGO DE VESTIMENTA ────────────── -->
   <section class="section dress-code fade-in">
     <div class="container">
-      <p class="section-tag">Vestimenta</p>
-      <h2 class="section-title">Código de vestimenta</h2>
-      <p style="margin-top: 1rem; color: var(--text);">Formal — Etiqueta de noche</p>
+      <p class="section-tag" data-i18n="dress.tag">Vestimenta</p>
+      <h2 class="section-title" data-i18n="dress.title">Código de vestimenta</h2>
+      <p style="margin-top: 1rem; color: var(--text);" data-i18n="dress.formal">Formal — Etiqueta de noche</p>
       <div class="dress-code-box">
-        <p>Mujeres: Vestido largo</p>
-        <p>Hombres: Traje (etiqueta)</p>
+        <p data-i18n="dress.women">Mujeres: Vestido largo</p>
+        <p data-i18n="dress.men">Hombres: Traje (etiqueta)</p>
       </div>
-      <p style="margin-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;">
+      <p style="margin-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;" data-i18n="dress.colors">
         Colores sugeridos · Mujeres
       </p>
       <div class="palette stagger">
@@ -2343,7 +2525,7 @@
         </div>
         <div class="palette-swatch">
           <span class="swatch-color" style="background:#D8CFF0;" aria-label="Lavanda suave"></span>
-          <span class="swatch-label">Lavanda</span>
+          <span class="swatch-label" data-i18n="dress.lavender">Lavanda</span>
         </div>
         <div class="palette-swatch">
           <span class="swatch-color" style="background:#F7C9A9;" aria-label="Peach"></span>
@@ -2351,11 +2533,11 @@
         </div>
         <div class="palette-swatch">
           <span class="swatch-color" style="background:#F6E7A6;" aria-label="Amarillo mantequilla"></span>
-          <span class="swatch-label">Mantequilla</span>
+          <span class="swatch-label" data-i18n="dress.butter">Mantequilla</span>
         </div>
         <div class="palette-swatch">
           <span class="swatch-color" style="background:#CFEFE8;" aria-label="Verde menta"></span>
-          <span class="swatch-label">Menta</span>
+          <span class="swatch-label" data-i18n="dress.mint">Menta</span>
         </div>
       </div>
     </div>
@@ -2365,33 +2547,33 @@
   <!-- ── NUESTRA HISTORIA (timeline) ─────── -->
   <section class="section historia fade-in" id="historia">
     <div class="container">
-      <p class="section-tag section-tag--alt">Nuestra historia</p>
-      <h2 class="section-title">Cómo llegamos hasta aquí</h2>
+      <p class="section-tag section-tag--alt" data-i18n="story.tag">Nuestra historia</p>
+      <h2 class="section-title" data-i18n="story.title">Cómo llegamos hasta aquí</h2>
 
       <!-- Timeline — TEXTOS Y FECHAS EDITABLES. Añade/quita hitos según vuestra historia -->
       <div class="timeline stagger">
         <div class="timeline-item">
-          <p class="timeline-year">El comienzo</p>
-          <h3 class="timeline-title">Cómo nos conocimos</h3>
-          <p class="timeline-text">A veces los momentos más bonitos llegan sin esperarlos… Nuestro camino se cruzó gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera se convirtió en el inicio de una historia llena de cariño, momentos inolvidables y mucho amor.</p>
+          <p class="timeline-year" data-i18n="story.y1">El comienzo</p>
+          <h3 class="timeline-title" data-i18n="story.t1">Cómo nos conocimos</h3>
+          <p class="timeline-text" data-i18n="story.p1">A veces los momentos más bonitos llegan sin esperarlos… Nuestro camino se cruzó gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera se convirtió en el inicio de una historia llena de cariño, momentos inolvidables y mucho amor.</p>
         </div>
         <div class="timeline-item">
-          <p class="timeline-year">Primeros pasos</p>
-          <h3 class="timeline-title">Nuestra primera cita</h3>
-          <p class="timeline-text">Nuestra primera cita fue un instante que siempre llevaremos en el corazón: un picnic en el encantador parque de El Capricho, en Madrid. Rodeados de naturaleza, compartimos risas, sueños y conversaciones que hicieron que el tiempo se detuviera. Sin saberlo, aquel día estábamos escribiendo la primera página de nuestra historia de amor.</p>
-          <p class="timeline-text">Desde entonces, ese lugar guarda un significado muy especial para nosotros y se convirtió en nuestra pequeña tradición: volver cada año al parque donde empezó todo, para recordar aquel primer día y celebrar todo lo que hemos construido juntos.</p>
+          <p class="timeline-year" data-i18n="story.y2">Primeros pasos</p>
+          <h3 class="timeline-title" data-i18n="story.t2">Nuestra primera cita</h3>
+          <p class="timeline-text" data-i18n="story.p2a">Nuestra primera cita fue un instante que siempre llevaremos en el corazón: un picnic en el encantador parque de El Capricho, en Madrid. Rodeados de naturaleza, compartimos risas, sueños y conversaciones que hicieron que el tiempo se detuviera. Sin saberlo, aquel día estábamos escribiendo la primera página de nuestra historia de amor.</p>
+          <p class="timeline-text" data-i18n="story.p2b">Desde entonces, ese lugar guarda un significado muy especial para nosotros y se convirtió en nuestra pequeña tradición: volver cada año al parque donde empezó todo, para recordar aquel primer día y celebrar todo lo que hemos construido juntos.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">28 · 07 · 2025</p>
-          <h3 class="timeline-title">La pedida de mano</h3>
-          <p class="timeline-text">El 28 de julio de 2025 será siempre una fecha guardada en lo más profundo de nuestros corazones. Él preparó una noche que parecía una cita más, una cena especial en el restaurante Dani del Four Seasons, sin que yo imaginara que estaba a punto de vivir uno de los momentos más bonitos de nuestra historia.</p>
-          <p class="timeline-text">Al volver a casa, donde tantos recuerdos compartimos, me regaló una de las mayores muestras de amor. Con la emoción en sus ojos y el corazón lleno de palabras, me habló de nuestro camino, de todo lo vivido y de todos los sueños que aún nos quedaban por cumplir juntos.</p>
-          <p class="timeline-text">Y entonces llegó ese instante que parecía sacado de un sueño… se arrodilló y me pidió que camináramos juntos hacia siempre. Entre lágrimas, sonrisas y un amor inmenso, dijimos que sí a seguir escribiendo nuestra historia.</p>
+          <h3 class="timeline-title" data-i18n="story.t3">La pedida de mano</h3>
+          <p class="timeline-text" data-i18n="story.p3a">El 28 de julio de 2025 será siempre una fecha guardada en lo más profundo de nuestros corazones. Él preparó una noche que parecía una cita más, una cena especial en el restaurante Dani del Four Seasons, sin que yo imaginara que estaba a punto de vivir uno de los momentos más bonitos de nuestra historia.</p>
+          <p class="timeline-text" data-i18n="story.p3b">Al volver a casa, donde tantos recuerdos compartimos, me regaló una de las mayores muestras de amor. Con la emoción en sus ojos y el corazón lleno de palabras, me habló de nuestro camino, de todo lo vivido y de todos los sueños que aún nos quedaban por cumplir juntos.</p>
+          <p class="timeline-text" data-i18n="story.p3c">Y entonces llegó ese instante que parecía sacado de un sueño… se arrodilló y me pidió que camináramos juntos hacia siempre. Entre lágrimas, sonrisas y un amor inmenso, dijimos que sí a seguir escribiendo nuestra historia.</p>
         </div>
         <div class="timeline-item">
           <p class="timeline-year">10 · 10 · 2026</p>
-          <h3 class="timeline-title">El gran día</h3>
-          <p class="timeline-text">Y por fin, el día que estábamos esperando. ¡Queremos compartirlo contigo!</p>
+          <h3 class="timeline-title" data-i18n="story.t4">El gran día</h3>
+          <p class="timeline-text" data-i18n="story.p4">Y por fin, el día que estábamos esperando. ¡Queremos compartirlo contigo!</p>
         </div>
       </div>
     </div>
@@ -2400,30 +2582,30 @@
   <!-- ── GALERÍA ─────────────────────────── -->
   <section class="section gallery fade-in" id="galeria">
     <div class="container">
-      <p class="section-tag">Galería</p>
-      <h2 class="section-title">Galería de fotos</h2>
+      <p class="section-tag" data-i18n="gallery.tag">Galería</p>
+      <h2 class="section-title" data-i18n="gallery.title">Galería de fotos</h2>
 
       <div class="gallery-grid stagger" id="galleryGrid">
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="Pareja" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-1.jpg">
+          <img src="img/galeria-1.jpg" alt="En el mirador, contemplando los Alpes" loading="lazy" data-i18n-alt="gallery.alt1">
         </div>
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1523438885200-e635ba2d3715?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2d3715?w=600&q=80" alt="Anillos" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-2.jpg">
+          <img src="img/galeria-2.jpg" alt="De la mano en el embarcadero del lago" loading="lazy" data-i18n-alt="gallery.alt2">
         </div>
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="Flores" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-3.jpg">
+          <img src="img/galeria-3.jpg" alt="Bailando en la pradera con las montañas de fondo" loading="lazy" data-i18n-alt="gallery.alt3">
         </div>
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=600&q=80" alt="Decoración" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-4.jpg">
+          <img src="img/galeria-4.jpg" alt="Junto a la capilla de piedra" loading="lazy" data-i18n-alt="gallery.alt4">
         </div>
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80" alt="Ramo" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-5.jpg">
+          <img src="img/galeria-5.jpg" alt="Sentados en la ladera" loading="lazy" data-i18n-alt="gallery.alt5">
         </div>
-        <div class="gallery-item" data-src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80">
-          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80" alt="Mesa" loading="lazy">
+        <div class="gallery-item" data-src="img/galeria-6.jpg">
+          <img src="img/galeria-6.jpg" alt="Cruzando la calle en Zúrich" loading="lazy" data-i18n-alt="gallery.alt6">
         </div>
       </div>
-      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light); font-size: 0.85rem;">
+      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light); font-size: 0.85rem;" data-i18n="gallery.hint">
         Haz clic en una foto para ampliarla
       </p>
     </div>
@@ -2440,10 +2622,10 @@
   <!-- ── RSVP ────────────────────────────── -->
   <section class="section rsvp fade-in" id="rsvp">
     <div class="container">
-      <p class="section-tag">Confirmación</p>
-      <h2 class="section-title">Confirma tu asistencia</h2>
-      <p style="text-align: center; color: var(--text);">
-        Por favor confirma antes del <strong>15 de Septiembre de 2026</strong>
+      <p class="section-tag" data-i18n="rsvp.tag">Confirmación</p>
+      <h2 class="section-title" data-i18n="rsvp.title">Confirma tu asistencia</h2>
+      <p style="text-align: center; color: var(--text);" data-i18n-html="rsvp.deadline">
+        Por favor confirma antes del <strong>1 de septiembre de 2026</strong>
       </p>
 
       <div class="rsvp-card" id="rsvpCard">
@@ -2454,7 +2636,7 @@
           </svg>
           <h3 id="confirmationTitle">¡Gracias por confirmar!</h3>
           <p id="confirmationText"></p>
-          <button type="button" class="reset-rsvp" onclick="resetRSVP()">
+          <button type="button" class="reset-rsvp" onclick="resetRSVP()" data-i18n="rsvp.change">
             Cambiar respuesta
           </button>
         </div>
@@ -2462,56 +2644,56 @@
         <form class="rsvp-form" id="rsvpForm">
           <div class="form-row">
             <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" placeholder="Tu nombre" required>
+              <label for="nombre" data-i18n="rsvp.name">Nombre</label>
+              <input type="text" id="nombre" placeholder="Tu nombre" required data-i18n-ph="rsvp.namePh">
             </div>
             <div class="form-group">
-              <label for="apellido">Apellido</label>
-              <input type="text" id="apellido" placeholder="Tu apellido" required>
+              <label for="apellido" data-i18n="rsvp.surname">Apellido</label>
+              <input type="text" id="apellido" placeholder="Tu apellido" required data-i18n-ph="rsvp.surnamePh">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="telefono">Teléfono</label>
-              <input type="tel" id="telefono" placeholder="+52 55 1234 5678">
+              <label for="telefono" data-i18n="rsvp.phone">Teléfono</label>
+              <input type="tel" id="telefono" placeholder="+34 600 00 00 00">
             </div>
           </div>
           <div class="form-group">
-            <label>¿Asistirás?</label>
+            <label data-i18n="rsvp.attend">¿Asistirás?</label>
             <div class="radio-group">
               <label>
                 <input type="radio" name="asistencia" value="si" required>
-                Sí, ahí estaré
+                <span data-i18n="rsvp.attendYes">Sí, ahí estaré</span>
               </label>
               <label>
                 <input type="radio" name="asistencia" value="no">
-                No podré asistir
+                <span data-i18n="rsvp.attendNo">No podré asistir</span>
               </label>
             </div>
           </div>
 
           <div class="form-group">
-            <label>¿Usarás el autobús privado?</label>
+            <label data-i18n="rsvp.bus">¿Usarás el autobús privado?</label>
             <div class="radio-group">
               <label>
                 <input type="radio" name="autobus" value="si" required>
-                Sí, iré en el autobús
+                <span data-i18n="rsvp.busYes">Sí, iré en el autobús</span>
               </label>
               <label>
                 <input type="radio" name="autobus" value="no">
-                No, iré por mi cuenta
+                <span data-i18n="rsvp.busNo">No, iré por mi cuenta</span>
               </label>
             </div>
           </div>
           <div class="form-group">
-            <label for="alergenos">Alérgenos o restricciones alimentarias</label>
-            <textarea id="alergenos" rows="2" placeholder="Indícanos si tienes alguna alergia o restricción..."></textarea>
+            <label for="alergenos" data-i18n="rsvp.allergies">Alérgenos o restricciones alimentarias</label>
+            <textarea id="alergenos" rows="2" placeholder="Indícanos si tienes alguna alergia o restricción..." data-i18n-ph="rsvp.allergiesPh"></textarea>
           </div>
           <div class="form-group">
-            <label for="mensaje">Mensaje para los novios</label>
-            <textarea id="mensaje" rows="3" placeholder="Déjanos un mensaje..."></textarea>
+            <label for="mensaje" data-i18n="rsvp.message">Mensaje para los novios</label>
+            <textarea id="mensaje" rows="3" placeholder="Déjanos un mensaje..." data-i18n-ph="rsvp.messagePh"></textarea>
           </div>
-          <button type="submit" class="btn" id="rsvpBtn">Enviar confirmación</button>
+          <button type="submit" class="btn" id="rsvpBtn" data-i18n="rsvp.submit">Enviar confirmación</button>
         </form>
       </div>
     </div>
@@ -2520,16 +2702,16 @@
   <!-- ── SPOTIFY ──────────────────────────── -->
   <section class="section dress-code fade-in" id="musica">
     <div class="container">
-      <p class="section-tag">Música</p>
-      <h2 class="section-title">Banda sonora de la fiesta</h2>
-      <p class="sponsor-intro">
+      <p class="section-tag" data-i18n="music.tag">Música</p>
+      <h2 class="section-title" data-i18n="music.title">Banda sonora de la fiesta</h2>
+      <p class="sponsor-intro" data-i18n="music.intro">
         ¿Tienes alguna canción que no puede faltar? Abre la playlist y añádela — es colaborativa.
       </p>
       <div class="music-wrap">
         <iframe title="Playlist colaborativa de la boda" src="https://open.spotify.com/embed/playlist/1XOZ6VKG3Clte6KtewGWq7?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
       <a class="music-link" href="https://open.spotify.com/playlist/1XOZ6VKG3Clte6KtewGWq7?si=9070c708a5804015&pt=cbae1da7ea85acc7cc7c726b62d3a6f4" target="_blank" rel="noopener">
-        Abrir en Spotify <span class="arrow">→</span>
+        <span data-i18n="music.open">Abrir en Spotify</span> <span class="arrow">→</span>
       </a>
     </div>
   </section>
@@ -2537,31 +2719,31 @@
   <!-- ── FOTOS / RECUERDOS ────────────────── -->
   <section class="section photos fade-in" id="recuerdos">
     <div class="container">
-      <p class="section-tag">Recuerdos</p>
-      <h2 class="section-title">Vuestras fotos</h2>
-      <p style="text-align: center; color: var(--text); max-width: 500px; margin: 1rem auto 0;">
+      <p class="section-tag" data-i18n="photos.tag">Recuerdos</p>
+      <h2 class="section-title" data-i18n="photos.title">Vuestras fotos</h2>
+      <p style="text-align: center; color: var(--text); max-width: 500px; margin: 1rem auto 0;" data-i18n="photos.intro">
         Comparte tus momentos con los novios. Sube tus fotos y las veremos todos.
       </p>
 
       <div class="upload-area">
         <label class="upload-label" for="photoInput">
           <span class="upload-icon">&#x1F4F7;</span>
-          <p>Haz clic para subir una foto</p>
-          <span>JPG o PNG, máx. 10 MB</span>
+          <p data-i18n="photos.click">Haz clic para subir una foto</p>
+          <span data-i18n="photos.limits">JPG o PNG, máx. 10 MB</span>
         </label>
         <input type="file" class="upload-input" id="photoInput" accept="image/jpeg,image/png,image/heic,image/webp">
         <div class="upload-preview" id="uploadPreview">
           <img src="" alt="" id="previewImg">
           <p class="upload-name" id="previewName"></p>
           <div class="upload-actions">
-            <button class="btn" id="uploadBtn" style="margin-top: 0; padding: 0.7rem 2rem;">Subir foto</button>
-            <button class="btn" id="cancelBtn" style="margin-top: 0; padding: 0.7rem 2rem; border-color: var(--text-light); color: var(--text-light);">Cancelar</button>
+            <button class="btn" id="uploadBtn" style="margin-top: 0; padding: 0.7rem 2rem;" data-i18n="photos.upload">Subir foto</button>
+            <button class="btn" id="cancelBtn" style="margin-top: 0; padding: 0.7rem 2rem; border-color: var(--text-light); color: var(--text-light);" data-i18n="photos.cancel">Cancelar</button>
           </div>
         </div>
         <p class="upload-status" id="uploadStatus"></p>
       </div>
 
-      <div class="photos-empty active" id="photosEmpty">Aún no hay fotos. ¡Sé el primero en subir!</div>
+      <div class="photos-empty active" id="photosEmpty" data-i18n="photos.empty">Aún no hay fotos. ¡Sé el primero en subir!</div>
       <div class="photos-gallery" id="photosGallery"></div>
     </div>
   </section>
@@ -2569,10 +2751,10 @@
   <!-- ── REGALOS ──────────────────────────── -->
   <section class="section gifts fade-in" id="regalos">
     <div class="container">
-      <p class="section-tag">Regalos</p>
-      <h2 class="section-title">Vuestra presencia</h2>
-      <p>
-        Vuestra presencia es nuestro mejor regalo. Gracias por acompañarnos y formar parte de nuestra historia.
+      <p class="section-tag" data-i18n="gifts.tag">Regalos</p>
+      <h2 class="section-title" data-i18n="gifts.title">Vuestra presencia</h2>
+      <p data-i18n="gifts.text">
+        Vuestro mejor regalo es acompañarnos en este día tan especial. Si además queréis tener un detalle con nosotros, agradeceremos vuestra aportación en efectivo.
       </p>
     </div>
   </section>
@@ -2580,82 +2762,82 @@
   <!-- ── FAQ ─────────────────────────────── -->
   <section class="section fade-in" id="faq" style="background: var(--cream);">
     <div class="container">
-      <p class="section-tag" style="display:block;text-align:center;">Preguntas frecuentes</p>
+      <p class="section-tag" style="display:block;text-align:center;" data-i18n="faq.tag">Preguntas frecuentes</p>
       <h2 class="section-title" style="text-align:center;">FAQ</h2>
       <div class="faq-list stagger">
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿A qué hora debo llegar?</span>
+            <span data-i18n="faq.q1">¿A qué hora debo llegar?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a1">
               La ceremonia comienza a las 12:00 h en la iglesia. Te recomendamos llegar unos 15 minutos antes (sobre las 11:45) para encontrar sitio con tranquilidad.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Hay aparcamiento cerca?</span>
+            <span data-i18n="faq.q2">¿Hay aparcamiento cerca?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a2">
               Sí, en las inmediaciones de la parroquia y del restaurante hay aparcamiento gratuito en la calle y parkings públicos cercanos. También puedes utilizar el autobús privado que ponemos a disposición.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Cómo funciona el autobús privado?</span>
+            <span data-i18n="faq.q3">¿Cómo funciona el autobús privado?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a3">
               El autobús saldrá desde la parroquia hacia el restaurante después de la ceremonia, y a la vuelta tras el banquete. Es gratuito. Indícanos en el formulario si lo vas a usar para reservar tu plaza.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Puedo llevar niños?</span>
+            <span data-i18n="faq.q4">¿Puedo llevar niños?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a4">
               Si en tu invitación se incluye a los niños, ¡estaremos encantados de verles! Si tienes dudas, escríbenos directamente y lo aclaramos.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Y si tengo alergias o intolerancias?</span>
+            <span data-i18n="faq.q5">¿Y si tengo alergias o intolerancias?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a5">
               Indícanoslo en el formulario de confirmación, en el campo de alérgenos. El restaurante adaptará el menú para ti.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Hasta cuándo puedo confirmar?</span>
+            <span data-i18n="faq.q6">¿Hasta cuándo puedo confirmar?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n-html="faq.a6">
               La fecha límite para confirmar asistencia es el <strong>1 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.
             </div>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">
-            <span>¿Cuál es el dress code?</span>
+            <span data-i18n="faq.q7">¿Cuál es el dress code?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-answer">
-            <div class="faq-answer-inner">
+            <div class="faq-answer-inner" data-i18n="faq.a7">
               Formal — etiqueta de noche. Vestido largo para mujeres y traje (etiqueta) para hombres. Colores sugeridos para mujeres en tonos pastel: Dusty Rose, lavanda, Peach, amarillo mantequilla o verde menta. Por respeto a la novia, evita el blanco.
             </div>
           </div>
@@ -2665,17 +2847,376 @@
   </section>
 
   <!-- ── FOOTER ───────────────────────────── -->
-  <footer class="footer">
-    <p class="names">J &amp; C</p>
+  <footer class="footer fade-in">
+    <p class="signature">Jaybie &amp; Christine</p>
     <div class="ornament">X · X · MMXXVI</div>
-    <p class="footer-thanks">¡Te esperamos!</p>
+    <p class="footer-thanks" data-i18n="footer.thanks">¡Te esperamos!</p>
   </footer>
+
+  <!-- ── CTA FLOTANTE RSVP ────────────────── -->
+  <a class="rsvp-cta" id="rsvpCta" href="#rsvp" data-i18n="cta.confirm">Confirmar asistencia</a>
 
   <!-- ── AUDIO TOGGLE ─────────────────────── -->
   <button class="audio-toggle" id="audioToggle" aria-label="Música">▶</button>
 
   <!-- ── SCRIPTS ──────────────────────────── -->
   <script>
+    // ── I18N — SELECTOR DE IDIOMA ES/EN ─────
+    // Diccionario completo. El markup queda en español (fuente de verdad de fallback);
+    // applyLang() pinta el idioma activo. Auto-detect por navegador, persiste en localStorage.
+    const I18N = {
+      es: {
+        'a11y.skip': 'Saltar al contenido',
+        'intro.hint': 'Toca para continuar',
+        'intro.enter': 'Toca para entrar',
+        'intro.sealArc': 'N U E S T R A · B O D A',
+        'intro.date': 'Sábado, 10 de octubre de 2026',
+        'nav.inicio': 'Inicio', 'nav.detalles': 'Detalles', 'nav.homenaje': 'Homenaje',
+        'nav.padrinos': 'Padrinos', 'nav.historia': 'Historia', 'nav.galeria': 'Galería',
+        'nav.rsvp': 'Confirmar', 'nav.musica': 'Música', 'nav.recuerdos': 'Recuerdos',
+        'nav.regalos': 'Regalos', 'nav.faq': 'FAQ',
+        'hero.badge': 'Nos casamos',
+        'hero.tagline': 'Empieza nuestra historia juntos',
+        'hero.date': '10 de octubre de 2026',
+        'hero.scroll': 'Desliza',
+        'hero.scrollAria': 'Ir a los detalles',
+        'count.kicker': 'Cuenta atrás para el gran día',
+        'count.days': 'Días', 'count.hours': 'Horas', 'count.minutes': 'Minutos', 'count.seconds': 'Segundos',
+        'welcome.tag': 'Bienvenidos',
+        'welcome.quote': 'El amor no es solo mirarse el uno al otro,<br>es mirar juntos en la misma dirección.',
+        'welcome.text': 'Con inmensa alegría os invitamos a celebrar el día más importante de nuestras vidas. Será un honor contar con vuestra presencia en este momento tan especial.',
+        'details.tag': 'El evento',
+        'details.title': 'Detalles de la boda',
+        'details.dateH': 'Fecha',
+        'details.dateFull': 'Sábado, 10 de octubre<br>de 2026',
+        'details.time': '12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span>',
+        'details.churchH': 'Iglesia',
+        'details.restH': 'Restaurante',
+        'details.viewMap': 'Ver mapa',
+        'details.gmaps': 'Ver en Google Maps →',
+        'details.directions': 'Cómo llegar',
+        'details.mapChurchAria': 'Cargar mapa de la iglesia',
+        'details.mapRestAria': 'Cargar mapa del restaurante',
+        'tribute.tag': 'A nuestras madres',
+        'tribute.title': 'Homenaje',
+        'tribute.and': 'y',
+        'tribute.p1': 'Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.',
+        'tribute.p2': 'Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.',
+        'tribute.p3': 'Nos enseñasteis con vuestro ejemplo el valor de la familia, la entrega y el amor verdadero.',
+        'tribute.p4': 'Todo lo que somos lleva una parte de vosotras, y la historia que hoy comenzamos también nace de todo el amor que recibimos de vosotras.',
+        'tribute.close': 'Con todo nuestro amor y gratitud, este día también os pertenece.',
+        'sponsors.tag': 'Nuestros padrinos',
+        'sponsors.title': 'Padrinos de boda',
+        'sponsors.intro': 'Porque cada historia de amor también se escribe con quienes nos han querido desde siempre, hoy elegimos a personas muy especiales para que nos acompañen como padrinos y madrinas en el día más importante de nuestras vidas.',
+        'dress.tag': 'Vestimenta',
+        'dress.title': 'Código de vestimenta',
+        'dress.formal': 'Formal — Etiqueta de noche',
+        'dress.women': 'Mujeres: Vestido largo',
+        'dress.men': 'Hombres: Traje (etiqueta)',
+        'dress.colors': 'Colores sugeridos · Mujeres',
+        'dress.butter': 'Mantequilla', 'dress.mint': 'Menta', 'dress.lavender': 'Lavanda',
+        'story.tag': 'Nuestra historia',
+        'story.title': 'Cómo llegamos hasta aquí',
+        'story.y1': 'El comienzo',
+        'story.t1': 'Cómo nos conocimos',
+        'story.p1': 'A veces los momentos más bonitos llegan sin esperarlos… Nuestro camino se cruzó gracias a unos amigos en común, en un parque de Las Rozas. Lo que parecía un encuentro cualquiera se convirtió en el inicio de una historia llena de cariño, momentos inolvidables y mucho amor.',
+        'story.y2': 'Primeros pasos',
+        'story.t2': 'Nuestra primera cita',
+        'story.p2a': 'Nuestra primera cita fue un instante que siempre llevaremos en el corazón: un picnic en el encantador parque de El Capricho, en Madrid. Rodeados de naturaleza, compartimos risas, sueños y conversaciones que hicieron que el tiempo se detuviera. Sin saberlo, aquel día estábamos escribiendo la primera página de nuestra historia de amor.',
+        'story.p2b': 'Desde entonces, ese lugar guarda un significado muy especial para nosotros y se convirtió en nuestra pequeña tradición: volver cada año al parque donde empezó todo, para recordar aquel primer día y celebrar todo lo que hemos construido juntos.',
+        'story.t3': 'La pedida de mano',
+        'story.p3a': 'El 28 de julio de 2025 será siempre una fecha guardada en lo más profundo de nuestros corazones. Él preparó una noche que parecía una cita más, una cena especial en el restaurante Dani del Four Seasons, sin que yo imaginara que estaba a punto de vivir uno de los momentos más bonitos de nuestra historia.',
+        'story.p3b': 'Al volver a casa, donde tantos recuerdos compartimos, me regaló una de las mayores muestras de amor. Con la emoción en sus ojos y el corazón lleno de palabras, me habló de nuestro camino, de todo lo vivido y de todos los sueños que aún nos quedaban por cumplir juntos.',
+        'story.p3c': 'Y entonces llegó ese instante que parecía sacado de un sueño… se arrodilló y me pidió que camináramos juntos hacia siempre. Entre lágrimas, sonrisas y un amor inmenso, dijimos que sí a seguir escribiendo nuestra historia.',
+        'story.t4': 'El gran día',
+        'story.p4': 'Y por fin, el día que estábamos esperando. ¡Queremos compartirlo contigo!',
+        'gallery.tag': 'Galería',
+        'gallery.title': 'Galería de fotos',
+        'gallery.hint': 'Haz clic en una foto para ampliarla',
+        'gallery.alt1': 'En el mirador, contemplando los Alpes',
+        'gallery.alt2': 'De la mano en el embarcadero del lago',
+        'gallery.alt3': 'Bailando en la pradera con las montañas de fondo',
+        'gallery.alt4': 'Junto a la capilla de piedra',
+        'gallery.alt5': 'Sentados en la ladera',
+        'gallery.alt6': 'Cruzando la calle en Zúrich',
+        'rsvp.tag': 'Confirmación',
+        'rsvp.title': 'Confirma tu asistencia',
+        'rsvp.deadline': 'Por favor confirma antes del <strong>1 de septiembre de 2026</strong>',
+        'rsvp.change': 'Cambiar respuesta',
+        'rsvp.name': 'Nombre', 'rsvp.namePh': 'Tu nombre',
+        'rsvp.surname': 'Apellido', 'rsvp.surnamePh': 'Tu apellido',
+        'rsvp.phone': 'Teléfono',
+        'rsvp.attend': '¿Asistirás?',
+        'rsvp.attendYes': 'Sí, ahí estaré',
+        'rsvp.attendNo': 'No podré asistir',
+        'rsvp.bus': '¿Usarás el autobús privado?',
+        'rsvp.busYes': 'Sí, iré en el autobús',
+        'rsvp.busNo': 'No, iré por mi cuenta',
+        'rsvp.allergies': 'Alérgenos o restricciones alimentarias',
+        'rsvp.allergiesPh': 'Indícanos si tienes alguna alergia o restricción...',
+        'rsvp.message': 'Mensaje para los novios',
+        'rsvp.messagePh': 'Déjanos un mensaje...',
+        'rsvp.submit': 'Enviar confirmación',
+        'rsvp.sending': 'Enviando...',
+        'rsvp.thanksYes': '¡Gracias por confirmar!',
+        'rsvp.textYes': '{name}, nos alegra muchísimo que nos acompañes en este día tan especial. ¡Te esperamos!',
+        'rsvp.thanksNo': 'Gracias por avisarnos',
+        'rsvp.textNo': '{name}, lamentamos que no puedas acompañarnos. Te tendremos presente en este día tan especial.',
+        'music.tag': 'Música',
+        'music.title': 'Banda sonora de la fiesta',
+        'music.intro': '¿Tienes alguna canción que no puede faltar? Abre la playlist y añádela — es colaborativa.',
+        'music.open': 'Abrir en Spotify',
+        'photos.tag': 'Recuerdos',
+        'photos.title': 'Vuestras fotos',
+        'photos.intro': 'Comparte tus momentos con los novios. Sube tus fotos y las veremos todos.',
+        'photos.click': 'Haz clic para subir una foto',
+        'photos.limits': 'JPG o PNG, máx. 10 MB',
+        'photos.upload': 'Subir foto',
+        'photos.cancel': 'Cancelar',
+        'photos.empty': 'Aún no hay fotos. ¡Sé el primero en subir!',
+        'photos.onlyImages': 'Solo se admiten imágenes',
+        'photos.tooBig': 'La foto no debe superar 10 MB',
+        'photos.uploading': 'Subiendo...',
+        'photos.uploadingPhoto': 'Subiendo foto...',
+        'photos.uploaded': '¡Foto subida!',
+        'photos.uploadError': 'Error al subir la foto',
+        'photos.connError': 'Error de conexión',
+        'photos.memoryAlt': 'Foto de recuerdo',
+        'gifts.tag': 'Regalos',
+        'gifts.title': 'Vuestra presencia',
+        'gifts.text': 'Vuestro mejor regalo es acompañarnos en este día tan especial. Si además queréis tener un detalle con nosotros, agradeceremos vuestra aportación en efectivo.',
+        'faq.tag': 'Preguntas frecuentes',
+        'faq.q1': '¿A qué hora debo llegar?',
+        'faq.a1': 'La ceremonia comienza a las 12:00 h en la iglesia. Te recomendamos llegar unos 15 minutos antes (sobre las 11:45) para encontrar sitio con tranquilidad.',
+        'faq.q2': '¿Hay aparcamiento cerca?',
+        'faq.a2': 'Sí, en las inmediaciones de la parroquia y del restaurante hay aparcamiento gratuito en la calle y parkings públicos cercanos. También puedes utilizar el autobús privado que ponemos a disposición.',
+        'faq.q3': '¿Cómo funciona el autobús privado?',
+        'faq.a3': 'El autobús saldrá desde la parroquia hacia el restaurante después de la ceremonia, y a la vuelta tras el banquete. Es gratuito. Indícanos en el formulario si lo vas a usar para reservar tu plaza.',
+        'faq.q4': '¿Puedo llevar niños?',
+        'faq.a4': 'Si en tu invitación se incluye a los niños, ¡estaremos encantados de verles! Si tienes dudas, escríbenos directamente y lo aclaramos.',
+        'faq.q5': '¿Y si tengo alergias o intolerancias?',
+        'faq.a5': 'Indícanoslo en el formulario de confirmación, en el campo de alérgenos. El restaurante adaptará el menú para ti.',
+        'faq.q6': '¿Hasta cuándo puedo confirmar?',
+        'faq.a6': 'La fecha límite para confirmar asistencia es el <strong>1 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.',
+        'faq.q7': '¿Cuál es el dress code?',
+        'faq.a7': 'Formal — etiqueta de noche. Vestido largo para mujeres y traje (etiqueta) para hombres. Colores sugeridos para mujeres en tonos pastel: Dusty Rose, lavanda, Peach, amarillo mantequilla o verde menta. Por respeto a la novia, evita el blanco.',
+        'footer.thanks': '¡Te esperamos!',
+        'audio.play': 'Reproducir música',
+        'audio.pause': 'Pausar música',
+        'map.title': 'Mapa',
+        'cal.title': 'Boda Jaybie & Christine',
+        'cal.details': 'Te esperamos en el día más importante de nuestras vidas. https://boda-jaybiey-christine.netlify.app/',
+        'cta.confirm': 'Confirmar asistencia'
+      },
+      en: {
+        'a11y.skip': 'Skip to content',
+        'intro.hint': 'Tap to continue',
+        'intro.enter': 'Tap to enter',
+        'intro.sealArc': 'O U R · W E D D I N G',
+        'intro.date': 'Saturday, October 10, 2026',
+        'nav.inicio': 'Home', 'nav.detalles': 'Details', 'nav.homenaje': 'Tribute',
+        'nav.padrinos': 'Sponsors', 'nav.historia': 'Our Story', 'nav.galeria': 'Gallery',
+        'nav.rsvp': 'RSVP', 'nav.musica': 'Music', 'nav.recuerdos': 'Memories',
+        'nav.regalos': 'Gifts', 'nav.faq': 'FAQ',
+        'hero.badge': "We're getting married",
+        'hero.tagline': 'Our story together begins',
+        'hero.date': 'October 10, 2026',
+        'hero.scroll': 'Scroll',
+        'hero.scrollAria': 'Go to details',
+        'count.kicker': 'Countdown to the big day',
+        'count.days': 'Days', 'count.hours': 'Hours', 'count.minutes': 'Minutes', 'count.seconds': 'Seconds',
+        'welcome.tag': 'Welcome',
+        'welcome.quote': 'Love does not consist of gazing at each other,<br>but in looking outward together in the same direction.',
+        'welcome.text': 'With immense joy, we invite you to celebrate the most important day of our lives. It will be an honor to have you with us on this very special occasion.',
+        'details.tag': 'The event',
+        'details.title': 'Wedding details',
+        'details.dateH': 'Date',
+        'details.dateFull': 'Saturday, October 10,<br>2026',
+        'details.time': '12:00 pm<br><span style="font-size: 0.85em;">Church ceremony</span>',
+        'details.churchH': 'Church',
+        'details.restH': 'Reception',
+        'details.viewMap': 'View map',
+        'details.gmaps': 'Open in Google Maps →',
+        'details.directions': 'Get directions',
+        'details.mapChurchAria': 'Load church map',
+        'details.mapRestAria': 'Load restaurant map',
+        'tribute.tag': 'To our mothers',
+        'tribute.title': 'Tribute',
+        'tribute.and': 'and',
+        'tribute.p1': 'Today, as we begin this new journey together, we want to pause to honor and thank you.',
+        'tribute.p2': 'Thank you for giving us life, for your endless love, for every sacrifice made in silence, for every word of advice, every hug, and every moment you have walked beside us.',
+        'tribute.p3': 'Through your example, you taught us the value of family, devotion, and true love.',
+        'tribute.p4': 'Everything we are carries a part of you, and the story we begin today is also born from all the love we received from you.',
+        'tribute.close': 'With all our love and gratitude, this day belongs to you too.',
+        'sponsors.tag': 'Our sponsors',
+        'sponsors.title': 'Wedding sponsors',
+        'sponsors.intro': 'Because every love story is also written with those who have loved us all along, today we choose very special people to stand by our side as sponsors on the most important day of our lives.',
+        'dress.tag': 'Attire',
+        'dress.title': 'Dress code',
+        'dress.formal': 'Formal — Evening attire',
+        'dress.women': 'Ladies: Long dress',
+        'dress.men': 'Gentlemen: Formal suit',
+        'dress.colors': 'Suggested colors · Ladies',
+        'dress.butter': 'Butter', 'dress.mint': 'Mint', 'dress.lavender': 'Lavender',
+        'story.tag': 'Our story',
+        'story.title': 'How we got here',
+        'story.y1': 'The beginning',
+        'story.t1': 'How we met',
+        'story.p1': 'Sometimes the most beautiful moments arrive when you least expect them… Our paths crossed thanks to mutual friends, in a park in Las Rozas. What seemed like an ordinary encounter became the beginning of a story full of affection, unforgettable moments, and so much love.',
+        'story.y2': 'First steps',
+        'story.t2': 'Our first date',
+        'story.p2a': 'Our first date was a moment we will always carry in our hearts: a picnic in the charming El Capricho park in Madrid. Surrounded by nature, we shared laughter, dreams, and conversations that made time stand still. Without knowing it, that day we were writing the first page of our love story.',
+        'story.p2b': 'Since then, that place holds a very special meaning for us and became our little tradition: returning every year to the park where it all began, to remember that first day and celebrate everything we have built together.',
+        'story.t3': 'The proposal',
+        'story.p3a': 'July 28, 2025 will forever be a date kept deep in our hearts. He planned an evening that seemed like just another date, a special dinner at Dani restaurant in the Four Seasons, without me imagining I was about to live one of the most beautiful moments of our story.',
+        'story.p3b': 'When we returned home, where we share so many memories, he gave me one of the greatest expressions of love. With emotion in his eyes and a heart full of words, he spoke of our journey, of everything we had lived, and of all the dreams we still had to fulfill together.',
+        'story.p3c': 'And then came that moment that seemed straight out of a dream… he got down on one knee and asked me to walk together towards forever. Between tears, smiles, and immense love, we said yes to continuing to write our story.',
+        'story.t4': 'The big day',
+        'story.p4': 'And finally, the day we have been waiting for. We want to share it with you!',
+        'gallery.tag': 'Gallery',
+        'gallery.title': 'Photo gallery',
+        'gallery.hint': 'Click on a photo to enlarge it',
+        'gallery.alt1': 'At the viewpoint, gazing at the Alps',
+        'gallery.alt2': 'Holding hands on the lake pier',
+        'gallery.alt3': 'Dancing in the meadow with mountains behind',
+        'gallery.alt4': 'By the stone chapel',
+        'gallery.alt5': 'Sitting on the hillside',
+        'gallery.alt6': 'Crossing the street in Zurich',
+        'rsvp.tag': 'RSVP',
+        'rsvp.title': 'Confirm your attendance',
+        'rsvp.deadline': 'Please confirm by <strong>September 1, 2026</strong>',
+        'rsvp.change': 'Change response',
+        'rsvp.name': 'First name', 'rsvp.namePh': 'Your first name',
+        'rsvp.surname': 'Last name', 'rsvp.surnamePh': 'Your last name',
+        'rsvp.phone': 'Phone',
+        'rsvp.attend': 'Will you attend?',
+        'rsvp.attendYes': "Yes, I'll be there",
+        'rsvp.attendNo': "I won't be able to attend",
+        'rsvp.bus': 'Will you use the private bus?',
+        'rsvp.busYes': "Yes, I'll take the bus",
+        'rsvp.busNo': "No, I'll make my own way",
+        'rsvp.allergies': 'Allergies or dietary restrictions',
+        'rsvp.allergiesPh': 'Let us know about any allergies or restrictions...',
+        'rsvp.message': 'Message for the couple',
+        'rsvp.messagePh': 'Leave us a message...',
+        'rsvp.submit': 'Send RSVP',
+        'rsvp.sending': 'Sending...',
+        'rsvp.thanksYes': 'Thank you for confirming!',
+        'rsvp.textYes': '{name}, we are so happy that you will join us on this special day. See you there!',
+        'rsvp.thanksNo': 'Thank you for letting us know',
+        'rsvp.textNo': '{name}, we are sorry you cannot join us. You will be in our thoughts on this special day.',
+        'music.tag': 'Music',
+        'music.title': 'Party soundtrack',
+        'music.intro': "Is there a song that can't be missing? Open the playlist and add it — it's collaborative.",
+        'music.open': 'Open in Spotify',
+        'photos.tag': 'Memories',
+        'photos.title': 'Your photos',
+        'photos.intro': 'Share your moments with the couple. Upload your photos for everyone to see.',
+        'photos.click': 'Click to upload a photo',
+        'photos.limits': 'JPG or PNG, max 10 MB',
+        'photos.upload': 'Upload photo',
+        'photos.cancel': 'Cancel',
+        'photos.empty': 'No photos yet. Be the first to upload!',
+        'photos.onlyImages': 'Only images are allowed',
+        'photos.tooBig': 'The photo must not exceed 10 MB',
+        'photos.uploading': 'Uploading...',
+        'photos.uploadingPhoto': 'Uploading photo...',
+        'photos.uploaded': 'Photo uploaded!',
+        'photos.uploadError': 'Error uploading the photo',
+        'photos.connError': 'Connection error',
+        'photos.memoryAlt': 'Memory photo',
+        'gifts.tag': 'Gifts',
+        'gifts.title': 'Your presence',
+        'gifts.text': 'Your presence is our greatest gift. If you would also like to have a special gesture with us, we would warmly appreciate a cash contribution.',
+        'faq.tag': 'Frequently asked questions',
+        'faq.q1': 'What time should I arrive?',
+        'faq.a1': 'The ceremony begins at 12:00 pm at the church. We recommend arriving about 15 minutes early (around 11:45 am) to find a seat comfortably.',
+        'faq.q2': 'Is there parking nearby?',
+        'faq.a2': 'Yes, there is free street parking and public car parks near both the church and the restaurant. You can also use the private bus we provide.',
+        'faq.q3': 'How does the private bus work?',
+        'faq.a3': 'The bus will leave from the church to the restaurant after the ceremony, and return after the reception. It is free. Let us know in the RSVP form if you plan to use it so we can reserve your seat.',
+        'faq.q4': 'Can I bring children?',
+        'faq.a4': 'If children are included in your invitation, we will be delighted to see them! If in doubt, just ask us directly and we will clarify.',
+        'faq.q5': 'What if I have allergies or intolerances?',
+        'faq.a5': 'Let us know in the RSVP form, in the allergies field. The restaurant will adapt the menu for you.',
+        'faq.q6': 'Until when can I RSVP?',
+        'faq.a6': 'The deadline to confirm attendance is <strong>September 1, 2026</strong>. The sooner the better, so we can organize everything calmly.',
+        'faq.q7': 'What is the dress code?',
+        'faq.a7': 'Formal — evening attire. Long dress for ladies and formal suit for gentlemen. Suggested colors for ladies in pastel tones: Dusty Rose, Lavender, Peach, Butter Yellow, or Mint Green. Out of respect for the bride, please avoid white.',
+        'footer.thanks': 'See you there!',
+        'audio.play': 'Play music',
+        'audio.pause': 'Pause music',
+        'map.title': 'Map',
+        'cal.title': 'Jaybie & Christine Wedding',
+        'cal.details': 'Join us on the most important day of our lives. https://boda-jaybiey-christine.netlify.app/',
+        'cta.confirm': 'RSVP'
+      }
+    };
+
+    // Idioma inicial: ?lang= (test/compartir) → localStorage → idioma del navegador
+    var LANG = (function() {
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'es' || q === 'en') return q;
+        var saved = localStorage.getItem('boda-lang');
+        if (saved === 'es' || saved === 'en') return saved;
+      } catch (e) {}
+      var nav = (navigator.language || '').toLowerCase();
+      return nav.indexOf('en') === 0 ? 'en' : 'es';
+    })();
+
+    function t(key) {
+      return (I18N[LANG] && I18N[LANG][key]) || I18N.es[key] || '';
+    }
+
+    function applyLang() {
+      document.documentElement.lang = LANG;
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n'));
+        if (v) el.textContent = v;
+      });
+      // Bloques con marcado interno (<br>, <strong>, <span>) — contenido propio del diccionario, seguro
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n-html'));
+        if (v) el.innerHTML = v;
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n-ph'));
+        if (v) el.setAttribute('placeholder', v);
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n-aria'));
+        if (v) el.setAttribute('aria-label', v);
+      });
+      document.querySelectorAll('[data-i18n-alt]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n-alt'));
+        if (v) el.setAttribute('alt', v);
+      });
+      // Estado visual de los toggles
+      document.querySelectorAll('.lang-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-lang') === LANG);
+      });
+      // Aviso para bloques con texto dinámico (audio, RSVP mostrado, etc.)
+      document.dispatchEvent(new CustomEvent('langchange'));
+    }
+
+    function setLang(lang) {
+      if (lang === LANG) return;
+      LANG = lang;
+      try { localStorage.setItem('boda-lang', lang); } catch (e) {}
+      applyLang();
+    }
+
+    // Listeners de los toggles — stopPropagation: en la intro el click NO debe abrir las puertas
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        setLang(btn.getAttribute('data-lang'));
+      });
+    });
+
+    applyLang();   // primera pasada (el script va al final del body — DOM ya disponible)
+
     // ── INTRO PUERTAS IGLESIA ───────────────
     // Máquina de 3 estados: 0 = iglesia cerrada, 1 = puertas abiertas + hoja, 2 = entrar a la web
     // Se repite SIEMPRE (sin sessionStorage).
@@ -2788,28 +3329,37 @@
       const msgTitle = document.getElementById('confirmationTitle');
       const msgText = document.getElementById('confirmationText');
 
+      let lastRSVP = null;   // para re-pintar el mensaje si el usuario cambia de idioma
+
       function loadRSVP() {
         const saved = localStorage.getItem('wedding_rsvp');
         if (saved) {
           const data = JSON.parse(saved);
-          showConfirmation(data);
+          showConfirmation(data, true);
         }
       }
 
-      function showConfirmation(data) {
+      function showConfirmation(data, silent) {
+        lastRSVP = data;
         form.style.display = 'none';
         msg.classList.add('active');
+        document.dispatchEvent(new CustomEvent('rsvpchange'));   // el CTA flotante se oculta
         if (data.asistencia === 'si') {
-          msgTitle.textContent = '¡Gracias por confirmar!';
-          msgText.textContent = `${data.nombre}, nos alegra muchísimo que nos acompañes en este día tan especial. ¡Te esperamos!`;
-          if (window.__petalBurst) {
+          msgTitle.textContent = t('rsvp.thanksYes');
+          msgText.textContent = t('rsvp.textYes').replace('{name}', data.nombre);
+          if (!silent && window.__petalBurst) {
             setTimeout(function() { window.__petalBurst(30); }, 400);
           }
         } else {
-          msgTitle.textContent = 'Gracias por avisarnos';
-          msgText.textContent = `${data.nombre}, lamentamos que no puedas acompañarnos. Te tendremos presente en este día tan especial.`;
+          msgTitle.textContent = t('rsvp.thanksNo');
+          msgText.textContent = t('rsvp.textNo').replace('{name}', data.nombre);
         }
       }
+
+      // Si cambia el idioma con la confirmación visible, re-pintar en el idioma nuevo
+      document.addEventListener('langchange', function() {
+        if (lastRSVP && msg.classList.contains('active')) showConfirmation(lastRSVP, true);
+      });
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -2837,7 +3387,7 @@
 
         var rsvpBtn = document.getElementById('rsvpBtn');
         rsvpBtn.disabled = true;
-        rsvpBtn.textContent = 'Enviando...';
+        rsvpBtn.textContent = t('rsvp.sending');
 
         fetch('https://script.google.com/macros/s/AKfycby4pheD3krM6_kGLd2SN-JisTpXnS93_7RFiw95QDLulsKNnO7DESKkHonpfID6l1rfBA/exec', {
           method: 'POST',
@@ -2864,7 +3414,50 @@
       document.getElementById('rsvpForm').style.display = 'flex';
       document.getElementById('rsvpForm').reset();
       document.getElementById('confirmationMsg').classList.remove('active');
+      document.dispatchEvent(new CustomEvent('rsvpchange'));   // el CTA flotante reaparece
     }
+
+    // ── CTA FLOTANTE RSVP ───────────────────
+    // Visible tras pasar el hero; oculto dentro de la sección RSVP y si ya hay confirmación guardada.
+    (function() {
+      const cta = document.getElementById('rsvpCta');
+      const rsvpSection = document.getElementById('rsvp');
+      if (!cta || !rsvpSection) return;
+
+      let pastHero = false;      // scroll pasado del hero
+      let inRsvp = false;        // sección RSVP en pantalla
+
+      function confirmed() {
+        try { return !!localStorage.getItem('wedding_rsvp'); } catch (e) { return false; }
+      }
+
+      function update() {
+        cta.classList.toggle('visible', pastHero && !inRsvp && !confirmed());
+      }
+
+      // Umbral: un viewport de scroll (final del hero)
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          pastHero = window.scrollY > window.innerHeight * 0.8;
+          update();
+          ticking = false;
+        });
+      }, { passive: true });
+
+      // Ocultar mientras la sección RSVP está en pantalla (ya estás donde ibas)
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) { inRsvp = entry.isIntersecting; });
+          update();
+        }, { threshold: 0.15 }).observe(rsvpSection);
+      }
+
+      document.addEventListener('rsvpchange', update);
+      update();
+    })();
 
     // ── LIGHTBOX ────────────────────────────
     (function() {
@@ -2972,17 +3565,18 @@
       function updateBtn() {
         if (music.paused) {
           toggle.innerHTML = ICON_PLAY;
-          toggle.setAttribute('aria-label', 'Reproducir m\u00FAsica');
+          toggle.setAttribute('aria-label', t('audio.play'));
           toggle.classList.remove('playing');
         } else {
           toggle.innerHTML = ICON_PAUSE;
-          toggle.setAttribute('aria-label', 'Pausar m\u00FAsica');
+          toggle.setAttribute('aria-label', t('audio.pause'));
           toggle.classList.add('playing');
         }
       }
 
       music.addEventListener('play', updateBtn);
       music.addEventListener('pause', updateBtn);
+      document.addEventListener('langchange', updateBtn);
 
       toggle.addEventListener('click', function() {
         if (music.paused) {
@@ -3017,12 +3611,12 @@
       function handleFile(file) {
         if (!file) return;
         if (!file.type.startsWith('image/')) {
-          uploadStatus.textContent = 'Solo se admiten imágenes';
+          uploadStatus.textContent = t('photos.onlyImages');
           uploadStatus.className = 'upload-status error';
           return;
         }
         if (file.size > 10 * 1024 * 1024) {
-          uploadStatus.textContent = 'La foto no debe superar 10 MB';
+          uploadStatus.textContent = t('photos.tooBig');
           uploadStatus.className = 'upload-status error';
           return;
         }
@@ -3079,8 +3673,8 @@
       uploadBtn.addEventListener('click', function() {
         if (!pendingFile) return;
         uploadBtn.disabled = true;
-        uploadBtn.textContent = 'Subiendo...';
-        uploadStatus.textContent = 'Subiendo foto...';
+        uploadBtn.textContent = t('photos.uploading');
+        uploadStatus.textContent = t('photos.uploadingPhoto');
         uploadStatus.className = 'upload-status';
 
         var reader = new FileReader();
@@ -3119,23 +3713,23 @@
         .then(function(r) { return r.json(); })
         .then(function(data) {
           if (data.secure_url) {
-            uploadStatus.textContent = '¡Foto subida!';
+            uploadStatus.textContent = t('photos.uploaded');
             uploadStatus.className = 'upload-status';
             addPhotoToGallery(data.secure_url);
             savePhotoUrl(data.secure_url);
             resetUpload();
           } else {
-            uploadStatus.textContent = 'Error al subir la foto';
+            uploadStatus.textContent = t('photos.uploadError');
             uploadStatus.className = 'upload-status error';
             uploadBtn.disabled = false;
-            uploadBtn.textContent = 'Subir foto';
+            uploadBtn.textContent = t('photos.upload');
           }
         })
         .catch(function() {
-          uploadStatus.textContent = 'Error de conexión';
+          uploadStatus.textContent = t('photos.connError');
           uploadStatus.className = 'upload-status error';
           uploadBtn.disabled = false;
-          uploadBtn.textContent = 'Subir foto';
+          uploadBtn.textContent = t('photos.upload');
         });
       }
 
@@ -3144,14 +3738,18 @@
         pendingFile = null;
         uploadPreview.style.display = 'none';
         uploadBtn.disabled = false;
-        uploadBtn.textContent = 'Subir foto';
+        uploadBtn.textContent = t('photos.upload');
       }
 
       function addPhotoToGallery(url) {
         photosEmpty.classList.remove('active');
         var card = document.createElement('div');
         card.className = 'photo-card';
-        card.innerHTML = '<img src="' + url + '" loading="lazy" alt="Foto de recuerdo">';
+        var cardImg = document.createElement('img');
+        cardImg.src = url;
+        cardImg.loading = 'lazy';
+        cardImg.alt = t('photos.memoryAlt');
+        card.appendChild(cardImg);
         card.addEventListener('click', function() {
           window.open(url, '_blank');
         });
@@ -3227,12 +3825,11 @@
     (function() {
       // Datos del evento — UTC para evitar problemas zona horaria
       // Sábado 10 Oct 2026 12:00 (hora Madrid CEST = UTC+2)
+      // Título y descripción salen del diccionario i18n (idioma activo al hacer click)
       const event = {
-        title: 'Boda Jaybie & Christine',
         startUTC: '20261010T100000Z',   // 12:00 Madrid = 10:00 UTC
         endUTC:   '20261010T200000Z',   // hasta 22:00 Madrid (ceremonia + banquete)
-        location: 'Parroquia Santa María Micaela y San Enrique, Madrid',
-        details:  'Te esperamos en el día más importante de nuestras vidas. https://boda-jaybiey-christine.netlify.app/'
+        location: 'Parroquia Santa María Micaela y San Enrique, Madrid'
       };
 
       const gBtn = document.getElementById('calGoogle');
@@ -3242,9 +3839,9 @@
       // Google Calendar URL
       gBtn.addEventListener('click', function() {
         const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-          '&text=' + encodeURIComponent(event.title) +
+          '&text=' + encodeURIComponent(t('cal.title')) +
           '&dates=' + event.startUTC + '/' + event.endUTC +
-          '&details=' + encodeURIComponent(event.details) +
+          '&details=' + encodeURIComponent(t('cal.details')) +
           '&location=' + encodeURIComponent(event.location);
         window.open(url, '_blank', 'noopener');
       });
@@ -3262,8 +3859,8 @@
           'DTSTAMP:20260101T000000Z',
           'DTSTART:' + event.startUTC,
           'DTEND:' + event.endUTC,
-          'SUMMARY:' + event.title,
-          'DESCRIPTION:' + event.details.replace(/\n/g, '\\n'),
+          'SUMMARY:' + t('cal.title'),
+          'DESCRIPTION:' + t('cal.details').replace(/\n/g, '\\n'),
           'LOCATION:' + event.location,
           'STATUS:CONFIRMED',
           'END:VEVENT',
@@ -3295,7 +3892,7 @@
           iframe.loading = 'lazy';
           iframe.referrerPolicy = 'no-referrer-when-downgrade';
           iframe.setAttribute('allowfullscreen', '');
-          iframe.title = 'Mapa';
+          iframe.title = t('map.title');
           el.replaceWith(iframe);
         }
         el.addEventListener('click', load);
