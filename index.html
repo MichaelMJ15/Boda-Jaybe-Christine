@@ -1774,7 +1774,10 @@
         bottom: 1.2rem; right: 1.2rem;
         width: 44px; height: 44px;
       }
-      .hero { padding: 1.5rem 1rem; }
+      /* Padding-top grande: la nav fija ocupa hasta 3 filas en móvil y tapaba
+         el sello J&C (flex center desbordaba por arriba, bajo la nav) */
+      .hero { padding: 13rem 1rem 4rem; }
+      .hero-seal { width: 84px; margin-bottom: 1rem; }
       .hero-badge {
         font-size: 0.7rem;
         letter-spacing: 0.3em;
