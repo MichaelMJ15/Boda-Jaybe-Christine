@@ -3332,10 +3332,15 @@
       let lastRSVP = null;   // para re-pintar el mensaje si el usuario cambia de idioma
 
       function loadRSVP() {
-        const saved = localStorage.getItem('wedding_rsvp');
-        if (saved) {
-          const data = JSON.parse(saved);
-          showConfirmation(data, true);
+        // try/catch: un localStorage corrupto no debe romper el formulario
+        try {
+          const saved = localStorage.getItem('wedding_rsvp');
+          if (saved) {
+            const data = JSON.parse(saved);
+            showConfirmation(data, true);
+          }
+        } catch (e) {
+          localStorage.removeItem('wedding_rsvp');
         }
       }
 
@@ -3591,10 +3596,12 @@
 
     // (Smart nav reemplaza el handler antiguo de sombra — ver bloque "SMART NAV" más arriba)
 
-    // ── PHOTO UPLOAD ────────────────────────
+    // ── PHOTO UPLOAD (Google Drive vía Apps Script) ──
+    // Las fotos se guardan en una carpeta de Drive y la galería es COMPARTIDA:
+    // todos los invitados ven todas las fotos (doGet del script lista la carpeta).
     (function() {
-      var cloudName = 'dkerabcck';
-      var uploadPreset = 'boda_upload';
+      // URL del Apps Script de fotos (deploy como Web App, acceso: cualquiera)
+      var PHOTOS_URL = 'https://script.google.com/macros/s/AKfycbzMxJmxsB2Z4fvZRQv-7xXpE7TmUK-6Ys2Vo4Nnc8q8aJT4j1w8x3hFYdcPmLZuvT_l/exec';
       var photoInput = document.getElementById('photoInput');
       var uploadPreview = document.getElementById('uploadPreview');
       var previewImg = document.getElementById('previewImg');
@@ -3693,7 +3700,7 @@
             var ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
             canvas.toBlob(function(blob) {
-              uploadToCloudinary(blob);
+              uploadToDrive(blob);
             }, 'image/jpeg', 0.85);
           };
           img.src = e.target.result;
@@ -3701,36 +3708,39 @@
         reader.readAsDataURL(pendingFile);
       });
 
-      function uploadToCloudinary(blob) {
-        var fd = new FormData();
-        fd.append('file', blob);
-        fd.append('upload_preset', uploadPreset);
-        fd.append('tags', 'boda');
-
-        fetch('https://api.cloudinary.com/v1_1/' + cloudName + '/image/upload', {
-          method: 'POST', body: fd
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (data.secure_url) {
-            uploadStatus.textContent = t('photos.uploaded');
-            uploadStatus.className = 'upload-status';
-            addPhotoToGallery(data.secure_url);
-            savePhotoUrl(data.secure_url);
-            resetUpload();
-          } else {
-            uploadStatus.textContent = t('photos.uploadError');
+      // Sube la foto al Apps Script como JSON base64 (Content-Type text/plain:
+      // evita el preflight CORS, que Apps Script no soporta)
+      function uploadToDrive(blob) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var b64 = String(e.target.result).split(',')[1];   // fuera el prefijo data:...;base64,
+          fetch(PHOTOS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ data: b64, type: 'image/jpeg' })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.ok && data.id) {
+              uploadStatus.textContent = t('photos.uploaded');
+              uploadStatus.className = 'upload-status';
+              addPhotoToGallery(data.id, true);
+              resetUpload();
+            } else {
+              uploadStatus.textContent = t('photos.uploadError');
+              uploadStatus.className = 'upload-status error';
+              uploadBtn.disabled = false;
+              uploadBtn.textContent = t('photos.upload');
+            }
+          })
+          .catch(function() {
+            uploadStatus.textContent = t('photos.connError');
             uploadStatus.className = 'upload-status error';
             uploadBtn.disabled = false;
             uploadBtn.textContent = t('photos.upload');
-          }
-        })
-        .catch(function() {
-          uploadStatus.textContent = t('photos.connError');
-          uploadStatus.className = 'upload-status error';
-          uploadBtn.disabled = false;
-          uploadBtn.textContent = t('photos.upload');
-        });
+          });
+        };
+        reader.readAsDataURL(blob);
       }
 
       function resetUpload() {
@@ -3741,37 +3751,38 @@
         uploadBtn.textContent = t('photos.upload');
       }
 
-      function addPhotoToGallery(url) {
+      // Miniatura desde Drive por id de archivo; click abre la foto en Drive.
+      // first=true → al principio (foto recién subida); si no, al final (orden de la lista)
+      function addPhotoToGallery(id, first) {
         photosEmpty.classList.remove('active');
         var card = document.createElement('div');
         card.className = 'photo-card';
         var cardImg = document.createElement('img');
-        cardImg.src = url;
+        cardImg.src = 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(id) + '&sz=w800';
         cardImg.loading = 'lazy';
         cardImg.alt = t('photos.memoryAlt');
         card.appendChild(cardImg);
         card.addEventListener('click', function() {
-          window.open(url, '_blank');
+          window.open('https://drive.google.com/file/d/' + encodeURIComponent(id) + '/view', '_blank', 'noopener');
         });
-        photosGallery.prepend(card);
+        if (first) photosGallery.prepend(card);
+        else photosGallery.appendChild(card);
       }
 
-      function savePhotoUrl(url) {
-        var saved = JSON.parse(localStorage.getItem('wedding_photos') || '[]');
-        saved.unshift({ url: url, time: Date.now() });
-        if (saved.length > 200) saved = saved.slice(0, 200);
-        localStorage.setItem('wedding_photos', JSON.stringify(saved));
+      // Galería COMPARTIDA: carga todas las fotos de la carpeta Drive (más recientes primero)
+      function loadSharedPhotos() {
+        fetch(PHOTOS_URL)
+          .then(function(r) { return r.json(); })
+          .then(function(list) {
+            if (Array.isArray(list) && list.length > 0) {
+              photosEmpty.classList.remove('active');
+              list.forEach(function(p) { addPhotoToGallery(p.id); });
+            }
+          })
+          .catch(function() { /* sin conexión: se queda el mensaje de galería vacía */ });
       }
 
-      function loadSavedPhotos() {
-        var saved = JSON.parse(localStorage.getItem('wedding_photos') || '[]');
-        if (saved.length > 0) {
-          photosEmpty.classList.remove('active');
-          saved.forEach(function(p) { addPhotoToGallery(p.url); });
-        }
-      }
-
-      loadSavedPhotos();
+      loadSharedPhotos();
     })();
 
     // ── SCROLL SPY (nav resalta sección visible) ──
