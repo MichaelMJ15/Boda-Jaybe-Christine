@@ -1317,6 +1317,12 @@
       border-color: var(--gold);
       color: var(--white);
     }
+    /* Marca ✓ universal — iOS <15.4 no soporta :has() y sin esto no se ve
+       qué opción está elegida (el radio nativo va oculto) */
+    .radio-group input[type="radio"]:checked + span::before {
+      content: '\2713  ';
+      font-weight: 700;
+    }
     /* Focus visible — outline sobre el label */
     .radio-group input[type="radio"]:focus-visible + .radio-text,
     .radio-group label:focus-within {
@@ -1857,6 +1863,13 @@
     .intro-church {
       position: absolute; inset: 0;
       background: #e9e4da url('img/iglesia.jpg') center / cover no-repeat;
+    }
+    /* iOS <15 no soporta aspect-ratio: sin esto la lámina de la iglesia
+       queda con ancho 0 (intro en blanco) y las tarjetas de mapa colapsan */
+    @supports not (aspect-ratio: 1 / 1) {
+      .intro-church-wrap { width: min(100vw, 44.8vh); }
+      .map-lazy, .map-lazy--full { height: 320px; }
+      .gallery-item { height: 260px; }
     }
 
     /* Conjunto de puertas posicionado sobre el portal (coords = fracción imagen) */
