@@ -1782,6 +1782,9 @@
          La nav fija ocupa 2-3 filas en móvil según ancho/idioma y tapaba el sello J&C.
          Fallback 13rem si JS no corre. */
       .hero { padding: calc(var(--nav-h, 13rem) + 2rem) 1rem 4rem; }
+      /* Foto apaisada en pantalla vertical: anclar el encuadre en la pareja
+         (está al ~62% del ancho) para que salgan enteros al recortar los lados */
+      .hero::before { background-position: 62% center; }
       .hero-seal { width: 84px; margin-bottom: 1rem; }
       .hero-badge {
         font-size: 0.7rem;
