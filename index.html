@@ -901,6 +901,45 @@
       position: relative; z-index: 1;   /* por encima de la línea */
       box-shadow: 0 0 0 5px var(--cream);
     }
+    /* Hitos con lugar: 4ª columna = mini-tarjeta clicable con la ilustración → Google Maps */
+    .agenda-item--lugar { grid-template-columns: 56px 92px 1fr 88px; }
+    .agenda-thumb {
+      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+      width: 88px;
+      text-decoration: none;
+    }
+    .agenda-thumb-img {
+      display: block;
+      width: 84px; height: 100px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--thumb) center 30% / cover no-repeat;
+      position: relative;
+      transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+    }
+    .agenda-thumb-img::after {
+      /* pin de mapa — señala que es clicable */
+      content: '\1F4CD';
+      position: absolute; right: -6px; bottom: -6px;
+      width: 26px; height: 26px;
+      background: var(--cream);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+    }
+    .agenda-thumb-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-dark);
+      white-space: nowrap;
+    }
+    .agenda-thumb:hover .agenda-thumb-img {
+      border-color: var(--gold);
+      box-shadow: 0 4px 14px rgba(156,126,74,0.25);
+    }
+    .agenda-thumb:hover .agenda-thumb-label { text-decoration: underline; }
     .agenda-hora {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.25rem, 3vw, 1.6rem);
@@ -927,6 +966,11 @@
     }
     @media (max-width: 768px) {
       .agenda-item { grid-template-columns: 48px 74px 1fr; gap: 0.8rem; }
+      .agenda-item--lugar { grid-template-columns: 48px 74px 1fr 66px; }
+      .agenda-thumb { width: 66px; }
+      .agenda-thumb-img { width: 62px; height: 78px; }
+      .agenda-thumb-img::after { width: 22px; height: 22px; font-size: 0.7rem; }
+      .agenda-thumb-label { font-size: 0.56rem; letter-spacing: 0.1em; }
       .agenda-icon { width: 46px; height: 46px; font-size: 1.15rem; }
       .agenda-list::before { left: 23px; }
       .agenda-titulo { font-size: 0.74rem; letter-spacing: 0.14em; }
@@ -2377,7 +2421,6 @@
   <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio" data-i18n="nav.inicio">Inicio</a>
-      <a href="#detalles" data-i18n="nav.detalles">Detalles</a>
       <a href="#agenda" data-i18n="nav.agenda">Agenda</a>
       <a href="#homenaje" data-i18n="nav.homenaje">Homenaje</a>
       <a href="#padrinos" data-i18n="nav.padrinos">Padrinos</a>
@@ -2422,7 +2465,7 @@
     <p class="hero-tagline" data-i18n="hero.tagline">Empieza nuestra historia juntos</p>
     <p class="hero-date" data-i18n="hero.date">10 de octubre de 2026</p>
     <!-- Parroquia quitada del hero a petición del usuario (2026-07-10) — sigue en Detalles -->
-    <a class="hero-scroll" href="#detalles" aria-label="Ir a los detalles" data-i18n-aria="hero.scrollAria">
+    <a class="hero-scroll" href="#agenda" aria-label="Ir a la agenda" data-i18n-aria="hero.scrollAria">
       <span data-i18n="hero.scroll">Desliza</span>
       <span aria-hidden="true"></span>
     </a>
@@ -2469,68 +2512,26 @@
     </div>
   </section>
 
-  <!-- ── DETALLES DEL EVENTO ─────────────── -->
-  <section class="section details fade-in" id="detalles">
-    <div class="container">
-      <p class="section-tag" data-i18n="details.tag">El evento</p>
-      <h2 class="section-title" data-i18n="details.title">Detalles de la boda</h2>
-
-      <div class="details-grid stagger">
-        <div class="detail-card">
-          <span class="detail-icon">&#x1F4C5;</span>
-          <h3 data-i18n="details.dateH">Fecha</h3>
-          <p class="time-main">10.10.26</p>
-          <p data-i18n-html="details.dateFull">Sábado, 10 de octubre<br>de 2026</p>
-          <p style="margin-top: 0.5rem; color: var(--text-light);" data-i18n-html="details.time">12:00 h<br><span style="font-size: 0.85em;">Ceremonia en la iglesia</span></p>
-          <div class="calendar-buttons">
-            <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
-            <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
-          </div>
-        </div>
-
-        <div class="detail-card">
-          <span class="detail-icon">&#x26EA;</span>
-          <h3 data-i18n="details.churchH">Iglesia</h3>
-          <p>Parroquia Santa María<br>Micaela y San Enrique</p>
-          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.4556255,-3.6970033&z=16&output=embed" data-bg="img/iglesia.jpg" style="--bg: url('img/iglesia.jpg');" role="button" tabindex="0" aria-label="Cargar mapa de la iglesia" data-i18n-aria="details.mapChurchAria">
-            <span class="map-lazy-cta" data-i18n="details.viewMap">Ver mapa</span>
-          </div>
-          <div class="map-actions">
-            <a href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener" data-i18n="details.gmaps">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.4556255,-3.6970033" target="_blank" rel="noopener" data-i18n="details.directions">Cómo llegar</a>
-          </div>
-        </div>
-
-        <div class="detail-card">
-          <span class="detail-icon">&#x1F37D;</span>
-          <h3 data-i18n="details.restH">Restaurante</h3>
-          <p>Restaurante San Francisco</p>
-          <div class="map-lazy map-lazy--full" data-map="https://maps.google.com/maps?q=40.5201183,-3.7813086&z=16&output=embed" data-bg="img/restaurante.jpg" style="--bg: url('img/restaurante.jpg');" role="button" tabindex="0" aria-label="Cargar mapa del restaurante" data-i18n-aria="details.mapRestAria">
-            <span class="map-lazy-cta" data-i18n="details.viewMap">Ver mapa</span>
-          </div>
-          <div class="map-actions">
-            <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener" data-i18n="details.gmaps">Ver en Google Maps →</a>
-            <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener" data-i18n="details.directions">Cómo llegar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── AGENDA DEL DÍA ───────────────────── -->
+  <!-- (La antigua sección "Detalles de la boda" se eliminó 2026-07-12 a petición
+       de los novios: la agenda cubre lugares, horas y mapas. Recuperable en git.) -->
   <section class="section fade-in" id="agenda">
     <div class="container">
       <p class="section-tag" data-i18n="agenda.tag">Agenda</p>
       <h2 class="section-title" data-i18n="agenda.title">Horario de nuestra boda</h2>
 
       <div class="agenda-list stagger">
-        <div class="agenda-item">
+        <div class="agenda-item agenda-item--lugar">
           <span class="agenda-icon" aria-hidden="true">&#x26EA;</span>
           <span class="agenda-hora">11:30 h</span>
           <div>
             <p class="agenda-titulo" data-i18n="agenda.t1">Llegada de los invitados</p>
             <p class="agenda-desc" data-i18n="agenda.d1">Parroquia Santa María Micaela y San Enrique</p>
           </div>
+          <a class="agenda-thumb" href="https://maps.app.goo.gl/SbvmhrJz5amBWcbdA" target="_blank" rel="noopener" aria-label="Abrir la iglesia en Google Maps" data-i18n-aria="agenda.mapa1">
+            <span class="agenda-thumb-img" style="--thumb: url('img/iglesia.jpg');"></span>
+            <span class="agenda-thumb-label" data-i18n="details.directions">Cómo llegar</span>
+          </a>
         </div>
         <div class="agenda-item">
           <span class="agenda-icon" aria-hidden="true">&#x1F48D;</span>
@@ -2555,13 +2556,17 @@
             <p class="agenda-desc" data-i18n="agenda.d4">Autobús privado desde la iglesia</p>
           </div>
         </div>
-        <div class="agenda-item">
+        <div class="agenda-item agenda-item--lugar">
           <span class="agenda-icon" aria-hidden="true">&#x1F942;</span>
           <span class="agenda-hora">14:00 h</span>
           <div>
             <p class="agenda-titulo" data-i18n="agenda.t5">Cóctel de bienvenida</p>
             <p class="agenda-desc" data-i18n="agenda.d5">Restaurante San Francisco</p>
           </div>
+          <a class="agenda-thumb" href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener" aria-label="Abrir el restaurante en Google Maps" data-i18n-aria="agenda.mapa2">
+            <span class="agenda-thumb-img" style="--thumb: url('img/restaurante.jpg');"></span>
+            <span class="agenda-thumb-label" data-i18n="details.directions">Cómo llegar</span>
+          </a>
         </div>
         <div class="agenda-item">
           <span class="agenda-icon" aria-hidden="true">&#x1F37D;&#xFE0F;</span>
@@ -2600,6 +2605,12 @@
             <p class="agenda-desc" data-i18n="agenda.d10">¡Gracias por acompañarnos en este día tan especial!</p>
           </div>
         </div>
+      </div>
+
+      <!-- Añadir al calendario (rescatado de la antigua sección Detalles) -->
+      <div class="calendar-buttons" style="justify-content: center; margin: 2.5rem auto 0; max-width: 420px;">
+        <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
+        <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
       </div>
     </div>
   </section>
@@ -3056,7 +3067,7 @@
         'hero.tagline': 'Empieza nuestra historia juntos',
         'hero.date': '10 de octubre de 2026',
         'hero.scroll': 'Desliza',
-        'hero.scrollAria': 'Ir a los detalles',
+        'hero.scrollAria': 'Ir a la agenda',
         'count.kicker': 'Cuenta atrás para el gran día',
         'count.days': 'Días', 'count.hours': 'Horas', 'count.minutes': 'Minutos', 'count.seconds': 'Segundos',
         'welcome.tag': 'Bienvenidos',
@@ -3092,6 +3103,8 @@
         'agenda.t9': 'Recena',
         'agenda.t10': 'Fin de la fiesta',
         'agenda.d10': '¡Gracias por acompañarnos en este día tan especial!',
+        'agenda.mapa1': 'Abrir la iglesia en Google Maps',
+        'agenda.mapa2': 'Abrir el restaurante en Google Maps',
         'tribute.tag': 'A nuestras madres',
         'tribute.title': 'Homenaje',
         'tribute.and': 'y',
@@ -3217,7 +3230,7 @@
         'hero.tagline': 'Our story together begins',
         'hero.date': 'October 10, 2026',
         'hero.scroll': 'Scroll',
-        'hero.scrollAria': 'Go to details',
+        'hero.scrollAria': 'Go to the schedule',
         'count.kicker': 'Countdown to the big day',
         'count.days': 'Days', 'count.hours': 'Hours', 'count.minutes': 'Minutes', 'count.seconds': 'Seconds',
         'welcome.tag': 'Welcome',
@@ -3253,6 +3266,8 @@
         'agenda.t9': 'Late-night snack',
         'agenda.t10': 'End of the party',
         'agenda.d10': 'Thank you for joining us on this special day!',
+        'agenda.mapa1': 'Open the church in Google Maps',
+        'agenda.mapa2': 'Open the restaurant in Google Maps',
         'tribute.tag': 'To our mothers',
         'tribute.title': 'Tribute',
         'tribute.and': 'and',
