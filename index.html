@@ -868,6 +868,71 @@
       text-align: center;
       line-height: 1.8;
     }
+    /* ── AGENDA DEL DÍA (horario) ─────────── */
+    .agenda-list {
+      max-width: 640px;
+      margin: 3rem auto 0;
+      position: relative;
+    }
+    /* Línea vertical que une los iconos */
+    .agenda-list::before {
+      content: '';
+      position: absolute;
+      left: 27px; top: 28px; bottom: 28px;
+      width: 1px;
+      background: linear-gradient(var(--gold) 0%, var(--gold) 85%, transparent);
+      opacity: 0.55;
+    }
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 56px 92px 1fr;
+      gap: 1.1rem;
+      align-items: center;
+      padding: 0.85rem 0;
+      position: relative;
+    }
+    .agenda-icon {
+      width: 54px; height: 54px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem;
+      position: relative; z-index: 1;   /* por encima de la línea */
+      box-shadow: 0 0 0 5px var(--cream);
+    }
+    .agenda-hora {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.25rem, 3vw, 1.6rem);
+      font-weight: 600;
+      color: var(--dark);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .agenda-titulo {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+    .agenda-desc {
+      font-size: 0.86rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+      line-height: 1.5;
+      text-transform: none;
+      letter-spacing: 0.02em;
+    }
+    @media (max-width: 768px) {
+      .agenda-item { grid-template-columns: 48px 74px 1fr; gap: 0.8rem; }
+      .agenda-icon { width: 46px; height: 46px; font-size: 1.15rem; }
+      .agenda-list::before { left: 23px; }
+      .agenda-titulo { font-size: 0.74rem; letter-spacing: 0.14em; }
+      .agenda-desc { font-size: 0.8rem; }
+    }
+
     /* ── HOMENAJE (a las madres) ── */
     .homenaje { background: var(--emerald-soft); }
     .homenaje-madres { text-align: center; margin: 1.5rem 0 2rem; }
@@ -2313,6 +2378,7 @@
     <div class="nav-inner">
       <a href="#inicio" data-i18n="nav.inicio">Inicio</a>
       <a href="#detalles" data-i18n="nav.detalles">Detalles</a>
+      <a href="#agenda" data-i18n="nav.agenda">Agenda</a>
       <a href="#homenaje" data-i18n="nav.homenaje">Homenaje</a>
       <a href="#padrinos" data-i18n="nav.padrinos">Padrinos</a>
       <a href="#historia" data-i18n="nav.historia">Historia</a>
@@ -2445,6 +2511,93 @@
           <div class="map-actions">
             <a href="https://maps.app.goo.gl/sJHQJxEunJoPmcDM9" target="_blank" rel="noopener" data-i18n="details.gmaps">Ver en Google Maps →</a>
             <a class="map-dir" href="https://www.google.com/maps/dir/?api=1&destination=40.5201183,-3.7813086" target="_blank" rel="noopener" data-i18n="details.directions">Cómo llegar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENDA DEL DÍA ───────────────────── -->
+  <section class="section fade-in" id="agenda">
+    <div class="container">
+      <p class="section-tag" data-i18n="agenda.tag">Agenda</p>
+      <h2 class="section-title" data-i18n="agenda.title">Horario de nuestra boda</h2>
+
+      <div class="agenda-list stagger">
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x26EA;</span>
+          <span class="agenda-hora">11:30 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t1">Llegada de los invitados</p>
+            <p class="agenda-desc" data-i18n="agenda.d1">Parroquia Santa María Micaela y San Enrique</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F48D;</span>
+          <span class="agenda-hora">12:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t2">Comienzo de la ceremonia</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F4F8;</span>
+          <span class="agenda-hora">13:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t3">Fin de la ceremonia</p>
+            <p class="agenda-desc" data-i18n="agenda.d3">Felicitaciones y fotos en la iglesia</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F68C;</span>
+          <span class="agenda-hora">13:30 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t4">Traslado al restaurante</p>
+            <p class="agenda-desc" data-i18n="agenda.d4">Autobús privado desde la iglesia</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F942;</span>
+          <span class="agenda-hora">14:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t5">Cóctel de bienvenida</p>
+            <p class="agenda-desc" data-i18n="agenda.d5">Restaurante San Francisco</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F37D;&#xFE0F;</span>
+          <span class="agenda-hora">15:45 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t6">Comienzo del banquete</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F382;</span>
+          <span class="agenda-hora">18:30 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t7">Sobremesa</p>
+            <p class="agenda-desc" data-i18n="agenda.d7">Corte de tarta y café</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F3B6;</span>
+          <span class="agenda-hora">20:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t8">Comienzo de la fiesta</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x1F35F;</span>
+          <span class="agenda-hora">22:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t9">Recena</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon" aria-hidden="true">&#x2728;</span>
+          <span class="agenda-hora">00:00 h</span>
+          <div>
+            <p class="agenda-titulo" data-i18n="agenda.t10">Fin de la fiesta</p>
+            <p class="agenda-desc" data-i18n="agenda.d10">¡Gracias por acompañarnos en este día tan especial!</p>
           </div>
         </div>
       </div>
@@ -2895,7 +3048,7 @@
         'intro.enter': 'Toca para entrar',
         'intro.sealArc': 'N U E S T R A · B O D A',
         'intro.date': 'Sábado, 10 de octubre de 2026',
-        'nav.inicio': 'Inicio', 'nav.detalles': 'Detalles', 'nav.homenaje': 'Homenaje',
+        'nav.inicio': 'Inicio', 'nav.detalles': 'Detalles', 'nav.agenda': 'Agenda', 'nav.homenaje': 'Homenaje',
         'nav.padrinos': 'Padrinos', 'nav.historia': 'Historia', 'nav.galeria': 'Galería',
         'nav.rsvp': 'Confirmar', 'nav.musica': 'Música', 'nav.recuerdos': 'Recuerdos',
         'nav.regalos': 'Regalos', 'nav.faq': 'FAQ',
@@ -2921,6 +3074,24 @@
         'details.directions': 'Cómo llegar',
         'details.mapChurchAria': 'Cargar mapa de la iglesia',
         'details.mapRestAria': 'Cargar mapa del restaurante',
+        'agenda.tag': 'Agenda',
+        'agenda.title': 'Horario de nuestra boda',
+        'agenda.t1': 'Llegada de los invitados',
+        'agenda.d1': 'Parroquia Santa María Micaela y San Enrique',
+        'agenda.t2': 'Comienzo de la ceremonia',
+        'agenda.t3': 'Fin de la ceremonia',
+        'agenda.d3': 'Felicitaciones y fotos en la iglesia',
+        'agenda.t4': 'Traslado al restaurante',
+        'agenda.d4': 'Autobús privado desde la iglesia',
+        'agenda.t5': 'Cóctel de bienvenida',
+        'agenda.d5': 'Restaurante San Francisco',
+        'agenda.t6': 'Comienzo del banquete',
+        'agenda.t7': 'Sobremesa',
+        'agenda.d7': 'Corte de tarta y café',
+        'agenda.t8': 'Comienzo de la fiesta',
+        'agenda.t9': 'Recena',
+        'agenda.t10': 'Fin de la fiesta',
+        'agenda.d10': '¡Gracias por acompañarnos en este día tan especial!',
         'tribute.tag': 'A nuestras madres',
         'tribute.title': 'Homenaje',
         'tribute.and': 'y',
@@ -3038,7 +3209,7 @@
         'intro.enter': 'Tap to enter',
         'intro.sealArc': 'O U R · W E D D I N G',
         'intro.date': 'Saturday, October 10, 2026',
-        'nav.inicio': 'Home', 'nav.detalles': 'Details', 'nav.homenaje': 'Tribute',
+        'nav.inicio': 'Home', 'nav.detalles': 'Details', 'nav.agenda': 'Schedule', 'nav.homenaje': 'Tribute',
         'nav.padrinos': 'Sponsors', 'nav.historia': 'Our Story', 'nav.galeria': 'Gallery',
         'nav.rsvp': 'RSVP', 'nav.musica': 'Music', 'nav.recuerdos': 'Memories',
         'nav.regalos': 'Gifts', 'nav.faq': 'FAQ',
@@ -3064,6 +3235,24 @@
         'details.directions': 'Get directions',
         'details.mapChurchAria': 'Load church map',
         'details.mapRestAria': 'Load restaurant map',
+        'agenda.tag': 'Schedule',
+        'agenda.title': 'Our wedding day',
+        'agenda.t1': 'Guests arrival',
+        'agenda.d1': 'Santa María Micaela y San Enrique Parish',
+        'agenda.t2': 'Ceremony begins',
+        'agenda.t3': 'End of ceremony',
+        'agenda.d3': 'Congratulations and photos at the church',
+        'agenda.t4': 'Transfer to the restaurant',
+        'agenda.d4': 'Private bus from the church',
+        'agenda.t5': 'Welcome cocktail',
+        'agenda.d5': 'San Francisco Restaurant',
+        'agenda.t6': 'Banquet begins',
+        'agenda.t7': 'After-dinner',
+        'agenda.d7': 'Cake cutting and coffee',
+        'agenda.t8': 'Party begins',
+        'agenda.t9': 'Late-night snack',
+        'agenda.t10': 'End of the party',
+        'agenda.d10': 'Thank you for joining us on this special day!',
         'tribute.tag': 'To our mothers',
         'tribute.title': 'Tribute',
         'tribute.and': 'and',
