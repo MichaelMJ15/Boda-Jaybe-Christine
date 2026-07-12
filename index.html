@@ -229,10 +229,11 @@
       width: max-content; max-width: 100%;
       margin: 0 auto 1.5rem;     /* centrado en todas las secciones */
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
+      font-size: 1rem;
+      font-weight: 600;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-dark);   /* antes --gold: se perdía sobre el crema */
       position: relative;
       padding-bottom: 0.75rem;
     }
@@ -795,14 +796,16 @@
       margin-top: 1.25rem;
     }
     .calendar-btn {
-      padding: 0.65rem 0.9rem;
+      padding: 0.75rem 1rem;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--gold);
-      background: transparent;
-      border: 1px solid var(--border);
+      color: var(--gold-dark);
+      background: rgba(201,169,110,0.08);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
       cursor: pointer;
       transition: border-color 200ms var(--ease-out),
                   background 200ms var(--ease-out),
@@ -2421,7 +2424,7 @@
   <nav class="nav" id="nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio" data-i18n="nav.inicio">Inicio</a>
-      <a href="#agenda" data-i18n="nav.agenda">Agenda</a>
+      <a href="#agenda" data-i18n="nav.agenda">Programa</a>
       <a href="#homenaje" data-i18n="nav.homenaje">Homenaje</a>
       <a href="#padrinos" data-i18n="nav.padrinos">Padrinos</a>
       <a href="#historia" data-i18n="nav.historia">Historia</a>
@@ -2517,8 +2520,14 @@
        de los novios: la agenda cubre lugares, horas y mapas. Recuperable en git.) -->
   <section class="section fade-in" id="agenda">
     <div class="container">
-      <p class="section-tag" data-i18n="agenda.tag">Agenda</p>
+      <p class="section-tag" data-i18n="agenda.tag">Programa</p>
       <h2 class="section-title" data-i18n="agenda.title">Horario de nuestra boda</h2>
+
+      <!-- Añadir al calendario — arriba, justo bajo el título (petición de los novios) -->
+      <div class="calendar-buttons" style="justify-content: center; margin: 1.8rem auto 0; max-width: 420px;">
+        <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
+        <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
+      </div>
 
       <div class="agenda-list stagger">
         <div class="agenda-item agenda-item--lugar">
@@ -2607,19 +2616,14 @@
         </div>
       </div>
 
-      <!-- Añadir al calendario (rescatado de la antigua sección Detalles) -->
-      <div class="calendar-buttons" style="justify-content: center; margin: 2.5rem auto 0; max-width: 420px;">
-        <button type="button" class="calendar-btn" id="calGoogle">Google Calendar</button>
-        <button type="button" class="calendar-btn" id="calApple">Apple / Outlook (.ics)</button>
-      </div>
     </div>
   </section>
 
   <!-- ── HOMENAJE (a las madres) ──────────── -->
   <section class="section homenaje fade-in" id="homenaje">
     <div class="container">
-      <p class="section-tag section-tag--alt" data-i18n="tribute.tag">A nuestras madres</p>
-      <h2 class="section-title" data-i18n="tribute.title">Homenaje</h2>
+      <p class="section-tag section-tag--alt" data-i18n="tribute.tag">Homenaje</p>
+      <h2 class="section-title" data-i18n="tribute.title">A nuestras madres</h2>
       <div class="homenaje-madres">
         <span class="homenaje-nombre">Marivic Caguisano</span>
         <span class="homenaje-y" data-i18n="tribute.and">y</span>
@@ -3059,7 +3063,7 @@
         'intro.enter': 'Toca para entrar',
         'intro.sealArc': 'N U E S T R A · B O D A',
         'intro.date': 'Sábado, 10 de octubre de 2026',
-        'nav.inicio': 'Inicio', 'nav.detalles': 'Detalles', 'nav.agenda': 'Agenda', 'nav.homenaje': 'Homenaje',
+        'nav.inicio': 'Inicio', 'nav.detalles': 'Detalles', 'nav.agenda': 'Programa', 'nav.homenaje': 'Homenaje',
         'nav.padrinos': 'Padrinos', 'nav.historia': 'Historia', 'nav.galeria': 'Galería',
         'nav.rsvp': 'Confirmar', 'nav.musica': 'Música', 'nav.recuerdos': 'Recuerdos',
         'nav.regalos': 'Regalos', 'nav.faq': 'FAQ',
@@ -3085,7 +3089,7 @@
         'details.directions': 'Cómo llegar',
         'details.mapChurchAria': 'Cargar mapa de la iglesia',
         'details.mapRestAria': 'Cargar mapa del restaurante',
-        'agenda.tag': 'Agenda',
+        'agenda.tag': 'Programa',
         'agenda.title': 'Horario de nuestra boda',
         'agenda.t1': 'Llegada de los invitados',
         'agenda.d1': 'Parroquia Santa María Micaela y San Enrique',
@@ -3105,8 +3109,8 @@
         'agenda.d10': '¡Gracias por acompañarnos en este día tan especial!',
         'agenda.mapa1': 'Abrir la iglesia en Google Maps',
         'agenda.mapa2': 'Abrir el restaurante en Google Maps',
-        'tribute.tag': 'A nuestras madres',
-        'tribute.title': 'Homenaje',
+        'tribute.tag': 'Homenaje',
+        'tribute.title': 'A nuestras madres',
         'tribute.and': 'y',
         'tribute.p1': 'Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.',
         'tribute.p2': 'Gracias por darnos la vida, por vuestro amor infinito, por cada sacrificio hecho en silencio, por cada consejo, cada abrazo y cada momento en el que nos habéis acompañado.',
@@ -3268,8 +3272,8 @@
         'agenda.d10': 'Thank you for joining us on this special day!',
         'agenda.mapa1': 'Open the church in Google Maps',
         'agenda.mapa2': 'Open the restaurant in Google Maps',
-        'tribute.tag': 'To our mothers',
-        'tribute.title': 'Tribute',
+        'tribute.tag': 'Tribute',
+        'tribute.title': 'To our mothers',
         'tribute.and': 'and',
         'tribute.p1': 'Today, as we begin this new journey together, we want to pause to honor and thank you.',
         'tribute.p2': 'Thank you for giving us life, for your endless love, for every sacrifice made in silence, for every word of advice, every hug, and every moment you have walked beside us.',
