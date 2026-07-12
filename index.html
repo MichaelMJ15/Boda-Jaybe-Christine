@@ -1774,9 +1774,10 @@
         bottom: 1.2rem; right: 1.2rem;
         width: 44px; height: 44px;
       }
-      /* Padding-top grande: la nav fija ocupa hasta 3 filas en móvil y tapaba
-         el sello J&C (flex center desbordaba por arriba, bajo la nav) */
-      .hero { padding: 13rem 1rem 4rem; }
+      /* Hueco superior = altura REAL de la nav (--nav-h la mide JS) + margen.
+         La nav fija ocupa 2-3 filas en móvil según ancho/idioma y tapaba el sello J&C.
+         Fallback 13rem si JS no corre. */
+      .hero { padding: calc(var(--nav-h, 13rem) + 2rem) 1rem 4rem; }
       .hero-seal { width: 84px; margin-bottom: 1rem; }
       .hero-badge {
         font-size: 0.7rem;
@@ -3917,6 +3918,20 @@
           }
         });
       });
+    })();
+
+    // ── ALTURA REAL DE LA NAV → --nav-h ─────
+    // El hero reserva este hueco arriba (la nav fija hace wrap a 2-3 filas en móvil)
+    (function() {
+      var nav = document.getElementById('nav');
+      if (!nav) return;
+      function midemeNav() {
+        document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+      }
+      midemeNav();
+      window.addEventListener('resize', midemeNav);
+      window.addEventListener('load', midemeNav);        // tras cargar fuentes (cambia el wrap)
+      document.addEventListener('langchange', midemeNav); // EN/ES cambian el número de filas
     })();
 
     // ── SMART NAV (oculta al bajar, muestra al subir) ──
