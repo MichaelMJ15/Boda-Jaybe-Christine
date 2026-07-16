@@ -426,7 +426,7 @@
       z-index: -2;
       background:
         url('img/hero.jpg')
-        center / cover no-repeat;
+        center 62% / cover no-repeat;   /* foto vertical: franja de pareja+montañas en desktop */
       animation: kenBurns 24s ease-in-out infinite alternate;
       will-change: transform;
     }
@@ -1990,9 +1990,8 @@
          La nav fija ocupa 2-3 filas en móvil según ancho/idioma y tapaba el sello J&C.
          Fallback 13rem si JS no corre. */
       .hero { padding: calc(var(--nav-h, 13rem) + 2rem) 1rem 4rem; }
-      /* Foto apaisada en pantalla vertical: anclar el encuadre en la pareja
-         (está al ~62% del ancho) para que salgan enteros al recortar los lados */
-      .hero::before { background-position: 62% center; }
+      /* Foto vertical del baile: sujeto centrado — encuadre natural en móvil */
+      .hero::before { background-position: center center; }
       .hero-seal { width: 84px; margin-bottom: 1rem; }
       .hero-badge {
         font-size: 0.7rem;
@@ -2739,7 +2738,7 @@
       </p>
 
       <div class="sponsor-principal">
-        <p class="sponsor-name">Mrs. Christian Careaga Guzmán</p>
+        <p class="sponsor-name">Mr. Christian Careaga Guzmán</p>
       </div>
 
       <div class="sponsors-grid stagger">
