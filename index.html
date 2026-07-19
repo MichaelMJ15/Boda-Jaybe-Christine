@@ -2967,6 +2967,19 @@
             </div>
           </div>
           <div class="form-group">
+            <label data-i18n="rsvp.menu">¿Qué menú prefieres?</label>
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="menu" value="carne" required>
+                <span data-i18n="rsvp.menuCarne">Carne</span>
+              </label>
+              <label>
+                <input type="radio" name="menu" value="pescado">
+                <span data-i18n="rsvp.menuPescado">Pescado</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="alergenos" data-i18n="rsvp.allergies">Alérgenos o restricciones alimentarias</label>
             <textarea id="alergenos" rows="2" placeholder="Indícanos si tienes alguna alergia o restricción..." data-i18n-ph="rsvp.allergiesPh"></textarea>
           </div>
@@ -3270,6 +3283,9 @@
         'rsvp.bus': '¿Usarás el autobús privado?',
         'rsvp.busYes': 'Sí, iré en el autobús',
         'rsvp.busNo': 'No, iré por mi cuenta',
+        'rsvp.menu': '¿Qué menú prefieres?',
+        'rsvp.menuCarne': 'Carne',
+        'rsvp.menuPescado': 'Pescado',
         'rsvp.allergies': 'Alérgenos o restricciones alimentarias',
         'rsvp.allergiesPh': 'Indícanos si tienes alguna alergia o restricción...',
         'rsvp.message': 'Mensaje para los novios',
@@ -3443,6 +3459,9 @@
         'rsvp.bus': 'Will you use the private bus?',
         'rsvp.busYes': "Yes, I'll take the bus",
         'rsvp.busNo': "No, I'll make my own way",
+        'rsvp.menu': 'Which menu do you prefer?',
+        'rsvp.menuCarne': 'Meat',
+        'rsvp.menuPescado': 'Fish',
         'rsvp.allergies': 'Allergies or dietary restrictions',
         'rsvp.allergiesPh': 'Let us know about any allergies or restrictions...',
         'rsvp.message': 'Message for the couple',
@@ -3743,6 +3762,7 @@
           apellido: document.getElementById('apellido').value.trim(),
           telefono: document.getElementById('telefono').value.trim(),
           autobus: document.querySelector('input[name="autobus"]:checked').value,
+          menu: (document.querySelector('input[name="menu"]:checked') || {}).value || '',
           asistencia: document.querySelector('input[name="asistencia"]:checked').value,
           alergenos: document.getElementById('alergenos').value.trim(),
           mensaje: document.getElementById('mensaje').value.trim()
