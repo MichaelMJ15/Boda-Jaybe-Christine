@@ -982,17 +982,36 @@
 
     /* ── HOMENAJE (a las madres) ── */
     .homenaje { background: var(--emerald-soft); }
-    .homenaje-madres { text-align: center; margin: 1.5rem 0 2rem; }
+    .homenaje-madres {
+      display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center;
+      gap: 1.5rem; margin: 2rem 0 2rem;
+    }
+    .homenaje-madre { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .homenaje-foto {
+      width: 116px; height: 116px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--cream);
+      box-shadow: 0 4px 18px rgba(13,79,60,0.18);
+      margin-bottom: 0.9rem;
+    }
+    .homenaje-y {
+      align-self: center;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--gold-dark);
+      margin-top: 3.4rem;   /* alinea con el centro de las fotos, no del bloque entero */
+    }
     .homenaje-nombre {
       display: block;
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-weight: 500; color: var(--emerald); line-height: 1.4;
     }
-    .homenaje-y {
-      display: block;
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
-      font-size: 1.2rem; color: var(--gold-dark); margin: 0.3rem 0;
+    @media (max-width: 600px) {
+      /* align-items:flex-start del bloque desktop es vertical en fila; al pasar a
+         columna aquí se vuelve horizontal y empuja todo a la izquierda — recentrar */
+      .homenaje-madres { flex-direction: column; align-items: center; gap: 0.5rem; }
+      .homenaje-y { margin: 0.3rem 0; }
     }
     .homenaje-texto {
       max-width: 640px; margin: 0 auto;
@@ -2714,9 +2733,15 @@
       <p class="section-tag section-tag--alt" data-i18n="tribute.tag">Homenaje</p>
       <h2 class="section-title" data-i18n="tribute.title">A nuestras madres</h2>
       <div class="homenaje-madres">
-        <span class="homenaje-nombre">Marivic Caguisano</span>
+        <div class="homenaje-madre">
+          <img class="homenaje-foto" src="img/madre-christine.jpg" alt="Marivic Caguisano">
+          <span class="homenaje-nombre">Marivic Caguisano</span>
+        </div>
         <span class="homenaje-y" data-i18n="tribute.and">y</span>
-        <span class="homenaje-nombre">Melinda Notarte</span>
+        <div class="homenaje-madre">
+          <img class="homenaje-foto" src="img/madre-jaybie.jpg" alt="Melinda Notarte">
+          <span class="homenaje-nombre">Melinda Notarte</span>
+        </div>
       </div>
       <div class="homenaje-texto">
         <p data-i18n="tribute.p1">Hoy, al comenzar este nuevo camino juntos, queremos detenernos para honraros y agradeceros.</p>
