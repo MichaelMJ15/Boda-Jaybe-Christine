@@ -1486,6 +1486,39 @@
       box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
       background: var(--white);
     }
+    /* Campo heredado y bloqueado (apellido al confirmar a otra persona).
+       Se ve apagado y no responde al focus dorado — no debe parecer editable. */
+    .form-group input[readonly] {
+      background: rgba(0,0,0,0.035);
+      color: var(--text-light);
+      cursor: default;
+    }
+    .form-group input[readonly]:focus {
+      border-color: var(--border);
+      box-shadow: none;
+      background: rgba(0,0,0,0.035);
+    }
+    /* Escape del bloqueo: apellidos distintos (pareja, amigos, dos apellidos) */
+    .field-unlock {
+      align-self: flex-start;
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      padding: 0.4rem 0;
+      min-height: 44px;
+      transition: color 200ms var(--ease-out);
+    }
+    .field-unlock:hover { color: var(--gold); }
+    /* .form-group es flex: el hidden nativo no basta */
+    .field-unlock[hidden] { display: none; }
+
     /* Validación: campo inválido tras intentar enviar (clase .submitted) */
     .rsvp-form.submitted :invalid {
       border-color: #b85c5c;
@@ -1652,6 +1685,56 @@
       min-height: 44px;
     }
     .reset-rsvp:hover { color: var(--gold); }
+
+    /* Lista de confirmados desde este dispositivo.
+       Caso real: alguien confirma por varios (mayores que no saben hacerlo solos)
+       y necesita ver a quién lleva metido. */
+    .rsvp-guests {
+      margin: 1.75rem auto 0;
+      max-width: 340px;
+      border-top: 1px solid rgba(156,126,74,0.22);
+      padding-top: 1.25rem;
+    }
+    .rsvp-guests[hidden] { display: none; }
+    .confirmation-msg .rsvp-guests-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin: 0 0 0.75rem;
+      max-width: none;
+    }
+    .rsvp-guests ul { list-style: none; margin: 0; padding: 0; }
+    .rsvp-guests li {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0;
+      color: var(--text);
+    }
+    .rsvp-guests li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 0.8rem;
+    }
+    /* Quien dijo que no sigue en la lista, pero sin el check */
+    .rsvp-guests li.declined::before { content: '·'; }
+    .rsvp-guests .guest-note {
+      color: var(--text-light);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    /* Mismo lenguaje visual que .btn, pero el texto es más largo */
+    .btn-add-guest {
+      display: block;              /* propio renglón, "Cambiar respuesta" cae debajo */
+      margin: 1.75rem auto 0;
+      padding: 0.85rem 1.75rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      max-width: 100%;
+    }
 
     /* ── GIFTS ─────────────────────────────── */
     .gifts {
@@ -2939,7 +3022,7 @@
       <p class="section-tag" data-i18n="rsvp.tag">Confirmación</p>
       <h2 class="section-title" data-i18n="rsvp.title">Confirma tu asistencia</h2>
       <p style="text-align: center; color: var(--text);" data-i18n-html="rsvp.deadline">
-        Por favor confirma antes del <strong>1 de septiembre de 2026</strong>
+        Por favor confirma antes del <strong>10 de septiembre de 2026</strong>
       </p>
 
       <div class="rsvp-card" id="rsvpCard">
@@ -2950,6 +3033,15 @@
           </svg>
           <h3 id="confirmationTitle">¡Gracias por confirmar!</h3>
           <p id="confirmationText"></p>
+
+          <div class="rsvp-guests" id="rsvpGuests" hidden>
+            <p class="rsvp-guests-title" data-i18n="rsvp.listTitle">Ya has confirmado a</p>
+            <ul id="rsvpGuestList"></ul>
+          </div>
+
+          <button type="button" class="btn btn-add-guest" id="addGuestBtn" onclick="addAnotherGuest()" data-i18n="rsvp.addGuest">
+            Confirmar a otra persona
+          </button>
           <button type="button" class="reset-rsvp" onclick="resetRSVP()" data-i18n="rsvp.change">
             Cambiar respuesta
           </button>
@@ -2964,6 +3056,10 @@
             <div class="form-group">
               <label for="apellido" data-i18n="rsvp.surname">Apellido</label>
               <input type="text" id="apellido" placeholder="Tu apellido" required data-i18n-ph="rsvp.surnamePh">
+              <!-- Solo aparece al confirmar a otra persona: el apellido se hereda bloqueado -->
+              <button type="button" class="field-unlock" id="unlockApellido" onclick="unlockApellido()" aria-controls="apellido" hidden data-i18n="rsvp.surnameUnlock">
+                Cambiar apellido
+              </button>
             </div>
           </div>
           <div class="form-row">
@@ -3171,7 +3267,7 @@
           </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner" data-i18n-html="faq.a6">
-              La fecha límite para confirmar asistencia es el <strong>1 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.
+              La fecha límite para confirmar asistencia es el <strong>10 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.
             </div>
           </div>
         </details>
@@ -3307,10 +3403,14 @@
         'gallery.alt6': 'Cruzando la calle en Zúrich',
         'rsvp.tag': 'Confirmación',
         'rsvp.title': 'Confirma tu asistencia',
-        'rsvp.deadline': 'Por favor confirma antes del <strong>1 de septiembre de 2026</strong>',
+        'rsvp.deadline': 'Por favor confirma antes del <strong>10 de septiembre de 2026</strong>',
         'rsvp.change': 'Cambiar respuesta',
+        'rsvp.addGuest': 'Confirmar a otra persona',
+        'rsvp.listTitle': 'Ya has confirmado a',
+        'rsvp.listNo': '(no asiste)',
         'rsvp.name': 'Nombre', 'rsvp.namePh': 'Tu nombre',
         'rsvp.surname': 'Apellido', 'rsvp.surnamePh': 'Tu apellido',
+        'rsvp.surnameUnlock': 'Cambiar apellido',
         'rsvp.phone': 'Teléfono',
         'rsvp.attend': '¿Asistirás?',
         'rsvp.attendYes': 'Sí, ahí estaré',
@@ -3376,7 +3476,7 @@
         'faq.q5': '¿Y si tengo alergias o intolerancias?',
         'faq.a5': 'Indícanoslo en el formulario de confirmación, en el campo de alérgenos. El restaurante adaptará el menú para ti.',
         'faq.q6': '¿Hasta cuándo puedo confirmar?',
-        'faq.a6': 'La fecha límite para confirmar asistencia es el <strong>1 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.',
+        'faq.a6': 'La fecha límite para confirmar asistencia es el <strong>10 de septiembre de 2026</strong>. Cuanto antes mejor para poder organizarlo todo con calma.',
         'faq.q7': '¿Cuál es el dress code?',
         'faq.a7': 'Formal — etiqueta de noche. Vestido largo para mujeres y traje (etiqueta) para hombres. Colores sugeridos para mujeres en tonos pastel: Dusty Rose, lavanda, Peach, amarillo mantequilla o verde menta. Por respeto a la novia, evita el blanco.',
         'footer.thanks': '¡Te esperamos!',
@@ -3485,10 +3585,14 @@
         'gallery.alt6': 'Crossing the street in Zurich',
         'rsvp.tag': 'RSVP',
         'rsvp.title': 'Confirm your attendance',
-        'rsvp.deadline': 'Please confirm by <strong>September 1, 2026</strong>',
+        'rsvp.deadline': 'Please confirm by <strong>September 10, 2026</strong>',
         'rsvp.change': 'Change response',
+        'rsvp.addGuest': 'Confirm another person',
+        'rsvp.listTitle': 'You have already confirmed',
+        'rsvp.listNo': '(not attending)',
         'rsvp.name': 'First name', 'rsvp.namePh': 'Your first name',
         'rsvp.surname': 'Last name', 'rsvp.surnamePh': 'Your last name',
+        'rsvp.surnameUnlock': 'Change last name',
         'rsvp.phone': 'Phone',
         'rsvp.attend': 'Will you attend?',
         'rsvp.attendYes': "Yes, I'll be there",
@@ -3554,7 +3658,7 @@
         'faq.q5': 'What if I have allergies or intolerances?',
         'faq.a5': 'Let us know in the RSVP form, in the allergies field. The restaurant will adapt the menu for you.',
         'faq.q6': 'Until when can I RSVP?',
-        'faq.a6': 'The deadline to confirm attendance is <strong>September 1, 2026</strong>. The sooner the better, so we can organize everything calmly.',
+        'faq.a6': 'The deadline to confirm attendance is <strong>September 10, 2026</strong>. The sooner the better, so we can organize everything calmly.',
         'faq.q7': 'What is the dress code?',
         'faq.a7': 'Formal — evening attire. Long dress for ladies and formal suit for gentlemen. Suggested colors for ladies in pastel tones: Dusty Rose, Lavender, Peach, Butter Yellow, or Mint Green. Out of respect for the bride, please avoid white.',
         'footer.thanks': 'See you there!',
@@ -3742,14 +3846,68 @@
       const msg = document.getElementById('confirmationMsg');
       const msgTitle = document.getElementById('confirmationTitle');
       const msgText = document.getElementById('confirmationText');
+      const guestsBox = document.getElementById('rsvpGuests');
+      const guestList = document.getElementById('rsvpGuestList');
 
       let lastRSVP = null;   // para re-pintar el mensaje si el usuario cambia de idioma
+
+      // Lista de todos los confirmados desde este dispositivo.
+      // 'wedding_rsvp' sigue guardando solo al último (lo usa el CTA flotante).
+      const LIST_KEY = 'wedding_rsvp_list';
+
+      function readList() {
+        try {
+          const arr = JSON.parse(localStorage.getItem(LIST_KEY) || '[]');
+          return Array.isArray(arr) ? arr : [];
+        } catch (e) { return []; }
+      }
+
+      function writeList(arr) {
+        try { localStorage.setItem(LIST_KEY, JSON.stringify(arr)); } catch (e) {}
+      }
+
+      // Quien confirmó antes de esta versión solo tiene el objeto suelto:
+      // se convierte en el primer elemento de la lista para no perderlo.
+      function migrateList() {
+        if (readList().length) return;
+        try {
+          const saved = localStorage.getItem('wedding_rsvp');
+          if (!saved) return;
+          const d = JSON.parse(saved);
+          if (d && d.nombre) {
+            writeList([{ nombre: d.nombre, apellido: d.apellido || '', asistencia: d.asistencia }]);
+          }
+        } catch (e) {}
+      }
+
+      function renderGuests() {
+        const list = readList();
+        guestList.innerHTML = '';
+        if (!list.length) { guestsBox.hidden = true; return; }
+        list.forEach(function(g) {
+          const li = document.createElement('li');
+          const name = document.createElement('span');
+          // textContent, nunca innerHTML — son nombres escritos por el invitado
+          name.textContent = ((g.nombre || '') + ' ' + (g.apellido || '')).trim();
+          li.appendChild(name);
+          if (g.asistencia !== 'si') {
+            li.className = 'declined';
+            const note = document.createElement('span');
+            note.className = 'guest-note';
+            note.textContent = t('rsvp.listNo');
+            li.appendChild(note);
+          }
+          guestList.appendChild(li);
+        });
+        guestsBox.hidden = false;
+      }
 
       function loadRSVP() {
         // try/catch: un localStorage corrupto no debe romper el formulario
         try {
           const saved = localStorage.getItem('wedding_rsvp');
           if (saved) {
+            migrateList();
             const data = JSON.parse(saved);
             showConfirmation(data, true);
           }
@@ -3762,6 +3920,7 @@
         lastRSVP = data;
         form.style.display = 'none';
         msg.classList.add('active');
+        renderGuests();
         document.dispatchEvent(new CustomEvent('rsvpchange'));   // el CTA flotante se oculta
         if (data.asistencia === 'si') {
           msgTitle.textContent = t('rsvp.thanksYes');
@@ -3809,32 +3968,127 @@
         rsvpBtn.disabled = true;
         rsvpBtn.textContent = t('rsvp.sending');
 
+        // mode no-cors: la respuesta es opaca, así que then y catch hacen lo mismo
+        function guardar() {
+          try { localStorage.setItem('wedding_rsvp', JSON.stringify(data)); } catch (e) {}
+          const list = readList();
+          list.push({ nombre: data.nombre, apellido: data.apellido, asistencia: data.asistencia });
+          writeList(list);
+          // El formulario se reutiliza para el siguiente invitado: hay que dejar el botón usable
+          rsvpBtn.disabled = false;
+          rsvpBtn.textContent = t('rsvp.submit');
+          showConfirmation(data);
+        }
+
         fetch('https://script.google.com/macros/s/AKfycby4pheD3krM6_kGLd2SN-JisTpXnS93_7RFiw95QDLulsKNnO7DESKkHonpfID6l1rfBA/exec', {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(data).toString()
         })
-        .then(function() {
-          localStorage.setItem('wedding_rsvp', JSON.stringify(data));
-          showConfirmation(data);
-        })
-        .catch(function() {
-          localStorage.setItem('wedding_rsvp', JSON.stringify(data));
-          showConfirmation(data);
-        });
+        .then(guardar)
+        .catch(guardar);
       });
 
       loadRSVP();
     })();
 
     // ── RESET RSVP ──────────────────────────
+    // "Cambiar respuesta": recupera lo que envió esta persona para que solo
+    // tenga que tocar lo que quiere corregir, no reescribirlo todo.
     function resetRSVP() {
+      let prev = {};
+      try { prev = JSON.parse(localStorage.getItem('wedding_rsvp') || '{}') || {}; } catch (e) {}
+
       localStorage.removeItem('wedding_rsvp');
-      document.getElementById('rsvpForm').style.display = 'flex';
-      document.getElementById('rsvpForm').reset();
+      // Sale de la lista y vuelve a entrar al reenviar (si no, saldría duplicada)
+      try {
+        const list = JSON.parse(localStorage.getItem('wedding_rsvp_list') || '[]');
+        if (Array.isArray(list) && list.length) {
+          list.pop();
+          localStorage.setItem('wedding_rsvp_list', JSON.stringify(list));
+        }
+      } catch (e) {}
+
+      const form = document.getElementById('rsvpForm');
+      form.style.display = 'flex';
+      form.reset();
+      form.classList.remove('submitted');
+      setApellidoLock(false);   // aquí editas lo tuyo: el apellido vuelve a ser libre
+
+      setValue('nombre', prev.nombre);
+      setValue('apellido', prev.apellido);
+      setValue('telefono', prev.telefono);
+      setValue('alergenos', prev.alergenos);
+      setValue('mensaje', prev.mensaje);
+      setRadio('asistencia', prev.asistencia);
+      setRadio('autobus', prev.autobus);
+      setRadio('menu', prev.menu);
+
+      restoreRsvpButton();
       document.getElementById('confirmationMsg').classList.remove('active');
       document.dispatchEvent(new CustomEvent('rsvpchange'));   // el CTA flotante reaparece
+    }
+
+    // ── CONFIRMAR A OTRA PERSONA ────────────
+    // Mismo móvil, invitado distinto: quien confirma por sus padres o abuelos
+    // se topaba con la tarjeta de "ya has confirmado" y no podía seguir.
+    // Conserva lo ya confirmado y hereda apellido y teléfono para no reescribirlos.
+    function addAnotherGuest() {
+      const form = document.getElementById('rsvpForm');
+      let prev = {};
+      try { prev = JSON.parse(localStorage.getItem('wedding_rsvp') || '{}') || {}; } catch (e) {}
+
+      form.reset();
+      form.classList.remove('submitted');
+      const apellido = document.getElementById('apellido');
+      apellido.value = prev.apellido || '';
+      document.getElementById('telefono').value = prev.telefono || '';
+      // Apellido heredado: se bloquea para no cambiarlo sin querer, pero con escape.
+      // Si no hubiera apellido previo, se deja editable — si no, no habría forma de rellenarlo.
+      setApellidoLock(!!apellido.value);
+      restoreRsvpButton();
+
+      document.getElementById('confirmationMsg').classList.remove('active');
+      form.style.display = 'flex';
+
+      document.getElementById('rsvpCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('nombre').focus({ preventScroll: true });
+    }
+
+    // El formulario ya no es de un solo uso: el botón vuelve a su estado inicial
+    function restoreRsvpButton() {
+      const btn = document.getElementById('rsvpBtn');
+      btn.disabled = false;
+      btn.textContent = t('rsvp.submit');
+    }
+
+    // Rellenar el formulario con lo ya enviado (al corregir la propia respuesta)
+    function setValue(id, value) {
+      if (!value) return;
+      document.getElementById(id).value = value;
+    }
+
+    // Comparación por .value, no selector con interpolación — el dato viene de localStorage
+    function setRadio(name, value) {
+      if (!value) return;
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function(radio) {
+        if (radio.value === value) radio.checked = true;
+      });
+    }
+
+    // Bloqueo del apellido heredado. El enlace de escape solo se ve si está bloqueado.
+    function setApellidoLock(locked) {
+      document.getElementById('apellido').readOnly = locked;
+      document.getElementById('unlockApellido').hidden = !locked;
+    }
+
+    // No todos comparten apellido: pareja, amigos, o los dos apellidos españoles
+    function unlockApellido() {
+      setApellidoLock(false);
+      const apellido = document.getElementById('apellido');
+      apellido.focus();
+      apellido.select();   // al teclear se sustituye el heredado
     }
 
     // ── CTA FLOTANTE RSVP ───────────────────
